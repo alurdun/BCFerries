@@ -2,6 +2,7 @@
   "name": "SemanticModel",
   "compatibilityLevel": 1200,
   "model": {
+    "defaultMode": "directQuery",
     "culture": "en-CA",
     "dataSources": [
       {
@@ -21,242 +22,243 @@
         "name": "Sailings",
         "columns": [
           {
-            "name": "SAILING_PK",
+            "name": "SailingKey",
             "dataType": "string",
             "sourceColumn": "SAILING_PK"
           },
           {
-            "name": "SAILING_STARTDATE",
+            "name": "SailingStartDate",
             "dataType": "dateTime",
             "sourceColumn": "SAILING_STARTDATE"
           },
           {
-            "name": "SAILING_ENDDATE",
+            "name": "SailingEndDate",
             "dataType": "dateTime",
             "sourceColumn": "SAILING_ENDDATE"
           },
           {
-            "name": "SAI_CODE",
+            "name": "SailingCode",
             "dataType": "string",
             "sourceColumn": "SAI_CODE"
           },
           {
-            "name": "SAI_SAILINGDEPARTUREDATE",
+            "name": "SailingDepartureDate",
             "dataType": "dateTime",
             "sourceColumn": "SAI_SAILINGDEPARTUREDATE"
           },
           {
-            "name": "SAI_LOCKED",
+            "name": "SailingLocked",
             "dataType": "string",
             "sourceColumn": "SAI_LOCKED"
           },
           {
-            "name": "SAI_SCHEDULECODE",
+            "name": "SailingScheduleCode",
             "dataType": "string",
             "sourceColumn": "SAI_SCHEDULECODE"
           },
           {
-            "name": "SAI_SAILINGARRIVALDATE",
+            "name": "SailingArrivalDate",
             "dataType": "dateTime",
             "sourceColumn": "SAI_SAILINGARRIVALDATE"
           },
           {
-            "name": "SAI_HIDEINFORMATION",
+            "name": "SailingHideInformation",
             "dataType": "string",
             "sourceColumn": "SAI_HIDEINFORMATION"
           },
           {
-            "name": "LIN_CODE",
+            "name": "LineCode",
             "dataType": "string",
             "sourceColumn": "LIN_CODE"
           },
           {
-            "name": "LIN_DESCRIPTION",
+            "name": "LineDescription",
             "dataType": "string",
             "sourceColumn": "LIN_DESCRIPTION"
           },
           {
-            "name": "SHI_CODE",
+            "name": "ShipCode",
             "dataType": "string",
             "sourceColumn": "SHI_CODE"
           },
           {
-            "name": "SHI_NAME",
+            "name": "ShipName",
             "dataType": "string",
             "sourceColumn": "SHI_NAME"
           },
           {
-            "name": "SHI_SHIPTYPE",
+            "name": "ShipType",
             "dataType": "string",
             "sourceColumn": "SHI_SHIPTYPE"
           },
           {
-            "name": "SHI_DIVISION",
+            "name": "ShipDivision",
             "dataType": "string",
             "sourceColumn": "SHI_DIVISION"
           },
           {
-            "name": "SHI_PHYSICALSHIPNAME",
+            "name": "PhysicalShipName",
             "dataType": "string",
             "sourceColumn": "SHI_PHYSICALSHIPNAME"
           },
           {
-            "name": "PHY_DESCRIPTION",
+            "name": "ShipPhysicalDescription",
             "dataType": "string",
             "sourceColumn": "PHY_DESCRIPTION"
           },
           {
-            "name": "DEP_PORTCODE",
+            "name": "DeparturePortCode",
             "dataType": "string",
             "sourceColumn": "DEP_PORTCODE"
           },
           {
-            "name": "DEP_PORTORDER",
+            "name": "DeparturePortOrder",
             "dataType": "double",
             "sourceColumn": "DEP_PORTORDER"
           },
           {
-            "name": "DEP_DEPARTURETIME",
+            "name": "DepartureTime",
             "dataType": "dateTime",
-            "sourceColumn": "DEP_DEPARTURETIME"
+            "sourceColumn": "DEP_DEPARTURETIME",
+            "formatString": "HH:MM"
           },
           {
-            "name": "ARR_SAILINGCODE",
+            "name": "ArrivalSailingCode",
             "dataType": "string",
             "sourceColumn": "ARR_SAILINGCODE"
           },
           {
-            "name": "ARR_PORTCODE",
+            "name": "ArrivalPortCode",
             "dataType": "string",
             "sourceColumn": "ARR_PORTCODE"
           },
           {
-            "name": "ARR_PORTORDER",
+            "name": "ArrivalPortOrder",
             "dataType": "double",
             "sourceColumn": "ARR_PORTORDER"
           },
           {
-            "name": "ARR_ARRIVALTIME",
+            "name": "ArrivalTime",
             "dataType": "dateTime",
             "sourceColumn": "ARR_ARRIVALTIME"
           },
           {
-            "name": "LEG_CODE",
+            "name": "LegCode",
             "dataType": "string",
             "sourceColumn": "LEG_CODE"
           },
           {
-            "name": "DPO_GEOGRAPHICALAREA",
+            "name": "DeparturePortGeographicalArea",
             "dataType": "string",
             "sourceColumn": "DPO_GEOGRAPHICALAREA"
           },
           {
-            "name": "DPO_NAME",
+            "name": "DeparturePortName",
             "dataType": "string",
             "sourceColumn": "DPO_NAME"
           },
           {
-            "name": "DPO_DESCRIPTION",
+            "name": "DeparturePortDescription",
             "dataType": "string",
             "sourceColumn": "DPO_DESCRIPTION"
           },
           {
-            "name": "APO_GEOGRAPHICALAREA",
+            "name": "ArrivalPortGeographicalArea",
             "dataType": "string",
             "sourceColumn": "APO_GEOGRAPHICALAREA"
           },
           {
-            "name": "APO_NAME",
+            "name": "ArrivalPortName",
             "dataType": "string",
             "sourceColumn": "APO_NAME"
           },
           {
-            "name": "APO_DESCRIPTION",
+            "name": "ArrivalPortDescription",
             "dataType": "string",
             "sourceColumn": "APO_DESCRIPTION"
           },
           {
-            "name": "GED_NAME",
+            "name": "DepartureGeographicalAreaName",
             "dataType": "string",
             "sourceColumn": "GED_NAME"
           },
           {
-            "name": "GEA_NAME",
+            "name": "ArrivalGeographicalAreaName",
             "dataType": "string",
             "sourceColumn": "GEA_NAME"
           },
           {
-            "name": "ROUTECODE",
+            "name": "RouteCode",
             "dataType": "string",
             "sourceColumn": "ROUTECODE"
           },
           {
-            "name": "ROUTESORT",
+            "name": "RouteSort",
             "dataType": "string",
             "sourceColumn": "ROUTESORT"
           },
           {
-            "name": "DEP_DEPARTUREDATETIME",
+            "name": "DepartureDateTime",
             "dataType": "dateTime",
             "sourceColumn": "DEP_DEPARTUREDATETIME"
           },
           {
-            "name": "DEP_DEPARTUREDATE",
+            "name": "DepartureDate",
             "dataType": "dateTime",
             "sourceColumn": "DEP_DEPARTUREDATE"
           },
           {
-            "name": "DEP_DEPARTURETIMEHOUR",
+            "name": "DepartureTimeHour",
             "dataType": "string",
             "sourceColumn": "DEP_DEPARTURETIMEHOUR"
           },
           {
-            "name": "ARR_ARRIVALDATETIME",
+            "name": "ArrivalDateTime",
             "dataType": "dateTime",
             "sourceColumn": "ARR_ARRIVALDATETIME"
           },
           {
-            "name": "ARR_ARRIVALDATE",
+            "name": "ArrivalDate",
             "dataType": "dateTime",
             "sourceColumn": "ARR_ARRIVALDATE"
           },
           {
-            "name": "ARR_ARRIVALTIMEHOUR",
+            "name": "ArrivalTimeHour",
             "dataType": "string",
             "sourceColumn": "ARR_ARRIVALTIMEHOUR"
           },
           {
-            "name": "DEP_DEPARTUREDATEMONTH",
+            "name": "DepartureDateMonth",
             "dataType": "string",
             "sourceColumn": "DEP_DEPARTUREDATEMONTH"
           },
           {
-            "name": "DEP_DEPARTUREDATEMONTHSORT",
+            "name": "DepartureDateTimeMonthSort",
             "dataType": "string",
             "sourceColumn": "DEP_DEPARTUREDATEMONTHSORT"
           },
           {
-            "name": "DEP_DEPARTUREDATEDAYOFWEEK",
+            "name": "DepartureDateDayOfWeek",
             "dataType": "string",
             "sourceColumn": "DEP_DEPARTUREDATEDAYOFWEEK"
           },
           {
-            "name": "DEP_DEPARTUREDATEDAYOFWEEKSORT",
+            "name": "DepartureDateDayOfWeekSort",
             "dataType": "string",
             "sourceColumn": "DEP_DEPARTUREDATEDAYOFWEEKSORT"
           },
           {
-            "name": "DEP_DEPARTUREDATEDAY",
+            "name": "DepartureDateDay",
             "dataType": "string",
             "sourceColumn": "DEP_DEPARTUREDATEDAY"
           },
           {
-            "name": "LIC_CREWNUMBER",
+            "name": "LicenseCrewnumber",
             "dataType": "double",
             "sourceColumn": "LIC_CREWNUMBER"
           },
           {
-            "name": "LIC_SELLABLECAPACITY",
+            "name": "LicenseSellableCapacity",
             "dataType": "double",
             "sourceColumn": "LIC_SELLABLECAPACITY"
           },
@@ -265,14 +267,26 @@
             "name": "DepartureAllocationKey",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "Sailings[SAI_CODE] & Sailings[DEP_PORTCODE]"
+            "expression": "Sailings[SailingCode] & Sailings[DeparturePortCode]"
           },
           {
             "type": "calculated",
             "name": "ArrivalAllocationKey",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "Sailings[SAI_CODE] & Sailings[ARR_PORTCODE]"
+            "expression": "Sailings[SailingCode] & Sailings[ArrivalPortCode]"
+          },
+          {
+            "type": "calculated",
+            "name": "DepartureDateDefault",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              " IF(",
+              "\tMONTH(",
+              "\t\tSailings[DepartureDate])=MONTH(",
+              "\t\t\tNOW()) && YEAR(Sailings[DepartureDate])=YEAR(NOW()) && DAY(Sailings[DepartureDate])=DAY(NOW()),\"1\",\"0\")"
+            ]
           }
         ],
         "partitions": [
@@ -1318,51 +1332,52 @@
         "name": "DepartureAllocation",
         "columns": [
           {
-            "name": "SAILINGCODE",
+            "name": "SailingCode",
             "dataType": "string",
             "sourceColumn": "SAILINGCODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DEPARTUREPORT",
+            "name": "DeparturePort",
             "dataType": "string",
             "sourceColumn": "DEPARTUREPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ARRIVALPORT",
+            "name": "ArrivalPort",
             "dataType": "string",
             "sourceColumn": "ARRIVALPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "LEGCODE",
+            "name": "LegCode",
             "dataType": "string",
             "sourceColumn": "LEGCODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PHYSICALRESOURCECODE",
+            "name": "PhysicalResourceCode",
             "dataType": "string",
             "sourceColumn": "PHYSICALRESOURCECODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SELLABLECAPACITY",
+            "name": "SellableCapacity",
             "dataType": "double",
             "sourceColumn": "SELLABLECAPACITY",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "SOLDCAPACITY",
+            "name": "SoldCapacity",
             "dataType": "double",
             "sourceColumn": "SOLDCAPACITY",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "AVAILABLECAPACITY",
+            "name": "AvailableCapacity",
             "dataType": "double",
             "sourceColumn": "AVAILABLECAPACITY",
+            "formatString": "0",
             "sourceProviderType": "Decimal"
           },
           {
@@ -1370,7 +1385,15 @@
             "name": "DepartureAllocationKey",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "DepartureAllocation[SAILINGCODE] & DepartureAllocation[DEPARTUREPORT]"
+            "expression": "DepartureAllocation[SailingCode] & DepartureAllocation[DeparturePort]"
+          },
+          {
+            "type": "calculated",
+            "name": "AvailablePercent",
+            "dataType": "double",
+            "isDataTypeInferred": true,
+            "expression": "DepartureAllocation[AvailableCapacity]/DepartureAllocation[SellableCapacity]",
+            "formatString": "0%"
           }
         ],
         "partitions": [
@@ -1468,49 +1491,49 @@
         "name": "ArrivalAllocation",
         "columns": [
           {
-            "name": "SAILINGCODE",
+            "name": "SailingCode",
             "dataType": "string",
             "sourceColumn": "SAILINGCODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DEPARTUREPORT",
+            "name": "DeparturePort",
             "dataType": "string",
             "sourceColumn": "DEPARTUREPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ARRIVALPORT",
+            "name": "ArrivalPort",
             "dataType": "string",
             "sourceColumn": "ARRIVALPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "LEGCODE",
+            "name": "LegCode",
             "dataType": "string",
             "sourceColumn": "LEGCODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PHYSICALRESOURCECODE",
+            "name": "PhysicalResourceCode",
             "dataType": "string",
             "sourceColumn": "PHYSICALRESOURCECODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SELLABLECAPACITY",
+            "name": "SellableCapacity",
             "dataType": "double",
             "sourceColumn": "SELLABLECAPACITY",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "SOLDCAPACITY",
+            "name": "SoldCapacity",
             "dataType": "double",
             "sourceColumn": "SOLDCAPACITY",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "AVAILABLECAPACITY",
+            "name": "AvailableCapacity",
             "dataType": "double",
             "sourceColumn": "AVAILABLECAPACITY",
             "sourceProviderType": "Decimal"
@@ -1520,7 +1543,7 @@
             "name": "ArrivalAllocationKey",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "ArrivalAllocation[SAILINGCODE] & ArrivalAllocation[ARRIVALPORT]"
+            "expression": "ArrivalAllocation[SailingCode] & ArrivalAllocation[ArrivalPort]"
           }
         ],
         "partitions": [
@@ -1616,6 +1639,7 @@
       },
       {
         "name": "JasperQuerySpaceAvailability",
+        "isHidden": true,
         "columns": [
           {
             "name": "SAILINGCODE",
@@ -2623,6 +2647,169 @@
             ]
           }
         ]
+      },
+      {
+        "name": "PhysicalResources",
+        "columns": [
+          {
+            "name": "PhysicalResourceCode",
+            "dataType": "string",
+            "sourceColumn": "PHYSICALRESOURCECODE",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "ResourceType",
+            "dataType": "string",
+            "sourceColumn": "RESOURCETYPE",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "ResourceTypeSort",
+            "dataType": "double",
+            "sourceColumn": "RESOURCETYPESORT",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "ResourceCode",
+            "dataType": "string",
+            "sourceColumn": "RESOURCECODE",
+            "sourceProviderType": "VarChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Query",
+            "dataView": "full",
+            "source": {
+              "query": [
+                "select distinct PHYSICALRESOURCECODE,",
+                "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
+                "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
+                "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
+                "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
+                "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
+                "END RESOURCETYPE, ",
+                "CASE  ",
+                "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
+                "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
+                "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
+                "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
+                "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
+                "END RESOURCETYPESORT, ",
+                "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
+                "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
+                "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
+                "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
+                "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
+                "END AS RESOURCECODE",
+                "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
+                "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
+                "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
+                "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
+                "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0"
+              ],
+              "dataSource": "Oracle scan.stg01.rac.bcferries.corp"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select distinct PHYSICALRESOURCECODE,",
+                  "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
+                  "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
+                  "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
+                  "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
+                  "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
+                  "END RESOURCETYPE, ",
+                  "CASE  ",
+                  "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
+                  "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
+                  "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
+                  "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
+                  "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
+                  "END RESOURCETYPESORT, ",
+                  "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
+                  "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
+                  "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
+                  "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
+                  "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
+                  "END AS RESOURCECODE",
+                  "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
+                  "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
+                  "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
+                  "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
+                  "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "select distinct PHYSICALRESOURCECODE,",
+              "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
+              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
+              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
+              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
+              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
+              "END RESOURCETYPE, ",
+              "CASE  ",
+              "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
+              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
+              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
+              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
+              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
+              "END RESOURCETYPESORT, ",
+              "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
+              "END AS RESOURCECODE",
+              "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
+              "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
+              "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
+              "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
+              "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Query"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select distinct PHYSICALRESOURCECODE,",
+              "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
+              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
+              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
+              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
+              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
+              "END RESOURCETYPE, ",
+              "CASE  ",
+              "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
+              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
+              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
+              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
+              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
+              "END RESOURCETYPESORT, ",
+              "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
+              "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
+              "END AS RESOURCECODE",
+              "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
+              "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
+              "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
+              "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
+              "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
       }
     ],
     "relationships": [
@@ -2639,6 +2826,20 @@
         "fromColumn": "ArrivalAllocationKey",
         "toTable": "Sailings",
         "toColumn": "ArrivalAllocationKey"
+      },
+      {
+        "name": "2a494311-913d-4558-83fd-2246cc8927ec",
+        "fromTable": "ArrivalAllocation",
+        "fromColumn": "PhysicalResourceCode",
+        "toTable": "PhysicalResources",
+        "toColumn": "PhysicalResourceCode"
+      },
+      {
+        "name": "358baa79-7424-40c3-b2c5-7829330bc58c",
+        "fromTable": "DepartureAllocation",
+        "fromColumn": "PhysicalResourceCode",
+        "toTable": "PhysicalResources",
+        "toColumn": "PhysicalResourceCode"
       }
     ],
     "annotations": [
