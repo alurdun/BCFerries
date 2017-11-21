@@ -2024,6 +2024,22 @@
               "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
               "       dimContact[ContactID]  = factActivity[ContactID])))"
             ]
+          },
+          {
+            "type": "calculated",
+            "name": "ActivityIDNoRel",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimActivity) , ",
+              "        FILTER(DimActivity, ",
+              "        dimActivity[ActivityID] = factActivity[ActivityID]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimActivity[ActivityID], 1) ,  FILTER(dimActivity, ",
+              "       dimActivity[ActivityID]  = factActivity[ACTIVITYID])))"
+            ]
           }
         ],
         "partitions": [
