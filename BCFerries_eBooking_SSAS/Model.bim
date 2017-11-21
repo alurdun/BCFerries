@@ -7,7 +7,7 @@
     "dataSources": [
       {
         "name": "Oracle scan.stg01.rac.bcferries.corp",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.stg01.rac.bcferries.corp;User ID=report_proxy_user;Persist Security Info=false",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corps;Persist Security Info=true;User ID=report_proxy_user;Extended Properties=UseSessionFormat=1",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -27,16 +27,6 @@
             "sourceColumn": "SAILING_PK"
           },
           {
-            "name": "SailingStartDate",
-            "dataType": "dateTime",
-            "sourceColumn": "SAILING_STARTDATE"
-          },
-          {
-            "name": "SailingEndDate",
-            "dataType": "dateTime",
-            "sourceColumn": "SAILING_ENDDATE"
-          },
-          {
             "name": "SailingCode",
             "dataType": "string",
             "sourceColumn": "SAI_CODE"
@@ -44,7 +34,14 @@
           {
             "name": "SailingDepartureDate",
             "dataType": "dateTime",
-            "sourceColumn": "SAI_SAILINGDEPARTUREDATE"
+            "sourceColumn": "SAI_SAILINGDEPARTUREDATE",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"4105\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
           },
           {
             "name": "SailingLocked",
@@ -118,9 +115,8 @@
           },
           {
             "name": "DepartureTime",
-            "dataType": "dateTime",
-            "sourceColumn": "DEP_DEPARTURETIME",
-            "formatString": "HH:MM"
+            "dataType": "string",
+            "sourceColumn": "DEP_DEPARTURETIME"
           },
           {
             "name": "ArrivalSailingCode",
@@ -205,7 +201,14 @@
           {
             "name": "DepartureDate",
             "dataType": "dateTime",
-            "sourceColumn": "DEP_DEPARTUREDATE"
+            "sourceColumn": "DEP_DEPARTUREDATE",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"4105\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
           },
           {
             "name": "DepartureTimeHour",
@@ -287,6 +290,561 @@
               "\t\tSailings[DepartureDate])=MONTH(",
               "\t\t\tNOW()) && YEAR(Sailings[DepartureDate])=YEAR(NOW()) && DAY(Sailings[DepartureDate])=DAY(NOW()),\"1\",\"0\")"
             ]
+          },
+          {
+            "name": "SAILING_STARTDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "SAILING_STARTDATE"
+          },
+          {
+            "name": "SAILING_ENDDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "SAILING_ENDDATE"
+          },
+          {
+            "name": "SAI_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "SAI_STARTDATE"
+          },
+          {
+            "name": "SAI_DESCRIPTION",
+            "dataType": "string",
+            "sourceColumn": "SAI_DESCRIPTION"
+          },
+          {
+            "name": "SAI_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "SAI_ENDDATE"
+          },
+          {
+            "name": "SAI_JOURNEYDURATION",
+            "dataType": "double",
+            "sourceColumn": "SAI_JOURNEYDURATION"
+          },
+          {
+            "name": "SAI_SCHEDULESTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "SAI_SCHEDULESTARTDATE"
+          },
+          {
+            "name": "SAI_SHIPTEMPLATECODE",
+            "dataType": "string",
+            "sourceColumn": "SAI_SHIPTEMPLATECODE"
+          },
+          {
+            "name": "SAI_SHIPTEMPLATESTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "SAI_SHIPTEMPLATESTARTDATE"
+          },
+          {
+            "name": "SAI_LINECODE",
+            "dataType": "string",
+            "sourceColumn": "SAI_LINECODE"
+          },
+          {
+            "name": "SAI_LINESTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "SAI_LINESTARTDATE"
+          },
+          {
+            "name": "SAI_DAYNIGHT",
+            "dataType": "string",
+            "sourceColumn": "SAI_DAYNIGHT"
+          },
+          {
+            "name": "SAI_VERSION",
+            "dataType": "double",
+            "sourceColumn": "SAI_VERSION"
+          },
+          {
+            "name": "SAI_COMMENTS",
+            "dataType": "string",
+            "sourceColumn": "SAI_COMMENTS"
+          },
+          {
+            "name": "SAI_VOYAGECODE",
+            "dataType": "string",
+            "sourceColumn": "SAI_VOYAGECODE"
+          },
+          {
+            "name": "SAI_MDS",
+            "dataType": "string",
+            "sourceColumn": "SAI_MDS"
+          },
+          {
+            "name": "SAI_NORESERVABLE",
+            "dataType": "string",
+            "sourceColumn": "SAI_NORESERVABLE"
+          },
+          {
+            "name": "LIN_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "LIN_STARTDATE"
+          },
+          {
+            "name": "LIN_MILES",
+            "dataType": "double",
+            "sourceColumn": "LIN_MILES"
+          },
+          {
+            "name": "LIN_DEPARTURE_TIME",
+            "dataType": "dateTime",
+            "sourceColumn": "LIN_DEPARTURE_TIME"
+          },
+          {
+            "name": "LIN_ARRIVAL_TIME",
+            "dataType": "dateTime",
+            "sourceColumn": "LIN_ARRIVAL_TIME"
+          },
+          {
+            "name": "LIN_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "LIN_ENDDATE"
+          },
+          {
+            "name": "LIN_RTSPODEPARTURENUMBER",
+            "dataType": "double",
+            "sourceColumn": "LIN_RTSPODEPARTURENUMBER"
+          },
+          {
+            "name": "LIN_VERSION",
+            "dataType": "double",
+            "sourceColumn": "LIN_VERSION"
+          },
+          {
+            "name": "LIN_LINEDIRECTIONID",
+            "dataType": "double",
+            "sourceColumn": "LIN_LINEDIRECTIONID"
+          },
+          {
+            "name": "LIN_HOURS_BEFORE_DEPARTURE",
+            "dataType": "double",
+            "sourceColumn": "LIN_HOURS_BEFORE_DEPARTURE"
+          },
+          {
+            "name": "SHI_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "SHI_STARTDATE"
+          },
+          {
+            "name": "SHI_PHYSICALSHIPSTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "SHI_PHYSICALSHIPSTARTDATE"
+          },
+          {
+            "name": "SHI_DAYNIGHT",
+            "dataType": "string",
+            "sourceColumn": "SHI_DAYNIGHT"
+          },
+          {
+            "name": "SHI_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "SHI_ENDDATE"
+          },
+          {
+            "name": "SHI_VERSION",
+            "dataType": "double",
+            "sourceColumn": "SHI_VERSION"
+          },
+          {
+            "name": "PHY_NAME",
+            "dataType": "string",
+            "sourceColumn": "PHY_NAME"
+          },
+          {
+            "name": "PHY_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "PHY_STARTDATE"
+          },
+          {
+            "name": "PHY_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "PHY_ENDDATE"
+          },
+          {
+            "name": "PHY_VERSION",
+            "dataType": "double",
+            "sourceColumn": "PHY_VERSION"
+          },
+          {
+            "name": "PHY_VINGCARDNAME",
+            "dataType": "string",
+            "sourceColumn": "PHY_VINGCARDNAME"
+          },
+          {
+            "name": "PHY_LLOYDSREGISTER",
+            "dataType": "string",
+            "sourceColumn": "PHY_LLOYDSREGISTER"
+          },
+          {
+            "name": "PHY_CALLRADIOSIGNAL",
+            "dataType": "string",
+            "sourceColumn": "PHY_CALLRADIOSIGNAL"
+          },
+          {
+            "name": "PHY_CODE",
+            "dataType": "string",
+            "sourceColumn": "PHY_CODE"
+          },
+          {
+            "name": "PHY_WIDTHTRESHOLD",
+            "dataType": "double",
+            "sourceColumn": "PHY_WIDTHTRESHOLD"
+          },
+          {
+            "name": "PHY_BUILDYEAR",
+            "dataType": "string",
+            "sourceColumn": "PHY_BUILDYEAR"
+          },
+          {
+            "name": "PHY_COUNTRYFLAG",
+            "dataType": "string",
+            "sourceColumn": "PHY_COUNTRYFLAG"
+          },
+          {
+            "name": "PHY_ICECLASS",
+            "dataType": "string",
+            "sourceColumn": "PHY_ICECLASS"
+          },
+          {
+            "name": "PHY_ISDUMMYSHIP",
+            "dataType": "string",
+            "sourceColumn": "PHY_ISDUMMYSHIP"
+          },
+          {
+            "name": "DEP_SAILINGCODE",
+            "dataType": "string",
+            "sourceColumn": "DEP_SAILINGCODE"
+          },
+          {
+            "name": "DEP_SAILINGSTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "DEP_SAILINGSTARTDATE"
+          },
+          {
+            "name": "DEP_PORTSTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "DEP_PORTSTARTDATE"
+          },
+          {
+            "name": "DEP_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "DEP_STARTDATE"
+          },
+          {
+            "name": "DEP_ARRIVALTIME",
+            "dataType": "dateTime",
+            "sourceColumn": "DEP_ARRIVALTIME"
+          },
+          {
+            "name": "DEP_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "DEP_ENDDATE"
+          },
+          {
+            "name": "DEP_VERSION",
+            "dataType": "double",
+            "sourceColumn": "DEP_VERSION"
+          },
+          {
+            "name": "DEP_GVNUMBERIMPORT",
+            "dataType": "string",
+            "sourceColumn": "DEP_GVNUMBERIMPORT"
+          },
+          {
+            "name": "DEP_GVNUMBEREXPORT",
+            "dataType": "string",
+            "sourceColumn": "DEP_GVNUMBEREXPORT"
+          },
+          {
+            "name": "DEP_ACTUALDEPARTUREDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "DEP_ACTUALDEPARTUREDATE"
+          },
+          {
+            "name": "DEP_ACTUALARRIVALDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "DEP_ACTUALARRIVALDATE"
+          },
+          {
+            "name": "DEP_GSVOYAGECODE",
+            "dataType": "string",
+            "sourceColumn": "DEP_GSVOYAGECODE"
+          },
+          {
+            "name": "DEP_REPORTCLOSED",
+            "dataType": "string",
+            "sourceColumn": "DEP_REPORTCLOSED"
+          },
+          {
+            "name": "DEP_BERTH",
+            "dataType": "string",
+            "sourceColumn": "DEP_BERTH"
+          },
+          {
+            "name": "ARR_SAILINGSTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "ARR_SAILINGSTARTDATE"
+          },
+          {
+            "name": "ARR_PORTSTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "ARR_PORTSTARTDATE"
+          },
+          {
+            "name": "ARR_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "ARR_STARTDATE"
+          },
+          {
+            "name": "ARR_DEPARTURETIME",
+            "dataType": "dateTime",
+            "sourceColumn": "ARR_DEPARTURETIME"
+          },
+          {
+            "name": "ARR_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "ARR_ENDDATE"
+          },
+          {
+            "name": "ARR_VERSION",
+            "dataType": "double",
+            "sourceColumn": "ARR_VERSION"
+          },
+          {
+            "name": "ARR_GVNUMBERIMPORT",
+            "dataType": "string",
+            "sourceColumn": "ARR_GVNUMBERIMPORT"
+          },
+          {
+            "name": "ARR_GVNUMBEREXPORT",
+            "dataType": "string",
+            "sourceColumn": "ARR_GVNUMBEREXPORT"
+          },
+          {
+            "name": "ARR_ACTUALDEPARTUREDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "ARR_ACTUALDEPARTUREDATE"
+          },
+          {
+            "name": "ARR_ACTUALARRIVALDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "ARR_ACTUALARRIVALDATE"
+          },
+          {
+            "name": "ARR_GSVOYAGECODE",
+            "dataType": "string",
+            "sourceColumn": "ARR_GSVOYAGECODE"
+          },
+          {
+            "name": "ARR_REPORTCLOSED",
+            "dataType": "string",
+            "sourceColumn": "ARR_REPORTCLOSED"
+          },
+          {
+            "name": "ARR_BERTH",
+            "dataType": "string",
+            "sourceColumn": "ARR_BERTH"
+          },
+          {
+            "name": "LEG_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "LEG_STARTDATE"
+          },
+          {
+            "name": "LEG_DEPARTURE_PORT",
+            "dataType": "string",
+            "sourceColumn": "LEG_DEPARTURE_PORT"
+          },
+          {
+            "name": "LEG_DEPARTURE_PORTSTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "LEG_DEPARTURE_PORTSTARTDATE"
+          },
+          {
+            "name": "LEG_ARRIVAL_PORT",
+            "dataType": "string",
+            "sourceColumn": "LEG_ARRIVAL_PORT"
+          },
+          {
+            "name": "LEG_ARRIVAL_PORTSTARTDATE",
+            "dataType": "string",
+            "sourceColumn": "LEG_ARRIVAL_PORTSTARTDATE"
+          },
+          {
+            "name": "LEG_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "LEG_ENDDATE"
+          },
+          {
+            "name": "LEG_VERSION",
+            "dataType": "double",
+            "sourceColumn": "LEG_VERSION"
+          },
+          {
+            "name": "LEG_MANDATORYDOCUMENT",
+            "dataType": "string",
+            "sourceColumn": "LEG_MANDATORYDOCUMENT"
+          },
+          {
+            "name": "DPO_CODE",
+            "dataType": "string",
+            "sourceColumn": "DPO_CODE"
+          },
+          {
+            "name": "DPO_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "DPO_STARTDATE"
+          },
+          {
+            "name": "DPO_COUNTRY",
+            "dataType": "string",
+            "sourceColumn": "DPO_COUNTRY"
+          },
+          {
+            "name": "DPO_EMAIL",
+            "dataType": "string",
+            "sourceColumn": "DPO_EMAIL"
+          },
+          {
+            "name": "DPO_FAX",
+            "dataType": "string",
+            "sourceColumn": "DPO_FAX"
+          },
+          {
+            "name": "DPO_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "DPO_ENDDATE"
+          },
+          {
+            "name": "DPO_VERSION",
+            "dataType": "double",
+            "sourceColumn": "DPO_VERSION"
+          },
+          {
+            "name": "DPO_PORTID",
+            "dataType": "string",
+            "sourceColumn": "DPO_PORTID"
+          },
+          {
+            "name": "DPO_ADDRESS",
+            "dataType": "string",
+            "sourceColumn": "DPO_ADDRESS"
+          },
+          {
+            "name": "DPO_TOWN",
+            "dataType": "string",
+            "sourceColumn": "DPO_TOWN"
+          },
+          {
+            "name": "DPO_DISTRICT",
+            "dataType": "string",
+            "sourceColumn": "DPO_DISTRICT"
+          },
+          {
+            "name": "DPO_POSTCODE",
+            "dataType": "string",
+            "sourceColumn": "DPO_POSTCODE"
+          },
+          {
+            "name": "DPO_DESTINATIONCODE",
+            "dataType": "string",
+            "sourceColumn": "DPO_DESTINATIONCODE"
+          },
+          {
+            "name": "APO_CODE",
+            "dataType": "string",
+            "sourceColumn": "APO_CODE"
+          },
+          {
+            "name": "APO_STARTDATE",
+            "dataType": "string",
+            "sourceColumn": "APO_STARTDATE"
+          },
+          {
+            "name": "APO_COUNTRY",
+            "dataType": "string",
+            "sourceColumn": "APO_COUNTRY"
+          },
+          {
+            "name": "APO_EMAIL",
+            "dataType": "string",
+            "sourceColumn": "APO_EMAIL"
+          },
+          {
+            "name": "APO_FAX",
+            "dataType": "string",
+            "sourceColumn": "APO_FAX"
+          },
+          {
+            "name": "APO_ENDDATE",
+            "dataType": "string",
+            "sourceColumn": "APO_ENDDATE"
+          },
+          {
+            "name": "APO_VERSION",
+            "dataType": "double",
+            "sourceColumn": "APO_VERSION"
+          },
+          {
+            "name": "APO_PORTID",
+            "dataType": "string",
+            "sourceColumn": "APO_PORTID"
+          },
+          {
+            "name": "APO_ADDRESS",
+            "dataType": "string",
+            "sourceColumn": "APO_ADDRESS"
+          },
+          {
+            "name": "APO_TOWN",
+            "dataType": "string",
+            "sourceColumn": "APO_TOWN"
+          },
+          {
+            "name": "APO_DISTRICT",
+            "dataType": "string",
+            "sourceColumn": "APO_DISTRICT"
+          },
+          {
+            "name": "APO_POSTCODE",
+            "dataType": "string",
+            "sourceColumn": "APO_POSTCODE"
+          },
+          {
+            "name": "APO_DESTINATIONCODE",
+            "dataType": "string",
+            "sourceColumn": "APO_DESTINATIONCODE"
+          },
+          {
+            "name": "GED_CODE",
+            "dataType": "string",
+            "sourceColumn": "GED_CODE"
+          },
+          {
+            "name": "GED_COUNTRY",
+            "dataType": "string",
+            "sourceColumn": "GED_COUNTRY"
+          },
+          {
+            "name": "GEA_CODE",
+            "dataType": "string",
+            "sourceColumn": "GEA_CODE"
+          },
+          {
+            "name": "GEA_COUNTRY",
+            "dataType": "string",
+            "sourceColumn": "GEA_COUNTRY"
+          },
+          {
+            "name": "LIC_VESSELLICENSECODE",
+            "dataType": "string",
+            "sourceColumn": "LIC_VESSELLICENSECODE"
+          },
+          {
+            "name": "LIC_MAXCAPACITY",
+            "dataType": "double",
+            "sourceColumn": "LIC_MAXCAPACITY"
           }
         ],
         "partitions": [
@@ -295,70 +853,10 @@
             "dataView": "full",
             "source": {
               "query": [
-                "SELECT  distinct SAILING_PK",
-                "       ,SAILING_STARTDATE",
-                "       ,SAILING_ENDDATE",
-                "       ,SAI_CODE",
-                "       ,SAI_SAILINGDEPARTUREDATE",
-                "       ,SAI_SAILINGARRIVALDATE",
-                "       ,SAI_LOCKED",
-                "       ,SAI_HIDEINFORMATION",
-                "       ,SAI_SCHEDULECODE",
-                "       ,case",
-                "            when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-                "            when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-                "            when (substr(LIN_CODE,1 ,1) in ('5', '9')) then (substr(LIN_CODE,1,1))",
-                "            when (substr(LIN_CODE,1,2) in ('01', '02', '03')) then (substr(LIN_CODE,2,1))",
-                "            when (substr(LIN_CODE,1,1) not in ('5', '9')) then (substr(LIN_CODE,1,2))",
-                "        end as ROUTECODE",
-                "       ,case",
-                "           when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-                "           when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-                "           when (substr( LIN_CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LIN_CODE,1,1)) )",
-                "           when (substr( LIN_CODE,1,1) not in ('5', '9')) then (substr( LIN_CODE,1,2))",
-                "        end as ROUTESORT",
-                "       ,LIN_CODE",
-                "       ,LIN_DESCRIPTION",
-                "       ,LEG_CODE",
-                "       ,DEP_PORTCODE",
-                "       ,DPO_NAME",
-                "       ,DPO_DESCRIPTION",
-                "       ,DEP_PORTORDER",
-                "       ,DEP_DEPARTURETIME as DEP_DEPARTUREDATETIME",
-                "       ,TRUNC(DEP_DEPARTURETIME) as DEP_DEPARTUREDATE",
-                "       ,to_char( DEP_DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
-                "       ,to_char( DEP_DEPARTURETIME, 'HH24' ) as DEP_DEPARTURETIMEHOUR",
-                "       ,DPO_GEOGRAPHICALAREA",
-                "       ,GED_NAME",
-                "       ,ARR_SAILINGCODE",
-                "       ,ARR_PORTCODE",
-                "       ,APO_NAME",
-                "       ,APO_DESCRIPTION",
-                "       ,ARR_PORTORDER",
-                "       ,ARR_ARRIVALTIME as ARR_ARRIVALDATETIME",
-                "       ,TRUNC(ARR_ARRIVALTIME) as ARR_ARRIVALDATE",
-                "       ,to_char( ARR_ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
-                "       ,to_char( ARR_ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR",
-                "       ,APO_GEOGRAPHICALAREA",
-                "       ,GEA_NAME",
-                "       ,SHI_CODE",
-                "       ,SHI_NAME",
-                "       ,SHI_SHIPTYPE",
-                "       ,SHI_DIVISION",
-                "       ,SHI_PHYSICALSHIPNAME",
-                "       ,PHY_DESCRIPTION",
-                "        ,to_char ( DEP_DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
-                "      ,to_char ( DEP_DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
-                "      ,to_char ( DEP_DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
-                "      ,to_char ( DEP_DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
-                "      ,to_char ( DEP_DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY",
-                "      , LIC_MAXCAPACITY",
-                "    LIC_CREWNUMBER,",
-                "    LIC_SELLABLECAPACITY",
-                "FROM (SELECT",
+                "SELECT",
                 "SAILING.CODE || '-' || SAILING.STARTDATE || '-' || DEPARTSAILINGPORTSCHEDULE.PORTCODE || '-' || ARRIVALSAILINGPORTSCHEDULE.PORTCODE  as SAILING_PK ,",
                 "TO_DATE (SAILING.STARTDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_STARTDATE ,",
-                "TO_DATE (SAILING.ENDDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
+                "TO_DATE (SAILING.ENDDATE,   'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
                 "SAILING.CODE as SAI_CODE,",
                 "SAILING.STARTDATE as SAI_STARTDATE ,",
                 "SAILING.DESCRIPTION as SAI_DESCRIPTION ,",
@@ -380,7 +878,20 @@
                 "SAILING.HIDEINFORMATION as SAI_HIDEINFORMATION ,",
                 "SAILING.MDS as SAI_MDS ,",
                 "SAILING.NORESERVABLE as SAI_NORESERVABLE ,",
-                "LINE.CODE as LIN_CODE ,",
+                "LINE.CODE as LIN_CODE ",
+                "      ,case",
+                "            when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+                "            when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+                "            when (substr(LINE.CODE,1 ,1) in ('5', '9')) then (substr(LINE.CODE,1,1))",
+                "            when (substr(LINE.CODE,1,2) in ('01', '02', '03')) then (substr(LINE.CODE,2,1))",
+                "            when (substr(LINE.CODE,1,1) not in ('5', '9')) then (substr(LINE.CODE,1,2))",
+                "        end as ROUTECODE,",
+                "       case",
+                "           when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+                "           when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+                "           when (substr( LINE.CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LINE.CODE,1,1)) )",
+                "           when (substr( LINE.CODE,1,1) not in ('5', '9')) then (substr( LINE.CODE,1,2))",
+                "        end as ROUTESORT,",
                 "LINE.STARTDATE as LIN_STARTDATE ,",
                 "LINE.DESCRIPTION as LIN_DESCRIPTION,",
                 "LINE.MILES as LIN_MILES ,",
@@ -420,8 +931,16 @@
                 "DEPARTSAILINGPORTSCHEDULE.PORTCODE as DEP_PORTCODE ,",
                 "DEPARTSAILINGPORTSCHEDULE.PORTSTARTDATE as DEP_PORTSTARTDATE ,",
                 "DEPARTSAILINGPORTSCHEDULE.STARTDATE as DEP_STARTDATE ,",
-                "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER ,",
-                "DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME as DEP_DEPARTURETIME ,",
+                "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER",
+                ",DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME                       as DEP_DEPARTUREDATETIME",
+                ",TRUNC(DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME)                as DEP_DEPARTUREDATE",
+                ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
+                ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24' )    as DEP_DEPARTURETIMEHOUR",
+                ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
+                ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
+                ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
+                ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
+                ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY,",
                 "DEPARTSAILINGPORTSCHEDULE.ARRIVALTIME as DEP_ARRIVALTIME ,",
                 "DEPARTSAILINGPORTSCHEDULE.ENDDATE as DEP_ENDDATE ,",
                 "DEPARTSAILINGPORTSCHEDULE.VERSION as DEP_VERSION ,",
@@ -439,7 +958,10 @@
                 "ARRIVALSAILINGPORTSCHEDULE.STARTDATE as ARR_STARTDATE ,",
                 "ARRIVALSAILINGPORTSCHEDULE.PORTORDER as ARR_PORTORDER ,",
                 "ARRIVALSAILINGPORTSCHEDULE.DEPARTURETIME as ARR_DEPARTURETIME ,",
-                "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALTIME ,",
+                "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALDATETIME ",
+                "       ,TRUNC(ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME) as ARR_ARRIVALDATE",
+                "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
+                "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR,",
                 "ARRIVALSAILINGPORTSCHEDULE.ENDDATE as ARR_ENDDATE ,",
                 "ARRIVALSAILINGPORTSCHEDULE.VERSION as ARR_VERSION ,",
                 "ARRIVALSAILINGPORTSCHEDULE.GVNUMBERIMPORT as ARR_GVNUMBERIMPORT ,",
@@ -500,10 +1022,11 @@
                 "SAILINGVESSELLICENSE.CREWNUMBER as LIC_CREWNUMBER,",
                 "SAILINGVESSELLICENSE.SELLABLECAPACITY as LIC_SELLABLECAPACITY,",
                 "SAILINGVESSELLICENSE.MAXCAPACITY as LIC_MAXCAPACITY",
-                "",
                 "FROM",
                 "eBooking.MSP_SAILING SAILING,",
-                "(select CODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILING group by CODE) SAILINGFILTER,",
+                "(select CODE, MAX(STARTDATE) as STARTDATE ",
+                " from eBooking.MSP_SAILING ",
+                " group by CODE) SAILINGFILTER,",
                 "eBooking.MSP_LINE LINE ,",
                 "eBooking.MSP_SHIPTEMPLATE SHIPTEMPLATE ,",
                 "eBooking.MSP_PHYSICALSHIP PHYSICALSHIP ,",
@@ -515,7 +1038,9 @@
                 "eBooking.MSP_GEOGRAPHICALAREA DEPARTGEOGRAPHICALAREA ,",
                 "eBooking.MSP_GEOGRAPHICALAREA ARRIVALGEOGRAPHICALAREA,",
                 "eBooking.MSP_SAILINGVESSELLICENSE SAILINGVESSELLICENSE,",
-                "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILINGVESSELLICENSE group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
+                "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE",
+                "  from eBooking.MSP_SAILINGVESSELLICENSE ",
+                "   group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
                 "WHERE ",
                 "SAILING.CODE = SAILINGFILTER.CODE",
                 "and SAILING.STARTDATE = SAILINGFILTER.STARTDATE",
@@ -523,7 +1048,7 @@
                 "AND SAILING.SHIPTEMPLATECODE = SHIPTEMPLATE.CODE",
                 "  AND SAILING.SHIPTEMPLATESTARTDATE = SHIPTEMPLATE.STARTDATE",
                 "  AND PHYSICALSHIP.NAME = SHIPTEMPLATE.PHYSICALSHIPNAME",
-                "AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
+                "  AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
                 "  AND SAILING.CODE = DEPARTSAILINGPORTSCHEDULE.SAILINGCODE",
                 "  AND SAILING.STARTDATE = DEPARTSAILINGPORTSCHEDULE.SAILINGSTARTDATE",
                 "  AND DEPARTSAILINGPORTSCHEDULE.SAILINGCODE = ARRIVALSAILINGPORTSCHEDULE.SAILINGCODE",
@@ -544,8 +1069,7 @@
                 "  AND SAILING.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE ",
                 "  AND LICENSEFILTER.SAILINGCODE = SAILINGVESSELLICENSE.SAILINGCODE  ",
                 "  AND LICENSEFILTER.STARTDATE = SAILINGVESSELLICENSE.SAILINGSTARTDATE",
-                "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE",
-                ") D_STG_EBK_SAILING"
+                "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE"
               ],
               "dataSource": "Oracle scan.stg01.rac.bcferries.corp"
             },
@@ -553,70 +1077,10 @@
               {
                 "name": "QueryEditorSerialization",
                 "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT  distinct SAILING_PK",
-                  "       ,SAILING_STARTDATE",
-                  "       ,SAILING_ENDDATE",
-                  "       ,SAI_CODE",
-                  "       ,SAI_SAILINGDEPARTUREDATE",
-                  "       ,SAI_SAILINGARRIVALDATE",
-                  "       ,SAI_LOCKED",
-                  "       ,SAI_HIDEINFORMATION",
-                  "       ,SAI_SCHEDULECODE",
-                  "       ,case",
-                  "            when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-                  "            when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-                  "            when (substr(LIN_CODE,1 ,1) in ('5', '9')) then (substr(LIN_CODE,1,1))",
-                  "            when (substr(LIN_CODE,1,2) in ('01', '02', '03')) then (substr(LIN_CODE,2,1))",
-                  "            when (substr(LIN_CODE,1,1) not in ('5', '9')) then (substr(LIN_CODE,1,2))",
-                  "        end as ROUTECODE",
-                  "       ,case",
-                  "           when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-                  "           when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-                  "           when (substr( LIN_CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LIN_CODE,1,1)) )",
-                  "           when (substr( LIN_CODE,1,1) not in ('5', '9')) then (substr( LIN_CODE,1,2))",
-                  "        end as ROUTESORT",
-                  "       ,LIN_CODE",
-                  "       ,LIN_DESCRIPTION",
-                  "       ,LEG_CODE",
-                  "       ,DEP_PORTCODE",
-                  "       ,DPO_NAME",
-                  "       ,DPO_DESCRIPTION",
-                  "       ,DEP_PORTORDER",
-                  "       ,DEP_DEPARTURETIME as DEP_DEPARTUREDATETIME",
-                  "       ,TRUNC(DEP_DEPARTURETIME) as DEP_DEPARTUREDATE",
-                  "       ,to_char( DEP_DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
-                  "       ,to_char( DEP_DEPARTURETIME, 'HH24' ) as DEP_DEPARTURETIMEHOUR",
-                  "       ,DPO_GEOGRAPHICALAREA",
-                  "       ,GED_NAME",
-                  "       ,ARR_SAILINGCODE",
-                  "       ,ARR_PORTCODE",
-                  "       ,APO_NAME",
-                  "       ,APO_DESCRIPTION",
-                  "       ,ARR_PORTORDER",
-                  "       ,ARR_ARRIVALTIME as ARR_ARRIVALDATETIME",
-                  "       ,TRUNC(ARR_ARRIVALTIME) as ARR_ARRIVALDATE",
-                  "       ,to_char( ARR_ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
-                  "       ,to_char( ARR_ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR",
-                  "       ,APO_GEOGRAPHICALAREA",
-                  "       ,GEA_NAME",
-                  "       ,SHI_CODE",
-                  "       ,SHI_NAME",
-                  "       ,SHI_SHIPTYPE",
-                  "       ,SHI_DIVISION",
-                  "       ,SHI_PHYSICALSHIPNAME",
-                  "       ,PHY_DESCRIPTION",
-                  "        ,to_char ( DEP_DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
-                  "      ,to_char ( DEP_DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
-                  "      ,to_char ( DEP_DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
-                  "      ,to_char ( DEP_DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
-                  "      ,to_char ( DEP_DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY",
-                  "      , LIC_MAXCAPACITY",
-                  "    LIC_CREWNUMBER,",
-                  "    LIC_SELLABLECAPACITY",
-                  "FROM (SELECT",
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT",
                   "SAILING.CODE || '-' || SAILING.STARTDATE || '-' || DEPARTSAILINGPORTSCHEDULE.PORTCODE || '-' || ARRIVALSAILINGPORTSCHEDULE.PORTCODE  as SAILING_PK ,",
                   "TO_DATE (SAILING.STARTDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_STARTDATE ,",
-                  "TO_DATE (SAILING.ENDDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
+                  "TO_DATE (SAILING.ENDDATE,   'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
                   "SAILING.CODE as SAI_CODE,",
                   "SAILING.STARTDATE as SAI_STARTDATE ,",
                   "SAILING.DESCRIPTION as SAI_DESCRIPTION ,",
@@ -638,7 +1102,20 @@
                   "SAILING.HIDEINFORMATION as SAI_HIDEINFORMATION ,",
                   "SAILING.MDS as SAI_MDS ,",
                   "SAILING.NORESERVABLE as SAI_NORESERVABLE ,",
-                  "LINE.CODE as LIN_CODE ,",
+                  "LINE.CODE as LIN_CODE ",
+                  "      ,case",
+                  "            when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+                  "            when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+                  "            when (substr(LINE.CODE,1 ,1) in ('5', '9')) then (substr(LINE.CODE,1,1))",
+                  "            when (substr(LINE.CODE,1,2) in ('01', '02', '03')) then (substr(LINE.CODE,2,1))",
+                  "            when (substr(LINE.CODE,1,1) not in ('5', '9')) then (substr(LINE.CODE,1,2))",
+                  "        end as ROUTECODE,",
+                  "       case",
+                  "           when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+                  "           when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+                  "           when (substr( LINE.CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LINE.CODE,1,1)) )",
+                  "           when (substr( LINE.CODE,1,1) not in ('5', '9')) then (substr( LINE.CODE,1,2))",
+                  "        end as ROUTESORT,",
                   "LINE.STARTDATE as LIN_STARTDATE ,",
                   "LINE.DESCRIPTION as LIN_DESCRIPTION,",
                   "LINE.MILES as LIN_MILES ,",
@@ -678,8 +1155,16 @@
                   "DEPARTSAILINGPORTSCHEDULE.PORTCODE as DEP_PORTCODE ,",
                   "DEPARTSAILINGPORTSCHEDULE.PORTSTARTDATE as DEP_PORTSTARTDATE ,",
                   "DEPARTSAILINGPORTSCHEDULE.STARTDATE as DEP_STARTDATE ,",
-                  "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER ,",
-                  "DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME as DEP_DEPARTURETIME ,",
+                  "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER",
+                  ",DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME                       as DEP_DEPARTUREDATETIME",
+                  ",TRUNC(DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME)                as DEP_DEPARTUREDATE",
+                  ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
+                  ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24' )    as DEP_DEPARTURETIMEHOUR",
+                  ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
+                  ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
+                  ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
+                  ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
+                  ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY,",
                   "DEPARTSAILINGPORTSCHEDULE.ARRIVALTIME as DEP_ARRIVALTIME ,",
                   "DEPARTSAILINGPORTSCHEDULE.ENDDATE as DEP_ENDDATE ,",
                   "DEPARTSAILINGPORTSCHEDULE.VERSION as DEP_VERSION ,",
@@ -697,7 +1182,10 @@
                   "ARRIVALSAILINGPORTSCHEDULE.STARTDATE as ARR_STARTDATE ,",
                   "ARRIVALSAILINGPORTSCHEDULE.PORTORDER as ARR_PORTORDER ,",
                   "ARRIVALSAILINGPORTSCHEDULE.DEPARTURETIME as ARR_DEPARTURETIME ,",
-                  "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALTIME ,",
+                  "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALDATETIME ",
+                  "       ,TRUNC(ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME) as ARR_ARRIVALDATE",
+                  "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
+                  "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR,",
                   "ARRIVALSAILINGPORTSCHEDULE.ENDDATE as ARR_ENDDATE ,",
                   "ARRIVALSAILINGPORTSCHEDULE.VERSION as ARR_VERSION ,",
                   "ARRIVALSAILINGPORTSCHEDULE.GVNUMBERIMPORT as ARR_GVNUMBERIMPORT ,",
@@ -758,10 +1246,11 @@
                   "SAILINGVESSELLICENSE.CREWNUMBER as LIC_CREWNUMBER,",
                   "SAILINGVESSELLICENSE.SELLABLECAPACITY as LIC_SELLABLECAPACITY,",
                   "SAILINGVESSELLICENSE.MAXCAPACITY as LIC_MAXCAPACITY",
-                  "",
                   "FROM",
                   "eBooking.MSP_SAILING SAILING,",
-                  "(select CODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILING group by CODE) SAILINGFILTER,",
+                  "(select CODE, MAX(STARTDATE) as STARTDATE ",
+                  " from eBooking.MSP_SAILING ",
+                  " group by CODE) SAILINGFILTER,",
                   "eBooking.MSP_LINE LINE ,",
                   "eBooking.MSP_SHIPTEMPLATE SHIPTEMPLATE ,",
                   "eBooking.MSP_PHYSICALSHIP PHYSICALSHIP ,",
@@ -773,7 +1262,9 @@
                   "eBooking.MSP_GEOGRAPHICALAREA DEPARTGEOGRAPHICALAREA ,",
                   "eBooking.MSP_GEOGRAPHICALAREA ARRIVALGEOGRAPHICALAREA,",
                   "eBooking.MSP_SAILINGVESSELLICENSE SAILINGVESSELLICENSE,",
-                  "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILINGVESSELLICENSE group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
+                  "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE",
+                  "  from eBooking.MSP_SAILINGVESSELLICENSE ",
+                  "   group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
                   "WHERE ",
                   "SAILING.CODE = SAILINGFILTER.CODE",
                   "and SAILING.STARTDATE = SAILINGFILTER.STARTDATE",
@@ -781,7 +1272,7 @@
                   "AND SAILING.SHIPTEMPLATECODE = SHIPTEMPLATE.CODE",
                   "  AND SAILING.SHIPTEMPLATESTARTDATE = SHIPTEMPLATE.STARTDATE",
                   "  AND PHYSICALSHIP.NAME = SHIPTEMPLATE.PHYSICALSHIPNAME",
-                  "AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
+                  "  AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
                   "  AND SAILING.CODE = DEPARTSAILINGPORTSCHEDULE.SAILINGCODE",
                   "  AND SAILING.STARTDATE = DEPARTSAILINGPORTSCHEDULE.SAILINGSTARTDATE",
                   "  AND DEPARTSAILINGPORTSCHEDULE.SAILINGCODE = ARRIVALSAILINGPORTSCHEDULE.SAILINGCODE",
@@ -802,8 +1293,7 @@
                   "  AND SAILING.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE ",
                   "  AND LICENSEFILTER.SAILINGCODE = SAILINGVESSELLICENSE.SAILINGCODE  ",
                   "  AND LICENSEFILTER.STARTDATE = SAILINGVESSELLICENSE.SAILINGSTARTDATE",
-                  "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE",
-                  ") D_STG_EBK_SAILING</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -813,70 +1303,10 @@
           {
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
-              "SELECT  distinct SAILING_PK",
-              "       ,SAILING_STARTDATE",
-              "       ,SAILING_ENDDATE",
-              "       ,SAI_CODE",
-              "       ,SAI_SAILINGDEPARTUREDATE",
-              "       ,SAI_SAILINGARRIVALDATE",
-              "       ,SAI_LOCKED",
-              "       ,SAI_HIDEINFORMATION",
-              "       ,SAI_SCHEDULECODE",
-              "       ,case",
-              "            when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-              "            when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-              "            when (substr(LIN_CODE,1 ,1) in ('5', '9')) then (substr(LIN_CODE,1,1))",
-              "            when (substr(LIN_CODE,1,2) in ('01', '02', '03')) then (substr(LIN_CODE,2,1))",
-              "            when (substr(LIN_CODE,1,1) not in ('5', '9')) then (substr(LIN_CODE,1,2))",
-              "        end as ROUTECODE",
-              "       ,case",
-              "           when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-              "           when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-              "           when (substr( LIN_CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LIN_CODE,1,1)) )",
-              "           when (substr( LIN_CODE,1,1) not in ('5', '9')) then (substr( LIN_CODE,1,2))",
-              "        end as ROUTESORT",
-              "       ,LIN_CODE",
-              "       ,LIN_DESCRIPTION",
-              "       ,LEG_CODE",
-              "       ,DEP_PORTCODE",
-              "       ,DPO_NAME",
-              "       ,DPO_DESCRIPTION",
-              "       ,DEP_PORTORDER",
-              "       ,DEP_DEPARTURETIME as DEP_DEPARTUREDATETIME",
-              "       ,TRUNC(DEP_DEPARTURETIME) as DEP_DEPARTUREDATE",
-              "       ,to_char( DEP_DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
-              "       ,to_char( DEP_DEPARTURETIME, 'HH24' ) as DEP_DEPARTURETIMEHOUR",
-              "       ,DPO_GEOGRAPHICALAREA",
-              "       ,GED_NAME",
-              "       ,ARR_SAILINGCODE",
-              "       ,ARR_PORTCODE",
-              "       ,APO_NAME",
-              "       ,APO_DESCRIPTION",
-              "       ,ARR_PORTORDER",
-              "       ,ARR_ARRIVALTIME as ARR_ARRIVALDATETIME",
-              "       ,TRUNC(ARR_ARRIVALTIME) as ARR_ARRIVALDATE",
-              "       ,to_char( ARR_ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
-              "       ,to_char( ARR_ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR",
-              "       ,APO_GEOGRAPHICALAREA",
-              "       ,GEA_NAME",
-              "       ,SHI_CODE",
-              "       ,SHI_NAME",
-              "       ,SHI_SHIPTYPE",
-              "       ,SHI_DIVISION",
-              "       ,SHI_PHYSICALSHIPNAME",
-              "       ,PHY_DESCRIPTION",
-              "        ,to_char ( DEP_DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
-              "      ,to_char ( DEP_DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
-              "      ,to_char ( DEP_DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
-              "      ,to_char ( DEP_DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
-              "      ,to_char ( DEP_DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY",
-              "      , LIC_MAXCAPACITY",
-              "    LIC_CREWNUMBER,",
-              "    LIC_SELLABLECAPACITY",
-              "FROM (SELECT",
+              "SELECT",
               "SAILING.CODE || '-' || SAILING.STARTDATE || '-' || DEPARTSAILINGPORTSCHEDULE.PORTCODE || '-' || ARRIVALSAILINGPORTSCHEDULE.PORTCODE  as SAILING_PK ,",
               "TO_DATE (SAILING.STARTDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_STARTDATE ,",
-              "TO_DATE (SAILING.ENDDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
+              "TO_DATE (SAILING.ENDDATE,   'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
               "SAILING.CODE as SAI_CODE,",
               "SAILING.STARTDATE as SAI_STARTDATE ,",
               "SAILING.DESCRIPTION as SAI_DESCRIPTION ,",
@@ -898,7 +1328,20 @@
               "SAILING.HIDEINFORMATION as SAI_HIDEINFORMATION ,",
               "SAILING.MDS as SAI_MDS ,",
               "SAILING.NORESERVABLE as SAI_NORESERVABLE ,",
-              "LINE.CODE as LIN_CODE ,",
+              "LINE.CODE as LIN_CODE ",
+              "      ,case",
+              "            when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+              "            when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+              "            when (substr(LINE.CODE,1 ,1) in ('5', '9')) then (substr(LINE.CODE,1,1))",
+              "            when (substr(LINE.CODE,1,2) in ('01', '02', '03')) then (substr(LINE.CODE,2,1))",
+              "            when (substr(LINE.CODE,1,1) not in ('5', '9')) then (substr(LINE.CODE,1,2))",
+              "        end as ROUTECODE,",
+              "       case",
+              "           when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+              "           when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+              "           when (substr( LINE.CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LINE.CODE,1,1)) )",
+              "           when (substr( LINE.CODE,1,1) not in ('5', '9')) then (substr( LINE.CODE,1,2))",
+              "        end as ROUTESORT,",
               "LINE.STARTDATE as LIN_STARTDATE ,",
               "LINE.DESCRIPTION as LIN_DESCRIPTION,",
               "LINE.MILES as LIN_MILES ,",
@@ -938,8 +1381,16 @@
               "DEPARTSAILINGPORTSCHEDULE.PORTCODE as DEP_PORTCODE ,",
               "DEPARTSAILINGPORTSCHEDULE.PORTSTARTDATE as DEP_PORTSTARTDATE ,",
               "DEPARTSAILINGPORTSCHEDULE.STARTDATE as DEP_STARTDATE ,",
-              "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER ,",
-              "DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME as DEP_DEPARTURETIME ,",
+              "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER",
+              ",DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME                       as DEP_DEPARTUREDATETIME",
+              ",TRUNC(DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME)                as DEP_DEPARTUREDATE",
+              ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
+              ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24' )    as DEP_DEPARTURETIMEHOUR",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY,",
               "DEPARTSAILINGPORTSCHEDULE.ARRIVALTIME as DEP_ARRIVALTIME ,",
               "DEPARTSAILINGPORTSCHEDULE.ENDDATE as DEP_ENDDATE ,",
               "DEPARTSAILINGPORTSCHEDULE.VERSION as DEP_VERSION ,",
@@ -957,7 +1408,10 @@
               "ARRIVALSAILINGPORTSCHEDULE.STARTDATE as ARR_STARTDATE ,",
               "ARRIVALSAILINGPORTSCHEDULE.PORTORDER as ARR_PORTORDER ,",
               "ARRIVALSAILINGPORTSCHEDULE.DEPARTURETIME as ARR_DEPARTURETIME ,",
-              "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALTIME ,",
+              "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALDATETIME ",
+              "       ,TRUNC(ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME) as ARR_ARRIVALDATE",
+              "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
+              "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR,",
               "ARRIVALSAILINGPORTSCHEDULE.ENDDATE as ARR_ENDDATE ,",
               "ARRIVALSAILINGPORTSCHEDULE.VERSION as ARR_VERSION ,",
               "ARRIVALSAILINGPORTSCHEDULE.GVNUMBERIMPORT as ARR_GVNUMBERIMPORT ,",
@@ -1018,10 +1472,11 @@
               "SAILINGVESSELLICENSE.CREWNUMBER as LIC_CREWNUMBER,",
               "SAILINGVESSELLICENSE.SELLABLECAPACITY as LIC_SELLABLECAPACITY,",
               "SAILINGVESSELLICENSE.MAXCAPACITY as LIC_MAXCAPACITY",
-              "",
               "FROM",
               "eBooking.MSP_SAILING SAILING,",
-              "(select CODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILING group by CODE) SAILINGFILTER,",
+              "(select CODE, MAX(STARTDATE) as STARTDATE ",
+              " from eBooking.MSP_SAILING ",
+              " group by CODE) SAILINGFILTER,",
               "eBooking.MSP_LINE LINE ,",
               "eBooking.MSP_SHIPTEMPLATE SHIPTEMPLATE ,",
               "eBooking.MSP_PHYSICALSHIP PHYSICALSHIP ,",
@@ -1033,7 +1488,9 @@
               "eBooking.MSP_GEOGRAPHICALAREA DEPARTGEOGRAPHICALAREA ,",
               "eBooking.MSP_GEOGRAPHICALAREA ARRIVALGEOGRAPHICALAREA,",
               "eBooking.MSP_SAILINGVESSELLICENSE SAILINGVESSELLICENSE,",
-              "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILINGVESSELLICENSE group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
+              "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE",
+              "  from eBooking.MSP_SAILINGVESSELLICENSE ",
+              "   group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
               "WHERE ",
               "SAILING.CODE = SAILINGFILTER.CODE",
               "and SAILING.STARTDATE = SAILINGFILTER.STARTDATE",
@@ -1041,7 +1498,7 @@
               "AND SAILING.SHIPTEMPLATECODE = SHIPTEMPLATE.CODE",
               "  AND SAILING.SHIPTEMPLATESTARTDATE = SHIPTEMPLATE.STARTDATE",
               "  AND PHYSICALSHIP.NAME = SHIPTEMPLATE.PHYSICALSHIPNAME",
-              "AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
+              "  AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
               "  AND SAILING.CODE = DEPARTSAILINGPORTSCHEDULE.SAILINGCODE",
               "  AND SAILING.STARTDATE = DEPARTSAILINGPORTSCHEDULE.SAILINGSTARTDATE",
               "  AND DEPARTSAILINGPORTSCHEDULE.SAILINGCODE = ARRIVALSAILINGPORTSCHEDULE.SAILINGCODE",
@@ -1062,8 +1519,7 @@
               "  AND SAILING.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE ",
               "  AND LICENSEFILTER.SAILINGCODE = SAILINGVESSELLICENSE.SAILINGCODE  ",
               "  AND LICENSEFILTER.STARTDATE = SAILINGVESSELLICENSE.SAILINGSTARTDATE",
-              "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE",
-              ") D_STG_EBK_SAILING"
+              "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE"
             ]
           },
           {
@@ -1073,70 +1529,10 @@
           {
             "name": "QueryEditorSerialization",
             "value": [
-              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT  distinct SAILING_PK",
-              "       ,SAILING_STARTDATE",
-              "       ,SAILING_ENDDATE",
-              "       ,SAI_CODE",
-              "       ,SAI_SAILINGDEPARTUREDATE",
-              "       ,SAI_SAILINGARRIVALDATE",
-              "       ,SAI_LOCKED",
-              "       ,SAI_HIDEINFORMATION",
-              "       ,SAI_SCHEDULECODE",
-              "       ,case",
-              "            when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-              "            when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-              "            when (substr(LIN_CODE,1 ,1) in ('5', '9')) then (substr(LIN_CODE,1,1))",
-              "            when (substr(LIN_CODE,1,2) in ('01', '02', '03')) then (substr(LIN_CODE,2,1))",
-              "            when (substr(LIN_CODE,1,1) not in ('5', '9')) then (substr(LIN_CODE,1,2))",
-              "        end as ROUTECODE",
-              "       ,case",
-              "           when (LIN_CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
-              "           when (LIN_CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
-              "           when (substr( LIN_CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LIN_CODE,1,1)) )",
-              "           when (substr( LIN_CODE,1,1) not in ('5', '9')) then (substr( LIN_CODE,1,2))",
-              "        end as ROUTESORT",
-              "       ,LIN_CODE",
-              "       ,LIN_DESCRIPTION",
-              "       ,LEG_CODE",
-              "       ,DEP_PORTCODE",
-              "       ,DPO_NAME",
-              "       ,DPO_DESCRIPTION",
-              "       ,DEP_PORTORDER",
-              "       ,DEP_DEPARTURETIME as DEP_DEPARTUREDATETIME",
-              "       ,TRUNC(DEP_DEPARTURETIME) as DEP_DEPARTUREDATE",
-              "       ,to_char( DEP_DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
-              "       ,to_char( DEP_DEPARTURETIME, 'HH24' ) as DEP_DEPARTURETIMEHOUR",
-              "       ,DPO_GEOGRAPHICALAREA",
-              "       ,GED_NAME",
-              "       ,ARR_SAILINGCODE",
-              "       ,ARR_PORTCODE",
-              "       ,APO_NAME",
-              "       ,APO_DESCRIPTION",
-              "       ,ARR_PORTORDER",
-              "       ,ARR_ARRIVALTIME as ARR_ARRIVALDATETIME",
-              "       ,TRUNC(ARR_ARRIVALTIME) as ARR_ARRIVALDATE",
-              "       ,to_char( ARR_ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
-              "       ,to_char( ARR_ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR",
-              "       ,APO_GEOGRAPHICALAREA",
-              "       ,GEA_NAME",
-              "       ,SHI_CODE",
-              "       ,SHI_NAME",
-              "       ,SHI_SHIPTYPE",
-              "       ,SHI_DIVISION",
-              "       ,SHI_PHYSICALSHIPNAME",
-              "       ,PHY_DESCRIPTION",
-              "        ,to_char ( DEP_DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
-              "      ,to_char ( DEP_DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
-              "      ,to_char ( DEP_DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
-              "      ,to_char ( DEP_DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
-              "      ,to_char ( DEP_DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY",
-              "      , LIC_MAXCAPACITY",
-              "    LIC_CREWNUMBER,",
-              "    LIC_SELLABLECAPACITY",
-              "FROM (SELECT",
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT",
               "SAILING.CODE || '-' || SAILING.STARTDATE || '-' || DEPARTSAILINGPORTSCHEDULE.PORTCODE || '-' || ARRIVALSAILINGPORTSCHEDULE.PORTCODE  as SAILING_PK ,",
               "TO_DATE (SAILING.STARTDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_STARTDATE ,",
-              "TO_DATE (SAILING.ENDDATE, 'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
+              "TO_DATE (SAILING.ENDDATE,   'YYYY-MM-DD hh24:mi:ss') as SAILING_ENDDATE ,",
               "SAILING.CODE as SAI_CODE,",
               "SAILING.STARTDATE as SAI_STARTDATE ,",
               "SAILING.DESCRIPTION as SAI_DESCRIPTION ,",
@@ -1158,7 +1554,20 @@
               "SAILING.HIDEINFORMATION as SAI_HIDEINFORMATION ,",
               "SAILING.MDS as SAI_MDS ,",
               "SAILING.NORESERVABLE as SAI_NORESERVABLE ,",
-              "LINE.CODE as LIN_CODE ,",
+              "LINE.CODE as LIN_CODE ",
+              "      ,case",
+              "            when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+              "            when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+              "            when (substr(LINE.CODE,1 ,1) in ('5', '9')) then (substr(LINE.CODE,1,1))",
+              "            when (substr(LINE.CODE,1,2) in ('01', '02', '03')) then (substr(LINE.CODE,2,1))",
+              "            when (substr(LINE.CODE,1,1) not in ('5', '9')) then (substr(LINE.CODE,1,2))",
+              "        end as ROUTECODE,",
+              "       case",
+              "           when (LINE.CODE) in ('10BECA', '10BECB', '10BECC', '10PBBA', '10PBBB', '10PBBC', '10POFA', '10SHWA', '10SHWB') then ('10S')",
+              "           when (LINE.CODE) in ('10PPHA', '10PPHB', '10PPHC', '10PPHD', '10PPRA', '10PPRB', '10PPRC', '10PPRD') then ('10')",
+              "           when (substr( LINE.CODE,1 ,1) in ('5', '9')) then ( '0' || (substr( LINE.CODE,1,1)) )",
+              "           when (substr( LINE.CODE,1,1) not in ('5', '9')) then (substr( LINE.CODE,1,2))",
+              "        end as ROUTESORT,",
               "LINE.STARTDATE as LIN_STARTDATE ,",
               "LINE.DESCRIPTION as LIN_DESCRIPTION,",
               "LINE.MILES as LIN_MILES ,",
@@ -1198,8 +1607,16 @@
               "DEPARTSAILINGPORTSCHEDULE.PORTCODE as DEP_PORTCODE ,",
               "DEPARTSAILINGPORTSCHEDULE.PORTSTARTDATE as DEP_PORTSTARTDATE ,",
               "DEPARTSAILINGPORTSCHEDULE.STARTDATE as DEP_STARTDATE ,",
-              "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER ,",
-              "DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME as DEP_DEPARTURETIME ,",
+              "DEPARTSAILINGPORTSCHEDULE.PORTORDER as DEP_PORTORDER",
+              ",DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME                       as DEP_DEPARTUREDATETIME",
+              ",TRUNC(DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME)                as DEP_DEPARTUREDATE",
+              ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24:MI' ) as DEP_DEPARTURETIME",
+              ",to_char( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'HH24' )    as DEP_DEPARTURETIMEHOUR",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Month' ) as DEP_DEPARTUREDATEMONTH",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'MM' ) as DEP_DEPARTUREDATEMONTHSORT",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day' ) as DEP_DEPARTUREDATEDAYOFWEEK",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'Day',  'NLS_DATE_LANGUAGE=''numeric date language''' ) as DEP_DEPARTUREDATEDAYOFWEEKSORT",
+              ",to_char ( DEPARTSAILINGPORTSCHEDULE.DEPARTURETIME, 'DD' ) as DEP_DEPARTUREDATEDAY,",
               "DEPARTSAILINGPORTSCHEDULE.ARRIVALTIME as DEP_ARRIVALTIME ,",
               "DEPARTSAILINGPORTSCHEDULE.ENDDATE as DEP_ENDDATE ,",
               "DEPARTSAILINGPORTSCHEDULE.VERSION as DEP_VERSION ,",
@@ -1217,7 +1634,10 @@
               "ARRIVALSAILINGPORTSCHEDULE.STARTDATE as ARR_STARTDATE ,",
               "ARRIVALSAILINGPORTSCHEDULE.PORTORDER as ARR_PORTORDER ,",
               "ARRIVALSAILINGPORTSCHEDULE.DEPARTURETIME as ARR_DEPARTURETIME ,",
-              "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALTIME ,",
+              "ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME as ARR_ARRIVALDATETIME ",
+              "       ,TRUNC(ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME) as ARR_ARRIVALDATE",
+              "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24:MI' ) as ARR_ARRIVALTIME",
+              "       ,to_char( ARRIVALSAILINGPORTSCHEDULE.ARRIVALTIME, 'HH24' ) as ARR_ARRIVALTIMEHOUR,",
               "ARRIVALSAILINGPORTSCHEDULE.ENDDATE as ARR_ENDDATE ,",
               "ARRIVALSAILINGPORTSCHEDULE.VERSION as ARR_VERSION ,",
               "ARRIVALSAILINGPORTSCHEDULE.GVNUMBERIMPORT as ARR_GVNUMBERIMPORT ,",
@@ -1278,10 +1698,11 @@
               "SAILINGVESSELLICENSE.CREWNUMBER as LIC_CREWNUMBER,",
               "SAILINGVESSELLICENSE.SELLABLECAPACITY as LIC_SELLABLECAPACITY,",
               "SAILINGVESSELLICENSE.MAXCAPACITY as LIC_MAXCAPACITY",
-              "",
               "FROM",
               "eBooking.MSP_SAILING SAILING,",
-              "(select CODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILING group by CODE) SAILINGFILTER,",
+              "(select CODE, MAX(STARTDATE) as STARTDATE ",
+              " from eBooking.MSP_SAILING ",
+              " group by CODE) SAILINGFILTER,",
               "eBooking.MSP_LINE LINE ,",
               "eBooking.MSP_SHIPTEMPLATE SHIPTEMPLATE ,",
               "eBooking.MSP_PHYSICALSHIP PHYSICALSHIP ,",
@@ -1293,7 +1714,9 @@
               "eBooking.MSP_GEOGRAPHICALAREA DEPARTGEOGRAPHICALAREA ,",
               "eBooking.MSP_GEOGRAPHICALAREA ARRIVALGEOGRAPHICALAREA,",
               "eBooking.MSP_SAILINGVESSELLICENSE SAILINGVESSELLICENSE,",
-              "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE from eBooking.MSP_SAILINGVESSELLICENSE group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
+              "(select SAILINGCODE, SHIPTEMPLATECODE, MAX(STARTDATE) as STARTDATE",
+              "  from eBooking.MSP_SAILINGVESSELLICENSE ",
+              "   group by SAILINGCODE, SHIPTEMPLATECODE) LICENSEFILTER",
               "WHERE ",
               "SAILING.CODE = SAILINGFILTER.CODE",
               "and SAILING.STARTDATE = SAILINGFILTER.STARTDATE",
@@ -1301,7 +1724,7 @@
               "AND SAILING.SHIPTEMPLATECODE = SHIPTEMPLATE.CODE",
               "  AND SAILING.SHIPTEMPLATESTARTDATE = SHIPTEMPLATE.STARTDATE",
               "  AND PHYSICALSHIP.NAME = SHIPTEMPLATE.PHYSICALSHIPNAME",
-              "AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
+              "  AND PHYSICALSHIP.STARTDATE = SHIPTEMPLATE.PHYSICALSHIPSTARTDATE",
               "  AND SAILING.CODE = DEPARTSAILINGPORTSCHEDULE.SAILINGCODE",
               "  AND SAILING.STARTDATE = DEPARTSAILINGPORTSCHEDULE.SAILINGSTARTDATE",
               "  AND DEPARTSAILINGPORTSCHEDULE.SAILINGCODE = ARRIVALSAILINGPORTSCHEDULE.SAILINGCODE",
@@ -1322,8 +1745,7 @@
               "  AND SAILING.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE ",
               "  AND LICENSEFILTER.SAILINGCODE = SAILINGVESSELLICENSE.SAILINGCODE  ",
               "  AND LICENSEFILTER.STARTDATE = SAILINGVESSELLICENSE.SAILINGSTARTDATE",
-              "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE",
-              ") D_STG_EBK_SAILING</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "  AND LICENSEFILTER.SHIPTEMPLATECODE = SAILINGVESSELLICENSE.SHIPTEMPLATECODE</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -2807,6 +3229,80 @@
               "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
               "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
               "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Datetest",
+        "columns": [
+          {
+            "name": "LANG",
+            "dataType": "string",
+            "sourceColumn": "LANG",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "VALUE",
+            "dataType": "string",
+            "sourceColumn": "VALUE",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "SYSDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "SYSDATE",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Datetest",
+            "dataView": "full",
+            "source": {
+              "query": [
+                "select * from ",
+                "(SELECT VALUE as LANG FROM nls_session_parameters WHERE parameter = 'NLS_DATE_LANGUAGE') LANG,",
+                "(SELECT VALUE FROM nls_session_parameters WHERE parameter = 'NLS_DATE_FORMAT') DATEFORMAT,",
+                "(select sysdate from dual) FORMAT"
+              ],
+              "dataSource": "Oracle scan.stg01.rac.bcferries.corp"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from ",
+                  "(SELECT VALUE as LANG FROM nls_session_parameters WHERE parameter = 'NLS_DATE_LANGUAGE') LANG,",
+                  "(SELECT VALUE FROM nls_session_parameters WHERE parameter = 'NLS_DATE_FORMAT') DATEFORMAT,",
+                  "(select sysdate from dual) FORMAT</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "select * from ",
+              "(SELECT VALUE as LANG FROM nls_session_parameters WHERE parameter = 'NLS_DATE_LANGUAGE') LANG,",
+              "(SELECT VALUE FROM nls_session_parameters WHERE parameter = 'NLS_DATE_FORMAT') DATEFORMAT,",
+              "(select sysdate from dual) FORMAT"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Datetest"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from ",
+              "(SELECT VALUE as LANG FROM nls_session_parameters WHERE parameter = 'NLS_DATE_LANGUAGE') LANG,",
+              "(SELECT VALUE FROM nls_session_parameters WHERE parameter = 'NLS_DATE_FORMAT') DATEFORMAT,",
+              "(select sysdate from dual) FORMAT</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
