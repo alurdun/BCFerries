@@ -775,6 +775,54 @@
               "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
               "       dimContact[ContactID]  = factSubscription[ContactID])))"
             ]
+          },
+          {
+            "type": "calculated",
+            "name": "AccountIDNoRel",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimAccount) , ",
+              "        FILTER(DimAccount, ",
+              "        dimAccount[AccountID] = factSubscription[AccountID]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimAccount[AccountID], 1) ,  FILTER(dimAccount, ",
+              "       dimAccount[AccountID]  = factSubscription[AccountID])))"
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "SubscriptionIDNoRel",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimSubscription) , ",
+              "        FILTER(DimSubscription, ",
+              "        dimSubscription[SubscriptionID] = factSubscription[SubscriptionID]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimSubscription[SubscriptionID], 1) ,  FILTER(dimSubscription, ",
+              "       dimSubscription[SubscriptionID]  = factSubscription[SubscriptionID])))"
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "AgreementIDNoRel",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimAgreement) , ",
+              "        FILTER(DimAgreement, ",
+              "        dimAgreement[AgreementID] = factSubscription[AgreementID]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimAgreement[AgreementID], 1) ,  FILTER(dimAgreement, ",
+              "       dimAgreement[AgreementID]  = factSubscription[AgreementID])))"
+            ]
           }
         ],
         "partitions": [
@@ -918,6 +966,22 @@
               "      CALCULATE( ",
               "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
               "       dimContact[ContactID]  = factAgreement[ContactID])))"
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "AgreementIDNoRel",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimAgreement) , ",
+              "        FILTER(DimAgreement, ",
+              "        dimAgreement[AgreementID] = factAgreement[AgreementID]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimAgreement[AgreementID], 1) ,  FILTER(dimAgreement, ",
+              "       dimAgreement[AgreementID]  = factAgreement[AgreementID])))"
             ]
           }
         ],
@@ -1244,6 +1308,38 @@
               "      CALCULATE( ",
               "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
               "       dimContact[ContactID]  = factAddress[ContactID])))"
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "AccountIDNoRel",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimAccount) , ",
+              "        FILTER(DimAccount, ",
+              "        dimAccount[AccountID] = factAddress[AccountID]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimAccount[AccountID], 1) ,  FILTER(dimAccount, ",
+              "       dimAccount[AccountID]  = factAddress[AccountID])))"
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "AddressIDNoRel",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimAddress) , ",
+              "        FILTER(DimAddress, ",
+              "        dimAddress[AddressID] = factAddress[AddressID]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimAddress[AddressID], 1) ,  FILTER(dimAddress, ",
+              "       dimAddress[AddressID]  = factAddress[AddressID])))"
             ]
           }
         ],
@@ -2140,55 +2236,6 @@
     ],
     "relationships": [
       {
-        "name": "db477b7b-9964-4ed5-91d5-4bfae7257755",
-        "fromTable": "factSubscription",
-        "fromColumn": "AGREEMENTID",
-        "toTable": "dimAgreement",
-        "toColumn": "AGREEMENTID"
-      },
-      {
-        "name": "4a0373bc-699c-46d6-bc5f-23d4cfa6eb17",
-        "fromTable": "factSubscription",
-        "fromColumn": "ACCOUNTID",
-        "toTable": "dimAccount",
-        "toColumn": "ACCOUNTID"
-      },
-      {
-        "name": "5f684e07-8802-499c-b9c7-fc8b3f6ce416",
-        "fromTable": "factSubscription",
-        "fromColumn": "SUBSCRIPTIONID",
-        "toTable": "dimSubscription",
-        "toColumn": "SUBSCRIPTIONID"
-      },
-      {
-        "name": "5432672e-ecd5-4218-83e9-219d1dab2307",
-        "fromTable": "factAgreement",
-        "fromColumn": "AGREEMENTID",
-        "toTable": "dimAgreement",
-        "toColumn": "AGREEMENTID"
-      },
-      {
-        "name": "2b8bb4e8-f55c-4095-9a4f-c1c7ce5301f1",
-        "fromTable": "factActivity",
-        "fromColumn": "ACTIVITYID",
-        "toTable": "dimActivity",
-        "toColumn": "ACTIVITYID"
-      },
-      {
-        "name": "56ab5efb-5703-4069-ad08-cf1553ee70b5",
-        "fromTable": "factAddress",
-        "fromColumn": "ACCOUNTID",
-        "toTable": "dimAccount",
-        "toColumn": "ACCOUNTID"
-      },
-      {
-        "name": "5d291a70-0516-4dd8-b107-bb52c633548f",
-        "fromTable": "factAddress",
-        "fromColumn": "ADDRESSID",
-        "toTable": "dimAddress",
-        "toColumn": "ADDRESSID"
-      },
-      {
         "name": "58ef114d-286c-48f8-873c-591365cd3233",
         "fromTable": "factAgreement",
         "fromColumn": "ContactIDNoRel",
@@ -2215,6 +2262,55 @@
         "fromColumn": "ContactIDNoRel",
         "toTable": "dimContact",
         "toColumn": "CONTACTID"
+      },
+      {
+        "name": "06005d0d-c4f4-4666-bfe7-d7e4fba1df3d",
+        "fromTable": "factActivity",
+        "fromColumn": "ActivityIDNoRel",
+        "toTable": "dimActivity",
+        "toColumn": "ACTIVITYID"
+      },
+      {
+        "name": "663c481d-7a7c-4735-b180-e687942df134",
+        "fromTable": "factAddress",
+        "fromColumn": "AccountIDNoRel",
+        "toTable": "dimAccount",
+        "toColumn": "ACCOUNTID"
+      },
+      {
+        "name": "c0fab704-0a17-4214-80fd-bf9563239d1f",
+        "fromTable": "factAgreement",
+        "fromColumn": "AgreementIDNoRel",
+        "toTable": "dimAgreement",
+        "toColumn": "AGREEMENTID"
+      },
+      {
+        "name": "dc0592df-861c-4972-a028-0e5ad9597c34",
+        "fromTable": "factSubscription",
+        "fromColumn": "AccountIDNoRel",
+        "toTable": "dimAccount",
+        "toColumn": "ACCOUNTID"
+      },
+      {
+        "name": "4078e5b6-9022-4d7d-b380-0941cb42b6a3",
+        "fromTable": "factSubscription",
+        "fromColumn": "SubscriptionIDNoRel",
+        "toTable": "dimSubscription",
+        "toColumn": "SUBSCRIPTIONID"
+      },
+      {
+        "name": "c026b645-18d2-4462-9d01-6fc8152cb379",
+        "fromTable": "factSubscription",
+        "fromColumn": "AgreementIDNoRel",
+        "toTable": "dimAgreement",
+        "toColumn": "AGREEMENTID"
+      },
+      {
+        "name": "8cce3504-2635-4d7f-8292-ec71f3ecee42",
+        "fromTable": "factAddress",
+        "fromColumn": "AddressIDNoRel",
+        "toTable": "dimAddress",
+        "toColumn": "ADDRESSID"
       }
     ],
     "annotations": [
