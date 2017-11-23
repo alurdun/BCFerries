@@ -14,6 +14,17 @@
             "value": "Oracle"
           }
         ]
+      },
+      {
+        "name": "Oracle scan.dev01.rac.bcferries.corps",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corps;User ID=report_proxy_user;Persist Security Info=true",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "Oracle"
+          }
+        ]
       }
     ],
     "tables": [
@@ -149,11 +160,13 @@
           {
             "name": "CONTACTID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "CONTACTID"
           },
           {
             "name": "CUSTOMERNUMBER",
-            "dataType": "double",
+            "dataType": "string",
             "sourceColumn": "CUSTOMERNUMBER"
           },
           {
@@ -193,9 +206,10 @@
             "dataView": "full",
             "source": {
               "query": [
+                "select * from (",
                 "select ",
                 "    CONTACT.ROW_ID as ContactID",
-                "    , CONTACTX.ATTRIB_14 as CustomerNumber",
+                "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
                 "    , CONTACT.PER_TITLE as Mr_Ms",
                 "    , CONTACT.LAST_NAME as LastName",
                 "    , CONTACT.FST_NAME as FirstName",
@@ -233,7 +247,7 @@
                 "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
                 "union",
                 "select 'NOREL' as ContactID",
-                "    , 0 as CustomerNumber",
+                "    , '0' as CustomerNumber",
                 "    , 'NR' as Mr_Ms",
                 "    , 'NOREL' as LastName",
                 "    , 'NOREL' as FirstName",
@@ -259,7 +273,13 @@
                 "    , 'NOREL' as CreatedBy",
                 "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
                 "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-                "    , 'NOREL' as LastUpdatedBy from dual"
+                "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
+                "    '10000163',",
+                "'10000585',",
+                "'21',",
+                "'10000581',",
+                "'10001602',",
+                "'10001322')"
               ],
               "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
             },
@@ -267,9 +287,10 @@
               {
                 "name": "QueryEditorSerialization",
                 "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from (",
+                  "select ",
                   "    CONTACT.ROW_ID as ContactID",
-                  "    , CONTACTX.ATTRIB_14 as CustomerNumber",
+                  "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
                   "    , CONTACT.PER_TITLE as Mr_Ms",
                   "    , CONTACT.LAST_NAME as LastName",
                   "    , CONTACT.FST_NAME as FirstName",
@@ -307,7 +328,7 @@
                   "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
                   "union",
                   "select 'NOREL' as ContactID",
-                  "    , 0 as CustomerNumber",
+                  "    , '0' as CustomerNumber",
                   "    , 'NR' as Mr_Ms",
                   "    , 'NOREL' as LastName",
                   "    , 'NOREL' as FirstName",
@@ -333,7 +354,13 @@
                   "    , 'NOREL' as CreatedBy",
                   "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
                   "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-                  "    , 'NOREL' as LastUpdatedBy from dual</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
+                  "    '10000163',",
+                  "'10000585',",
+                  "'21',",
+                  "'10000581',",
+                  "'10001602',",
+                  "'10001322')</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -343,9 +370,10 @@
           {
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
+              "select * from (",
               "select ",
               "    CONTACT.ROW_ID as ContactID",
-              "    , CONTACTX.ATTRIB_14 as CustomerNumber",
+              "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
               "    , CONTACT.PER_TITLE as Mr_Ms",
               "    , CONTACT.LAST_NAME as LastName",
               "    , CONTACT.FST_NAME as FirstName",
@@ -383,7 +411,7 @@
               "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
               "union",
               "select 'NOREL' as ContactID",
-              "    , 0 as CustomerNumber",
+              "    , '0' as CustomerNumber",
               "    , 'NR' as Mr_Ms",
               "    , 'NOREL' as LastName",
               "    , 'NOREL' as FirstName",
@@ -409,7 +437,13 @@
               "    , 'NOREL' as CreatedBy",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-              "    , 'NOREL' as LastUpdatedBy from dual"
+              "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
+              "    '10000163',",
+              "'10000585',",
+              "'21',",
+              "'10000581',",
+              "'10001602',",
+              "'10001322')"
             ]
           },
           {
@@ -419,9 +453,10 @@
           {
             "name": "QueryEditorSerialization",
             "value": [
-              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from (",
+              "select ",
               "    CONTACT.ROW_ID as ContactID",
-              "    , CONTACTX.ATTRIB_14 as CustomerNumber",
+              "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
               "    , CONTACT.PER_TITLE as Mr_Ms",
               "    , CONTACT.LAST_NAME as LastName",
               "    , CONTACT.FST_NAME as FirstName",
@@ -459,7 +494,7 @@
               "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
               "union",
               "select 'NOREL' as ContactID",
-              "    , 0 as CustomerNumber",
+              "    , '0' as CustomerNumber",
               "    , 'NR' as Mr_Ms",
               "    , 'NOREL' as LastName",
               "    , 'NOREL' as FirstName",
@@ -485,7 +520,13 @@
               "    , 'NOREL' as CreatedBy",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-              "    , 'NOREL' as LastUpdatedBy from dual</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
+              "    '10000163',",
+              "'10000585',",
+              "'21',",
+              "'10000581',",
+              "'10001602',",
+              "'10001322')</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -496,6 +537,8 @@
           {
             "name": "SUBSCRIPTIONID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "SUBSCRIPTIONID",
             "sourceProviderType": "VarChar"
           },
@@ -753,76 +796,14 @@
           {
             "name": "FSUBSCRIPTIONID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "FSUBSCRIPTIONID"
           },
           {
             "name": "SUBSCRIPTIONID",
             "dataType": "string",
             "sourceColumn": "SUBSCRIPTIONID"
-          },
-          {
-            "type": "calculated",
-            "name": "ContactIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimContact) , ",
-              "        FILTER(DimContact, ",
-              "        dimContact[ContactID] = factSubscription[ContactID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
-              "       dimContact[ContactID]  = factSubscription[ContactID])))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "AccountIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimAccount) , ",
-              "        FILTER(DimAccount, ",
-              "        dimAccount[AccountID] = factSubscription[AccountID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimAccount[AccountID], 1) ,  FILTER(dimAccount, ",
-              "       dimAccount[AccountID]  = factSubscription[AccountID])))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "SubscriptionIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimSubscription) , ",
-              "        FILTER(DimSubscription, ",
-              "        dimSubscription[SubscriptionID] = factSubscription[SubscriptionID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimSubscription[SubscriptionID], 1) ,  FILTER(dimSubscription, ",
-              "       dimSubscription[SubscriptionID]  = factSubscription[SubscriptionID])))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "AgreementIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimAgreement) , ",
-              "        FILTER(DimAgreement, ",
-              "        dimAgreement[AgreementID] = factSubscription[AgreementID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimAgreement[AgreementID], 1) ,  FILTER(dimAgreement, ",
-              "       dimAgreement[AgreementID]  = factSubscription[AgreementID])))"
-            ]
           }
         ],
         "partitions": [
@@ -842,10 +823,13 @@
                 "    , SUBSCRIPTION.X_OPT_OUT_TIME as OptOutTime ",
                 "    , SUBSCRIPTION.INCL_EMP_FLG as SubscriptionFlag",
                 "    , SUBSCRIPTION.X_AGREE_ID as AgreementId",
-                "    , SUBSCRIPTION.X_CONTACT_ID as ContactId",
-                "    , SUBSCRIPTION.X_ACCNT_ID as AccountId",
-                "    , SUBSCRIPTION.ROW_ID as SubscriptionID",
-                "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION"
+                "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
+                "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
+                "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
+                "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+                "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+                "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+                "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
               ],
               "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
             },
@@ -864,10 +848,13 @@
                   "    , SUBSCRIPTION.X_OPT_OUT_TIME as OptOutTime ",
                   "    , SUBSCRIPTION.INCL_EMP_FLG as SubscriptionFlag",
                   "    , SUBSCRIPTION.X_AGREE_ID as AgreementId",
-                  "    , SUBSCRIPTION.X_CONTACT_ID as ContactId",
-                  "    , SUBSCRIPTION.X_ACCNT_ID as AccountId",
-                  "    , SUBSCRIPTION.ROW_ID as SubscriptionID",
-                  "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
+                  "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
+                  "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
+                  "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+                  "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+                  "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+                  "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -888,10 +875,13 @@
               "    , SUBSCRIPTION.X_OPT_OUT_TIME as OptOutTime ",
               "    , SUBSCRIPTION.INCL_EMP_FLG as SubscriptionFlag",
               "    , SUBSCRIPTION.X_AGREE_ID as AgreementId",
-              "    , SUBSCRIPTION.X_CONTACT_ID as ContactId",
-              "    , SUBSCRIPTION.X_ACCNT_ID as AccountId",
-              "    , SUBSCRIPTION.ROW_ID as SubscriptionID",
-              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION"
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
+              "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
+              "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
+              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+              "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+              "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
             ]
           },
           {
@@ -912,10 +902,13 @@
               "    , SUBSCRIPTION.X_OPT_OUT_TIME as OptOutTime ",
               "    , SUBSCRIPTION.INCL_EMP_FLG as SubscriptionFlag",
               "    , SUBSCRIPTION.X_AGREE_ID as AgreementId",
-              "    , SUBSCRIPTION.X_CONTACT_ID as ContactId",
-              "    , SUBSCRIPTION.X_ACCNT_ID as AccountId",
-              "    , SUBSCRIPTION.ROW_ID as SubscriptionID",
-              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
+              "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
+              "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
+              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+              "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+              "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -945,44 +938,14 @@
           {
             "name": "FAGREEMENTID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "FAGREEMENTID"
           },
           {
             "name": "AGREEMENTID",
             "dataType": "string",
             "sourceColumn": "AGREEMENTID"
-          },
-          {
-            "type": "calculated",
-            "name": "ContactIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimContact) , ",
-              "        FILTER(DimContact, ",
-              "        dimContact[ContactID] = factAgreement[ContactID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
-              "       dimContact[ContactID]  = factAgreement[ContactID])))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "AgreementIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimAgreement) , ",
-              "        FILTER(DimAgreement, ",
-              "        dimAgreement[AgreementID] = factAgreement[AgreementID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimAgreement[AgreementID], 1) ,  FILTER(dimAgreement, ",
-              "       dimAgreement[AgreementID]  = factAgreement[AgreementID])))"
-            ]
           }
         ],
         "partitions": [
@@ -1062,6 +1025,8 @@
           {
             "name": "AGREEMENTID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "AGREEMENTID",
             "sourceProviderType": "VarChar"
           },
@@ -1247,6 +1212,8 @@
           {
             "name": "FADDRESSID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "FADDRESSID",
             "sourceProviderType": "VarChar"
           },
@@ -1293,54 +1260,6 @@
             "dataType": "string",
             "sourceColumn": "LASTUPDATEDUSERID",
             "sourceProviderType": "VarChar"
-          },
-          {
-            "type": "calculated",
-            "name": "ContactIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimContact) , ",
-              "        FILTER(DimContact, ",
-              "        dimContact[ContactID] = factAddress[ContactID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
-              "       dimContact[ContactID]  = factAddress[ContactID])))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "AccountIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimAccount) , ",
-              "        FILTER(DimAccount, ",
-              "        dimAccount[AccountID] = factAddress[AccountID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimAccount[AccountID], 1) ,  FILTER(dimAccount, ",
-              "       dimAccount[AccountID]  = factAddress[AccountID])))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "AddressIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimAddress) , ",
-              "        FILTER(DimAddress, ",
-              "        dimAddress[AddressID] = factAddress[AddressID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimAddress[AddressID], 1) ,  FILTER(dimAddress, ",
-              "       dimAddress[AddressID]  = factAddress[AddressID])))"
-            ]
           }
         ],
         "partitions": [
@@ -1350,15 +1269,21 @@
             "source": {
               "query": [
                 "select",
-                "    ROW_ID as fAddressID",
-                "    , CONTACT_ID as ContactID",
-                "    , ACCNT_ID as AccountID",
-                "    , ADDR_PER_ID as AddressID",
-                "    , CREATED as CreatedDate",
-                "    , CREATED_BY as CreatedByUserID",
-                "    , LAST_UPD as LastUpdatedDate",
-                "    , LAST_UPD_BY as LastUpdatedUSerId",
-                "    from SIEBEL_DEV.S_CON_ADDR"
+                "    ADDRESS.ROW_ID as fAddressID",
+                "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+                "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
+                "    , COALESCE(ADDRESSES.ROW_ID, 'NOREL') as AddressID",
+                "    , ADDRESS.CREATED as CreatedDate",
+                "    , ADDRESS.CREATED_BY as CreatedByUserID",
+                "    , ADDRESS.LAST_UPD as LastUpdatedDate",
+                "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
+                "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
+                "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+                "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
+                "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
+                "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+                "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID"
               ],
               "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
             },
@@ -1367,18 +1292,30 @@
                 "name": "QueryEditorSerialization",
                 "value": [
                   "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select",
-                  "    ROW_ID as fAddressID",
-                  "    , CONTACT_ID as ContactID",
-                  "    , ACCNT_ID as AccountID",
-                  "    , ADDR_PER_ID as AddressID",
-                  "    , CREATED as CreatedDate",
-                  "    , CREATED_BY as CreatedByUserID",
-                  "    , LAST_UPD as LastUpdatedDate",
-                  "    , LAST_UPD_BY as LastUpdatedUSerId",
-                  "    from SIEBEL_DEV.S_CON_ADDR</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    ADDRESS.ROW_ID as fAddressID",
+                  "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+                  "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
+                  "    , COALESCE(ADDRESSES.ROW_ID, 'NOREL') as AddressID",
+                  "    , ADDRESS.CREATED as CreatedDate",
+                  "    , ADDRESS.CREATED_BY as CreatedByUserID",
+                  "    , ADDRESS.LAST_UPD as LastUpdatedDate",
+                  "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
+                  "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
+                  "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+                  "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
+                  "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                  "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
+                  "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+                  "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "AddressCount",
+            "expression": "COUNTA([FADDRESSID])"
           }
         ],
         "annotations": [
@@ -1386,15 +1323,21 @@
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
               "select",
-              "    ROW_ID as fAddressID",
-              "    , CONTACT_ID as ContactID",
-              "    , ACCNT_ID as AccountID",
-              "    , ADDR_PER_ID as AddressID",
-              "    , CREATED as CreatedDate",
-              "    , CREATED_BY as CreatedByUserID",
-              "    , LAST_UPD as LastUpdatedDate",
-              "    , LAST_UPD_BY as LastUpdatedUSerId",
-              "    from SIEBEL_DEV.S_CON_ADDR"
+              "    ADDRESS.ROW_ID as fAddressID",
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+              "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
+              "    , COALESCE(ADDRESSES.ROW_ID, 'NOREL') as AddressID",
+              "    , ADDRESS.CREATED as CreatedDate",
+              "    , ADDRESS.CREATED_BY as CreatedByUserID",
+              "    , ADDRESS.LAST_UPD as LastUpdatedDate",
+              "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
+              "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
+              "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+              "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
+              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
+              "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+              "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID"
             ]
           },
           {
@@ -1405,15 +1348,21 @@
             "name": "QueryEditorSerialization",
             "value": [
               "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select",
-              "    ROW_ID as fAddressID",
-              "    , CONTACT_ID as ContactID",
-              "    , ACCNT_ID as AccountID",
-              "    , ADDR_PER_ID as AddressID",
-              "    , CREATED as CreatedDate",
-              "    , CREATED_BY as CreatedByUserID",
-              "    , LAST_UPD as LastUpdatedDate",
-              "    , LAST_UPD_BY as LastUpdatedUSerId",
-              "    from SIEBEL_DEV.S_CON_ADDR</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    ADDRESS.ROW_ID as fAddressID",
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+              "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
+              "    , COALESCE(ADDRESSES.ROW_ID, 'NOREL') as AddressID",
+              "    , ADDRESS.CREATED as CreatedDate",
+              "    , ADDRESS.CREATED_BY as CreatedByUserID",
+              "    , ADDRESS.LAST_UPD as LastUpdatedDate",
+              "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
+              "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
+              "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+              "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
+              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
+              "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+              "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -1424,6 +1373,8 @@
           {
             "name": "ADDRESSID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "ADDRESSID",
             "sourceProviderType": "VarChar"
           },
@@ -1591,6 +1542,8 @@
           {
             "name": "ACCOUNTID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "ACCOUNTID",
             "sourceProviderType": "VarChar"
           },
@@ -1844,6 +1797,8 @@
           {
             "name": "ACTIVITYID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "ACTIVITYID",
             "sourceProviderType": "VarChar"
           },
@@ -2051,6 +2006,8 @@
           {
             "name": "FACTIVITYID",
             "dataType": "string",
+            "isUnique": true,
+            "isKey": true,
             "sourceColumn": "FACTIVITYID",
             "sourceProviderType": "VarChar"
           },
@@ -2104,38 +2061,6 @@
             "dataType": "string",
             "sourceColumn": "NOTIFICATIONTIME",
             "sourceProviderType": "VarChar"
-          },
-          {
-            "type": "calculated",
-            "name": "ContactIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimContact) , ",
-              "        FILTER(DimContact, ",
-              "        dimContact[ContactID] = factActivity[ContactID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimContact[ContactID], 1) ,  FILTER(dimContact, ",
-              "       dimContact[ContactID]  = factActivity[ContactID])))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "ActivityIDNoRel",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": [
-              "IF( CALCULATE( ",
-              "        COUNTROWS(dimActivity) , ",
-              "        FILTER(DimActivity, ",
-              "        dimActivity[ActivityID] = factActivity[ActivityID]) ) = 0, ",
-              "    \"NOREL\", ",
-              "      CALCULATE( ",
-              "        FIRSTNONBLANK(dimActivity[ActivityID], 1) ,  FILTER(dimActivity, ",
-              "       dimActivity[ActivityID]  = factActivity[ACTIVITYID])))"
-            ]
           }
         ],
         "partitions": [
@@ -2146,8 +2071,8 @@
               "query": [
                 "select ",
                 "    ACTCON.ROW_ID as fActivityID",
-                "    , ACTCON.ACTIVITY_ID as ActivityID",
-                "    , ACTCON.CON_ID as ContactID",
+                "    , COALESCE(ACTIVITY.ROW_ID, 'NOREL') as ActivityID",
+                "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
                 "    , ACTIVITY.TODO_PLAN_START_DT as PlannedStartDate",
                 "    , ACTIVITY.DOC_SENT_DT as SentDate",
                 "    , ACTCON.CREATED_BY as CreatedByUserId",
@@ -2158,7 +2083,8 @@
                 "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
                 "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
                 "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
-                "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID"
+                "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
+                "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
               ],
               "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
             },
@@ -2168,8 +2094,8 @@
                 "value": [
                   "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
                   "    ACTCON.ROW_ID as fActivityID",
-                  "    , ACTCON.ACTIVITY_ID as ActivityID",
-                  "    , ACTCON.CON_ID as ContactID",
+                  "    , COALESCE(ACTIVITY.ROW_ID, 'NOREL') as ActivityID",
+                  "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
                   "    , ACTIVITY.TODO_PLAN_START_DT as PlannedStartDate",
                   "    , ACTIVITY.DOC_SENT_DT as SentDate",
                   "    , ACTCON.CREATED_BY as CreatedByUserId",
@@ -2180,7 +2106,8 @@
                   "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
                   "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
                   "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
-                  "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
+                  "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -2192,8 +2119,8 @@
             "value": [
               "select ",
               "    ACTCON.ROW_ID as fActivityID",
-              "    , ACTCON.ACTIVITY_ID as ActivityID",
-              "    , ACTCON.CON_ID as ContactID",
+              "    , COALESCE(ACTIVITY.ROW_ID, 'NOREL') as ActivityID",
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
               "    , ACTIVITY.TODO_PLAN_START_DT as PlannedStartDate",
               "    , ACTIVITY.DOC_SENT_DT as SentDate",
               "    , ACTCON.CREATED_BY as CreatedByUserId",
@@ -2204,7 +2131,8 @@
               "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
               "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
               "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
-              "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID"
+              "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
+              "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
             ]
           },
           {
@@ -2216,8 +2144,8 @@
             "value": [
               "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
               "    ACTCON.ROW_ID as fActivityID",
-              "    , ACTCON.ACTIVITY_ID as ActivityID",
-              "    , ACTCON.CON_ID as ContactID",
+              "    , COALESCE(ACTIVITY.ROW_ID, 'NOREL') as ActivityID",
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
               "    , ACTIVITY.TODO_PLAN_START_DT as PlannedStartDate",
               "    , ACTIVITY.DOC_SENT_DT as SentDate",
               "    , ACTCON.CREATED_BY as CreatedByUserId",
@@ -2228,7 +2156,415 @@
               "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
               "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
               "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
-              "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
+              "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "factBooking",
+        "columns": [
+          {
+            "name": "CRM_CUSTOMER_NUMBER",
+            "dataType": "string",
+            "sourceColumn": "CRM_CUSTOMER_NUMBER",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "BOOKINGHOLDER_ID",
+            "dataType": "double",
+            "sourceColumn": "BOOKINGHOLDER_ID",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "BOOKINGHOLDER_NAME",
+            "dataType": "string",
+            "sourceColumn": "BOOKINGHOLDER_NAME",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "BOOKINGHOLDER_SURNAME",
+            "dataType": "string",
+            "sourceColumn": "BOOKINGHOLDER_SURNAME",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "BOOKINGHOLDER_PHONENUMBER",
+            "dataType": "string",
+            "sourceColumn": "BOOKINGHOLDER_PHONENUMBER",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "CRM_ACCOUNT_NUMBER",
+            "dataType": "string",
+            "sourceColumn": "CRM_ACCOUNT_NUMBER",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "CRM_ACCOUNT_NAME",
+            "dataType": "string",
+            "sourceColumn": "CRM_ACCOUNT_NAME",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "BOOKING_REFERENCE",
+            "dataType": "string",
+            "sourceColumn": "BOOKING_REFERENCE",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "BCF_REFERENCE_CODE",
+            "dataType": "string",
+            "sourceColumn": "BCF_REFERENCE_CODE",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "BOOKING_STATUS",
+            "dataType": "string",
+            "sourceColumn": "BOOKING_STATUS",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "STANDBY_STATUS",
+            "dataType": "string",
+            "sourceColumn": "STANDBY_STATUS",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "TOTAL_AMOUNT",
+            "dataType": "double",
+            "sourceColumn": "TOTAL_AMOUNT",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "AMOUNT_PAID",
+            "dataType": "double",
+            "sourceColumn": "AMOUNT_PAID",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "AMOUNT_OWING",
+            "dataType": "double",
+            "sourceColumn": "AMOUNT_OWING",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "SPECIAL_INSTRUCTIONS",
+            "dataType": "string",
+            "sourceColumn": "SPECIAL_INSTRUCTIONS",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "SALES_CHANNEL",
+            "dataType": "string",
+            "sourceColumn": "SALES_CHANNEL",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "DEPARTURE_PORT",
+            "dataType": "string",
+            "sourceColumn": "DEPARTURE_PORT",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "ARRIVAL_PORT",
+            "dataType": "string",
+            "sourceColumn": "ARRIVAL_PORT",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "DEPARTURE_DATE",
+            "dataType": "dateTime",
+            "sourceColumn": "DEPARTURE_DATE",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "ARRIVAL_DATE",
+            "dataType": "dateTime",
+            "sourceColumn": "ARRIVAL_DATE",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "VEHICLE_LENGTH",
+            "dataType": "double",
+            "sourceColumn": "VEHICLE_LENGTH",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "VEHICLE_TYPE",
+            "dataType": "string",
+            "sourceColumn": "VEHICLE_TYPE",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "SAILING_CODE",
+            "dataType": "string",
+            "sourceColumn": "SAILING_CODE",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "RESTRICTED_FLAG",
+            "dataType": "string",
+            "sourceColumn": "RESTRICTED_FLAG",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "HIDE_INFORMATION",
+            "dataType": "string",
+            "sourceColumn": "HIDE_INFORMATION",
+            "sourceProviderType": "VarChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "factBooking",
+            "dataView": "full",
+            "source": {
+              "query": [
+                "select distinct",
+                "       bh.CUSTOMERID          CRM_CUSTOMER_NUMBER",
+                "      ,bh.CONTACTID           BOOKINGHOLDER_ID",
+                "      ,bh.NAME                BOOKINGHOLDER_NAME",
+                "      ,bh.SURNAME             BOOKINGHOLDER_SURNAME",
+                "      ,bh.PHONENUMBER         BOOKINGHOLDER_PHONENUMBER",
+                "      ,bc.ID                  CRM_ACCOUNT_NUMBER",
+                "      ,bc.NAME                CRM_ACCOUNT_NAME",
+                "      ,b.BOOKINGREFERENCE     BOOKING_REFERENCE",
+                "      ,br_dep.CUSTOMERREFERENCE   BCF_REFERENCE_CODE",
+                "      ,b.BOOKINGSTATUS        BOOKING_STATUS",
+                "      ,b.STANDBYSTATUS        STANDBY_STATUS",
+                "      ,b.GROSSAMOUNT          TOTAL_AMOUNT",
+                "      ,b.PAID                 AMOUNT_PAID",
+                "      ,b.GROSSAMOUNT-b.PAID   AMOUNT_OWING",
+                "      ,b.SPECIALINSTRUCTIONS  SPECIAL_INSTRUCTIONS",
+                "      ,b.SALESCHANNEL         SALES_CHANNEL",
+                "      ,br_dep.ROUTEDEPARTUREPORT  DEPARTURE_PORT",
+                "      ,br_arr.ROUTEARRIVALPORT    ARRIVAL_PORT",
+                "      ,br_dep.DEPARTUREDATE       DEPARTURE_DATE",
+                "      ,br_arr.ARRIVALDATE         ARRIVAL_DATE",
+                "      ,bp.VEHICLELENGTH       VEHICLE_LENGTH",
+                "      ,bp.PRODUCTCODE         VEHICLE_TYPE",
+                "      ,s.CODE                 SAILING_CODE",
+                "      ,s.NORESERVABLE         RESTRICTED_FLAG",
+                "      ,s.HIDEINFORMATION      HIDE_INFORMATION",
+                "  from ebooking.IBE_BOOKING b",
+                "      ,ebooking.IBE_BOOKINGHOLDER bh",
+                "      ,ebooking.IBE_BOOKINGROUTE br_dep",
+                "      ,ebooking.IBE_BOOKINGROUTE br_arr",
+                "      ,ebooking.MSP_SAILING s",
+                "      ,ebooking.IBE_BOOKEDPRODUCT bp",
+                "      ,ebooking.IBE_BOOKINGCRMENTITY bc",
+                "where b.bookingstatus in ('OPTION','MODIFIED','CANCELLED','BOOKED')",
+                "   and b.BOOKINGVERSION = (select max(BOOKINGVERSION) from ebooking.IBE_BOOKING where BOOKINGREFERENCE = b.BOOKINGREFERENCE)",
+                "   and b.HOLDERCONTACTID = bh.CONTACTID",
+                "   and bh.LASTVERSION = 'Y'",
+                "   and b.BOOKINGREFERENCE = br_dep.BOOKINGREFERENCE",
+                "   and b.BOOKINGVERSION = br_dep.BOOKINGVERSION",
+                "   and b.STARTDATE = br_dep.BOOKINGSTARTDATE",
+                "   and br_dep.DEPARTUREDATE = (select min(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_dep.BOOKINGREFERENCE = BOOKINGREFERENCE and br_dep.BOOKINGVERSION = BOOKINGVERSION)",
+                "   and b.BOOKINGREFERENCE = br_arr.BOOKINGREFERENCE",
+                "   and b.BOOKINGVERSION = br_arr.BOOKINGVERSION",
+                "   and b.STARTDATE = br_arr.BOOKINGSTARTDATE",
+                "   and br_arr.DEPARTUREDATE = (select max(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_arr.BOOKINGREFERENCE = BOOKINGREFERENCE and br_arr.BOOKINGVERSION = BOOKINGVERSION)",
+                "   and br_dep.SAILINGCODE = s.CODE",
+                "   and br_dep.SAILINGSTARTDATE = s.STARTDATE",
+                "   and b.BOOKINGREFERENCE = bp.BOOKINGREFERENCE (+)",
+                "   and b.BOOKINGVERSION  = bp.BOOKINGVERSION (+)",
+                "   and b.STARTDATE = bp.BOOKINGSTARTDATE (+)",
+                "   and bp.PRODUCTTYPE (+) = 'VEHICLE'",
+                "   and b.BOOKINGREFERENCE = bc.BOOKINGREFERENCE (+)",
+                "   and b.BOOKINGVERSION  = bc.BOOKINGVERSION (+)",
+                "   and b.STARTDATE = bc.BOOKINGSTARTDATE (+)"
+              ],
+              "dataSource": "Oracle scan.dev01.rac.bcferries.corps"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select distinct",
+                  "       bh.CUSTOMERID          CRM_CUSTOMER_NUMBER",
+                  "      ,bh.CONTACTID           BOOKINGHOLDER_ID",
+                  "      ,bh.NAME                BOOKINGHOLDER_NAME",
+                  "      ,bh.SURNAME             BOOKINGHOLDER_SURNAME",
+                  "      ,bh.PHONENUMBER         BOOKINGHOLDER_PHONENUMBER",
+                  "      ,bc.ID                  CRM_ACCOUNT_NUMBER",
+                  "      ,bc.NAME                CRM_ACCOUNT_NAME",
+                  "      ,b.BOOKINGREFERENCE     BOOKING_REFERENCE",
+                  "      ,br_dep.CUSTOMERREFERENCE   BCF_REFERENCE_CODE",
+                  "      ,b.BOOKINGSTATUS        BOOKING_STATUS",
+                  "      ,b.STANDBYSTATUS        STANDBY_STATUS",
+                  "      ,b.GROSSAMOUNT          TOTAL_AMOUNT",
+                  "      ,b.PAID                 AMOUNT_PAID",
+                  "      ,b.GROSSAMOUNT-b.PAID   AMOUNT_OWING",
+                  "      ,b.SPECIALINSTRUCTIONS  SPECIAL_INSTRUCTIONS",
+                  "      ,b.SALESCHANNEL         SALES_CHANNEL",
+                  "      ,br_dep.ROUTEDEPARTUREPORT  DEPARTURE_PORT",
+                  "      ,br_arr.ROUTEARRIVALPORT    ARRIVAL_PORT",
+                  "      ,br_dep.DEPARTUREDATE       DEPARTURE_DATE",
+                  "      ,br_arr.ARRIVALDATE         ARRIVAL_DATE",
+                  "      ,bp.VEHICLELENGTH       VEHICLE_LENGTH",
+                  "      ,bp.PRODUCTCODE         VEHICLE_TYPE",
+                  "      ,s.CODE                 SAILING_CODE",
+                  "      ,s.NORESERVABLE         RESTRICTED_FLAG",
+                  "      ,s.HIDEINFORMATION      HIDE_INFORMATION",
+                  "  from ebooking.IBE_BOOKING b",
+                  "      ,ebooking.IBE_BOOKINGHOLDER bh",
+                  "      ,ebooking.IBE_BOOKINGROUTE br_dep",
+                  "      ,ebooking.IBE_BOOKINGROUTE br_arr",
+                  "      ,ebooking.MSP_SAILING s",
+                  "      ,ebooking.IBE_BOOKEDPRODUCT bp",
+                  "      ,ebooking.IBE_BOOKINGCRMENTITY bc",
+                  "where b.bookingstatus in ('OPTION','MODIFIED','CANCELLED','BOOKED')",
+                  "   and b.BOOKINGVERSION = (select max(BOOKINGVERSION) from ebooking.IBE_BOOKING where BOOKINGREFERENCE = b.BOOKINGREFERENCE)",
+                  "   and b.HOLDERCONTACTID = bh.CONTACTID",
+                  "   and bh.LASTVERSION = 'Y'",
+                  "   and b.BOOKINGREFERENCE = br_dep.BOOKINGREFERENCE",
+                  "   and b.BOOKINGVERSION = br_dep.BOOKINGVERSION",
+                  "   and b.STARTDATE = br_dep.BOOKINGSTARTDATE",
+                  "   and br_dep.DEPARTUREDATE = (select min(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_dep.BOOKINGREFERENCE = BOOKINGREFERENCE and br_dep.BOOKINGVERSION = BOOKINGVERSION)",
+                  "   and b.BOOKINGREFERENCE = br_arr.BOOKINGREFERENCE",
+                  "   and b.BOOKINGVERSION = br_arr.BOOKINGVERSION",
+                  "   and b.STARTDATE = br_arr.BOOKINGSTARTDATE",
+                  "   and br_arr.DEPARTUREDATE = (select max(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_arr.BOOKINGREFERENCE = BOOKINGREFERENCE and br_arr.BOOKINGVERSION = BOOKINGVERSION)",
+                  "   and br_dep.SAILINGCODE = s.CODE",
+                  "   and br_dep.SAILINGSTARTDATE = s.STARTDATE",
+                  "   and b.BOOKINGREFERENCE = bp.BOOKINGREFERENCE (+)",
+                  "   and b.BOOKINGVERSION  = bp.BOOKINGVERSION (+)",
+                  "   and b.STARTDATE = bp.BOOKINGSTARTDATE (+)",
+                  "   and bp.PRODUCTTYPE (+) = 'VEHICLE'",
+                  "   and b.BOOKINGREFERENCE = bc.BOOKINGREFERENCE (+)",
+                  "   and b.BOOKINGVERSION  = bc.BOOKINGVERSION (+)",
+                  "   and b.STARTDATE = bc.BOOKINGSTARTDATE (+)</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "select distinct",
+              "       bh.CUSTOMERID          CRM_CUSTOMER_NUMBER",
+              "      ,bh.CONTACTID           BOOKINGHOLDER_ID",
+              "      ,bh.NAME                BOOKINGHOLDER_NAME",
+              "      ,bh.SURNAME             BOOKINGHOLDER_SURNAME",
+              "      ,bh.PHONENUMBER         BOOKINGHOLDER_PHONENUMBER",
+              "      ,bc.ID                  CRM_ACCOUNT_NUMBER",
+              "      ,bc.NAME                CRM_ACCOUNT_NAME",
+              "      ,b.BOOKINGREFERENCE     BOOKING_REFERENCE",
+              "      ,br_dep.CUSTOMERREFERENCE   BCF_REFERENCE_CODE",
+              "      ,b.BOOKINGSTATUS        BOOKING_STATUS",
+              "      ,b.STANDBYSTATUS        STANDBY_STATUS",
+              "      ,b.GROSSAMOUNT          TOTAL_AMOUNT",
+              "      ,b.PAID                 AMOUNT_PAID",
+              "      ,b.GROSSAMOUNT-b.PAID   AMOUNT_OWING",
+              "      ,b.SPECIALINSTRUCTIONS  SPECIAL_INSTRUCTIONS",
+              "      ,b.SALESCHANNEL         SALES_CHANNEL",
+              "      ,br_dep.ROUTEDEPARTUREPORT  DEPARTURE_PORT",
+              "      ,br_arr.ROUTEARRIVALPORT    ARRIVAL_PORT",
+              "      ,br_dep.DEPARTUREDATE       DEPARTURE_DATE",
+              "      ,br_arr.ARRIVALDATE         ARRIVAL_DATE",
+              "      ,bp.VEHICLELENGTH       VEHICLE_LENGTH",
+              "      ,bp.PRODUCTCODE         VEHICLE_TYPE",
+              "      ,s.CODE                 SAILING_CODE",
+              "      ,s.NORESERVABLE         RESTRICTED_FLAG",
+              "      ,s.HIDEINFORMATION      HIDE_INFORMATION",
+              "  from ebooking.IBE_BOOKING b",
+              "      ,ebooking.IBE_BOOKINGHOLDER bh",
+              "      ,ebooking.IBE_BOOKINGROUTE br_dep",
+              "      ,ebooking.IBE_BOOKINGROUTE br_arr",
+              "      ,ebooking.MSP_SAILING s",
+              "      ,ebooking.IBE_BOOKEDPRODUCT bp",
+              "      ,ebooking.IBE_BOOKINGCRMENTITY bc",
+              "where b.bookingstatus in ('OPTION','MODIFIED','CANCELLED','BOOKED')",
+              "   and b.BOOKINGVERSION = (select max(BOOKINGVERSION) from ebooking.IBE_BOOKING where BOOKINGREFERENCE = b.BOOKINGREFERENCE)",
+              "   and b.HOLDERCONTACTID = bh.CONTACTID",
+              "   and bh.LASTVERSION = 'Y'",
+              "   and b.BOOKINGREFERENCE = br_dep.BOOKINGREFERENCE",
+              "   and b.BOOKINGVERSION = br_dep.BOOKINGVERSION",
+              "   and b.STARTDATE = br_dep.BOOKINGSTARTDATE",
+              "   and br_dep.DEPARTUREDATE = (select min(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_dep.BOOKINGREFERENCE = BOOKINGREFERENCE and br_dep.BOOKINGVERSION = BOOKINGVERSION)",
+              "   and b.BOOKINGREFERENCE = br_arr.BOOKINGREFERENCE",
+              "   and b.BOOKINGVERSION = br_arr.BOOKINGVERSION",
+              "   and b.STARTDATE = br_arr.BOOKINGSTARTDATE",
+              "   and br_arr.DEPARTUREDATE = (select max(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_arr.BOOKINGREFERENCE = BOOKINGREFERENCE and br_arr.BOOKINGVERSION = BOOKINGVERSION)",
+              "   and br_dep.SAILINGCODE = s.CODE",
+              "   and br_dep.SAILINGSTARTDATE = s.STARTDATE",
+              "   and b.BOOKINGREFERENCE = bp.BOOKINGREFERENCE (+)",
+              "   and b.BOOKINGVERSION  = bp.BOOKINGVERSION (+)",
+              "   and b.STARTDATE = bp.BOOKINGSTARTDATE (+)",
+              "   and bp.PRODUCTTYPE (+) = 'VEHICLE'",
+              "   and b.BOOKINGREFERENCE = bc.BOOKINGREFERENCE (+)",
+              "   and b.BOOKINGVERSION  = bc.BOOKINGVERSION (+)",
+              "   and b.STARTDATE = bc.BOOKINGSTARTDATE (+)"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "factBooking"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select distinct",
+              "       bh.CUSTOMERID          CRM_CUSTOMER_NUMBER",
+              "      ,bh.CONTACTID           BOOKINGHOLDER_ID",
+              "      ,bh.NAME                BOOKINGHOLDER_NAME",
+              "      ,bh.SURNAME             BOOKINGHOLDER_SURNAME",
+              "      ,bh.PHONENUMBER         BOOKINGHOLDER_PHONENUMBER",
+              "      ,bc.ID                  CRM_ACCOUNT_NUMBER",
+              "      ,bc.NAME                CRM_ACCOUNT_NAME",
+              "      ,b.BOOKINGREFERENCE     BOOKING_REFERENCE",
+              "      ,br_dep.CUSTOMERREFERENCE   BCF_REFERENCE_CODE",
+              "      ,b.BOOKINGSTATUS        BOOKING_STATUS",
+              "      ,b.STANDBYSTATUS        STANDBY_STATUS",
+              "      ,b.GROSSAMOUNT          TOTAL_AMOUNT",
+              "      ,b.PAID                 AMOUNT_PAID",
+              "      ,b.GROSSAMOUNT-b.PAID   AMOUNT_OWING",
+              "      ,b.SPECIALINSTRUCTIONS  SPECIAL_INSTRUCTIONS",
+              "      ,b.SALESCHANNEL         SALES_CHANNEL",
+              "      ,br_dep.ROUTEDEPARTUREPORT  DEPARTURE_PORT",
+              "      ,br_arr.ROUTEARRIVALPORT    ARRIVAL_PORT",
+              "      ,br_dep.DEPARTUREDATE       DEPARTURE_DATE",
+              "      ,br_arr.ARRIVALDATE         ARRIVAL_DATE",
+              "      ,bp.VEHICLELENGTH       VEHICLE_LENGTH",
+              "      ,bp.PRODUCTCODE         VEHICLE_TYPE",
+              "      ,s.CODE                 SAILING_CODE",
+              "      ,s.NORESERVABLE         RESTRICTED_FLAG",
+              "      ,s.HIDEINFORMATION      HIDE_INFORMATION",
+              "  from ebooking.IBE_BOOKING b",
+              "      ,ebooking.IBE_BOOKINGHOLDER bh",
+              "      ,ebooking.IBE_BOOKINGROUTE br_dep",
+              "      ,ebooking.IBE_BOOKINGROUTE br_arr",
+              "      ,ebooking.MSP_SAILING s",
+              "      ,ebooking.IBE_BOOKEDPRODUCT bp",
+              "      ,ebooking.IBE_BOOKINGCRMENTITY bc",
+              "where b.bookingstatus in ('OPTION','MODIFIED','CANCELLED','BOOKED')",
+              "   and b.BOOKINGVERSION = (select max(BOOKINGVERSION) from ebooking.IBE_BOOKING where BOOKINGREFERENCE = b.BOOKINGREFERENCE)",
+              "   and b.HOLDERCONTACTID = bh.CONTACTID",
+              "   and bh.LASTVERSION = 'Y'",
+              "   and b.BOOKINGREFERENCE = br_dep.BOOKINGREFERENCE",
+              "   and b.BOOKINGVERSION = br_dep.BOOKINGVERSION",
+              "   and b.STARTDATE = br_dep.BOOKINGSTARTDATE",
+              "   and br_dep.DEPARTUREDATE = (select min(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_dep.BOOKINGREFERENCE = BOOKINGREFERENCE and br_dep.BOOKINGVERSION = BOOKINGVERSION)",
+              "   and b.BOOKINGREFERENCE = br_arr.BOOKINGREFERENCE",
+              "   and b.BOOKINGVERSION = br_arr.BOOKINGVERSION",
+              "   and b.STARTDATE = br_arr.BOOKINGSTARTDATE",
+              "   and br_arr.DEPARTUREDATE = (select max(DEPARTUREDATE) from ebooking.IBE_BOOKINGROUTE where br_arr.BOOKINGREFERENCE = BOOKINGREFERENCE and br_arr.BOOKINGVERSION = BOOKINGVERSION)",
+              "   and br_dep.SAILINGCODE = s.CODE",
+              "   and br_dep.SAILINGSTARTDATE = s.STARTDATE",
+              "   and b.BOOKINGREFERENCE = bp.BOOKINGREFERENCE (+)",
+              "   and b.BOOKINGVERSION  = bp.BOOKINGVERSION (+)",
+              "   and b.STARTDATE = bp.BOOKINGSTARTDATE (+)",
+              "   and bp.PRODUCTTYPE (+) = 'VEHICLE'",
+              "   and b.BOOKINGREFERENCE = bc.BOOKINGREFERENCE (+)",
+              "   and b.BOOKINGVERSION  = bc.BOOKINGVERSION (+)",
+              "   and b.STARTDATE = bc.BOOKINGSTARTDATE (+)</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -2236,81 +2572,79 @@
     ],
     "relationships": [
       {
-        "name": "58ef114d-286c-48f8-873c-591365cd3233",
-        "fromTable": "factAgreement",
-        "fromColumn": "ContactIDNoRel",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID"
-      },
-      {
-        "name": "f7ec5fac-0f27-4276-ab11-96440d21d431",
-        "fromTable": "factActivity",
-        "fromColumn": "ContactIDNoRel",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID"
-      },
-      {
-        "name": "6bbf228f-9fb9-4503-a60f-7cecc60c24b4",
-        "fromTable": "factSubscription",
-        "fromColumn": "ContactIDNoRel",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID"
-      },
-      {
-        "name": "63c310d1-a025-45bc-8ef4-ce98a09c6de5",
+        "name": "6a8b3b7e-e0a7-48cb-97f1-3be878ccf57a",
         "fromTable": "factAddress",
-        "fromColumn": "ContactIDNoRel",
+        "fromColumn": "ACCOUNTID",
+        "toTable": "dimAccount",
+        "toColumn": "ACCOUNTID"
+      },
+      {
+        "name": "a23e1064-2f7c-4521-a2df-56df08e5faf2",
+        "fromTable": "factActivity",
+        "fromColumn": "CONTACTID",
         "toTable": "dimContact",
         "toColumn": "CONTACTID"
       },
       {
-        "name": "06005d0d-c4f4-4666-bfe7-d7e4fba1df3d",
+        "name": "a5bbfc34-1d09-4ea9-9804-dbd2cea0e0ca",
         "fromTable": "factActivity",
-        "fromColumn": "ActivityIDNoRel",
+        "fromColumn": "ACTIVITYID",
         "toTable": "dimActivity",
-        "toColumn": "ACTIVITYID"
+        "toColumn": "ACTIVITYID",
+        "crossFilteringBehavior": "bothDirections"
       },
       {
-        "name": "663c481d-7a7c-4735-b180-e687942df134",
+        "name": "ced7f0c0-49fb-4399-919c-5a07fa51d02d",
         "fromTable": "factAddress",
-        "fromColumn": "AccountIDNoRel",
-        "toTable": "dimAccount",
-        "toColumn": "ACCOUNTID"
-      },
-      {
-        "name": "c0fab704-0a17-4214-80fd-bf9563239d1f",
-        "fromTable": "factAgreement",
-        "fromColumn": "AgreementIDNoRel",
-        "toTable": "dimAgreement",
-        "toColumn": "AGREEMENTID"
-      },
-      {
-        "name": "dc0592df-861c-4972-a028-0e5ad9597c34",
-        "fromTable": "factSubscription",
-        "fromColumn": "AccountIDNoRel",
-        "toTable": "dimAccount",
-        "toColumn": "ACCOUNTID"
-      },
-      {
-        "name": "4078e5b6-9022-4d7d-b380-0941cb42b6a3",
-        "fromTable": "factSubscription",
-        "fromColumn": "SubscriptionIDNoRel",
-        "toTable": "dimSubscription",
-        "toColumn": "SUBSCRIPTIONID"
-      },
-      {
-        "name": "c026b645-18d2-4462-9d01-6fc8152cb379",
-        "fromTable": "factSubscription",
-        "fromColumn": "AgreementIDNoRel",
-        "toTable": "dimAgreement",
-        "toColumn": "AGREEMENTID"
-      },
-      {
-        "name": "8cce3504-2635-4d7f-8292-ec71f3ecee42",
-        "fromTable": "factAddress",
-        "fromColumn": "AddressIDNoRel",
+        "fromColumn": "ADDRESSID",
         "toTable": "dimAddress",
-        "toColumn": "ADDRESSID"
+        "toColumn": "ADDRESSID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "99920670-a4e0-49b3-a0bf-dfeb77ccad85",
+        "fromTable": "factAddress",
+        "fromColumn": "CONTACTID",
+        "toTable": "dimContact",
+        "toColumn": "CONTACTID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "9cf9e49d-7bc5-4555-bb24-afde494a2c33",
+        "fromTable": "factSubscription",
+        "fromColumn": "CONTACTID",
+        "toTable": "dimContact",
+        "toColumn": "CONTACTID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "0d8f1ea0-c5dd-4776-8313-9ebc2d2934b4",
+        "fromTable": "factSubscription",
+        "fromColumn": "SUBSCRIPTIONID",
+        "toTable": "dimSubscription",
+        "toColumn": "SUBSCRIPTIONID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "6bff43f1-0c88-4df5-a747-1178f7bc4999",
+        "fromTable": "factAgreement",
+        "fromColumn": "AGREEMENTID",
+        "toTable": "dimAgreement",
+        "toColumn": "AGREEMENTID"
+      },
+      {
+        "name": "f1805d09-7b8d-46d8-ae4a-bfe2a421a780",
+        "fromTable": "factAgreement",
+        "fromColumn": "CONTACTID",
+        "toTable": "dimContact",
+        "toColumn": "CONTACTID"
+      },
+      {
+        "name": "cefa8185-9a7f-486d-ac4a-a605797b7d32",
+        "fromTable": "factBooking",
+        "fromColumn": "CRM_CUSTOMER_NUMBER",
+        "toTable": "dimContact",
+        "toColumn": "CUSTOMERNUMBER"
       }
     ],
     "annotations": [
