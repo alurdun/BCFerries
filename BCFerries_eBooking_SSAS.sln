@@ -7,6 +7,8 @@ Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "BCFerries_eBooking_Live_SSA
 EndProject
 Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "BCFerries_CRM_SSAS", "BCFerries_CRM_SSAS\BCFerries_CRM_SSAS.smproj", "{2814C112-6247-4BFB-8778-F3EDC365B1C5}"
 EndProject
+Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "BCFerries_CRM_SSAS_eBookingFocused", "BCFerries_CRM_SSAS_eBookingFocused\BCFerries_CRM_SSAS_eBookingFocused.smproj", "{651A32EA-BAFC-4E37-843F-24AD6882C07B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|x86 = Development|x86
@@ -18,6 +20,9 @@ Global
 		{2814C112-6247-4BFB-8778-F3EDC365B1C5}.Development|x86.ActiveCfg = Development|x86
 		{2814C112-6247-4BFB-8778-F3EDC365B1C5}.Development|x86.Build.0 = Development|x86
 		{2814C112-6247-4BFB-8778-F3EDC365B1C5}.Development|x86.Deploy.0 = Development|x86
+		{651A32EA-BAFC-4E37-843F-24AD6882C07B}.Development|x86.ActiveCfg = Development|x86
+		{651A32EA-BAFC-4E37-843F-24AD6882C07B}.Development|x86.Build.0 = Development|x86
+		{651A32EA-BAFC-4E37-843F-24AD6882C07B}.Development|x86.Deploy.0 = Development|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
