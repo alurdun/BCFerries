@@ -5,7 +5,7 @@
     "culture": "en-CA",
     "dataSources": [
       {
-        "name": "Oracle scan.dev01.rac.bcferries.corp",
+        "name": "CRM",
         "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corp;User ID=joanders;Persist Security Info=false",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
@@ -16,8 +16,8 @@
         ]
       },
       {
-        "name": "Oracle scan.dev01.rac.bcferries.corps",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corps;User ID=report_proxy_user;Persist Security Info=true",
+        "name": "aBooking",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.stg01.rac.bcferries.corp;User ID=report_proxy_user;Persist Security Info=true",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -281,7 +281,7 @@
                 "'10001602',",
                 "'10001322')"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -621,7 +621,7 @@
                 "    , 'NOREL' as Comments",
                 "from dual"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -831,7 +831,7 @@
                 "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
                 "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -946,6 +946,11 @@
             "name": "AGREEMENTID",
             "dataType": "string",
             "sourceColumn": "AGREEMENTID"
+          },
+          {
+            "name": "ACCOUNTID",
+            "dataType": "string",
+            "sourceColumn": "ACCOUNTID"
           }
         ],
         "partitions": [
@@ -959,12 +964,15 @@
                 "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
                 "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
                 "    , AGREEMENT.ROW_ID as AgreementId",
-                "    , CONTACT.ROW_ID as ContactID",
+                "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+                "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
                 "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
                 "left join SIEBEL_DEV.S_CONTACT CONTACT",
-                "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID"
+                "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
+                "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+                "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -975,10 +983,13 @@
                   "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
                   "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
                   "    , AGREEMENT.ROW_ID as AgreementId",
-                  "    , CONTACT.ROW_ID as ContactID",
+                  "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+                  "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
                   "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
                   "left join SIEBEL_DEV.S_CONTACT CONTACT",
-                  "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
+                  "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+                  "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -993,10 +1004,13 @@
               "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
               "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
               "    , AGREEMENT.ROW_ID as AgreementId",
-              "    , CONTACT.ROW_ID as ContactID",
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+              "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
               "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
               "left join SIEBEL_DEV.S_CONTACT CONTACT",
-              "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID"
+              "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
+              "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+              "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID"
             ]
           },
           {
@@ -1011,10 +1025,13 @@
               "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
               "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
               "    , AGREEMENT.ROW_ID as AgreementId",
-              "    , CONTACT.ROW_ID as ContactID",
+              "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
+              "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
               "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
               "left join SIEBEL_DEV.S_CONTACT CONTACT",
-              "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
+              "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+              "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -1109,7 +1126,7 @@
                 "    , 'NOREL' as Notes",
                 "from dual"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -1285,7 +1302,7 @@
                 "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
                 "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -1448,7 +1465,7 @@
                 "    , 'NOREL' as PostalZip",
                 "    from dual"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -1622,6 +1639,25 @@
             "sourceColumn": "NOTIFY",
             "formatString": "General Date",
             "sourceProviderType": "Date"
+          },
+          {
+            "name": "PARENTACCOUNTID",
+            "dataType": "string",
+            "sourceColumn": "PARENTACCOUNTID"
+          },
+          {
+            "type": "calculated",
+            "name": "HierarchyPath",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " PATH([AccountId], [ParentAccountID])"
+          },
+          {
+            "type": "calculated",
+            "name": "ParentAccountName",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " LOOKUPVALUE ([Name], [AccountId], PATHITEM ([HierarchyPath], 1))"
           }
         ],
         "partitions": [
@@ -1632,6 +1668,7 @@
               "query": [
                 "select ",
                 "        ACCOUNT.ROW_ID as AccountID",
+                "        , ACCOUNT.MASTER_OU_ID as ParentAccountID\t",
                 "        , ACCOUNT.NAME as Name",
                 "        , ACCOUNT.LOC as Location",
                 "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
@@ -1646,10 +1683,11 @@
                 "        , ACCOUNT.X_BCF_NOTIFY as Notify",
                 "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
                 "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
-                "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID",
+                "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
                 "union",
                 "select",
                 "    'NOREL' as AccountID",
+                "        , 'NOREL' as ParentAccountID",
                 "        , 'NOREL' as Name",
                 "        , 'NOREL' as Location",
                 "        , 'NOREL' as AccountStatus",
@@ -1664,7 +1702,7 @@
                 "        , TO_DATE('1900-01-01', 'YYYY-MM-DD') as Notify",
                 "    from dual"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -1672,6 +1710,7 @@
                 "value": [
                   "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
                   "        ACCOUNT.ROW_ID as AccountID",
+                  "        , ACCOUNT.MASTER_OU_ID as ParentAccountID\t",
                   "        , ACCOUNT.NAME as Name",
                   "        , ACCOUNT.LOC as Location",
                   "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
@@ -1686,10 +1725,11 @@
                   "        , ACCOUNT.X_BCF_NOTIFY as Notify",
                   "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
                   "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
-                  "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID",
+                  "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
                   "union",
                   "select",
                   "    'NOREL' as AccountID",
+                  "        , 'NOREL' as ParentAccountID",
                   "        , 'NOREL' as Name",
                   "        , 'NOREL' as Location",
                   "        , 'NOREL' as AccountStatus",
@@ -1708,12 +1748,30 @@
             ]
           }
         ],
+        "hierarchies": [
+          {
+            "name": "AccountHierarchy",
+            "levels": [
+              {
+                "name": "ParentAccountName",
+                "ordinal": 0,
+                "column": "ParentAccountName"
+              },
+              {
+                "name": "NAME",
+                "ordinal": 1,
+                "column": "NAME"
+              }
+            ]
+          }
+        ],
         "annotations": [
           {
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
               "select ",
               "        ACCOUNT.ROW_ID as AccountID",
+              "        , ACCOUNT.MASTER_OU_ID as ParentAccountID\t",
               "        , ACCOUNT.NAME as Name",
               "        , ACCOUNT.LOC as Location",
               "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
@@ -1728,10 +1786,11 @@
               "        , ACCOUNT.X_BCF_NOTIFY as Notify",
               "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
               "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
-              "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID",
+              "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
               "union",
               "select",
               "    'NOREL' as AccountID",
+              "        , 'NOREL' as ParentAccountID",
               "        , 'NOREL' as Name",
               "        , 'NOREL' as Location",
               "        , 'NOREL' as AccountStatus",
@@ -1756,6 +1815,7 @@
             "value": [
               "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
               "        ACCOUNT.ROW_ID as AccountID",
+              "        , ACCOUNT.MASTER_OU_ID as ParentAccountID\t",
               "        , ACCOUNT.NAME as Name",
               "        , ACCOUNT.LOC as Location",
               "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
@@ -1770,10 +1830,11 @@
               "        , ACCOUNT.X_BCF_NOTIFY as Notify",
               "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
               "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
-              "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID",
+              "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
               "union",
               "select",
               "    'NOREL' as AccountID",
+              "        , 'NOREL' as ParentAccountID",
               "        , 'NOREL' as Name",
               "        , 'NOREL' as Location",
               "        , 'NOREL' as AccountStatus",
@@ -1891,7 +1952,7 @@
                 "    , 'NOREL' as ContactMethod",
                 "    from dual"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -2086,7 +2147,7 @@
                 "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
                 "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corp"
+              "dataSource": "CRM"
             },
             "annotations": [
               {
@@ -2379,7 +2440,7 @@
                 "   and b.BOOKINGVERSION  = bc.BOOKINGVERSION (+)",
                 "   and b.STARTDATE = bc.BOOKINGSTARTDATE (+)"
               ],
-              "dataSource": "Oracle scan.dev01.rac.bcferries.corps"
+              "dataSource": "aBooking"
             },
             "annotations": [
               {
@@ -2568,6 +2629,100 @@
             ]
           }
         ]
+      },
+      {
+        "name": "factContactAcctRelationship",
+        "columns": [
+          {
+            "name": "FCONACCTRELID",
+            "dataType": "string",
+            "sourceColumn": "FCONACCTRELID",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "CREATEDDATE",
+            "dataType": "dateTime",
+            "sourceColumn": "CREATEDDATE",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "CREATEDBYUSERID",
+            "dataType": "string",
+            "sourceColumn": "CREATEDBYUSERID",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "CONTACTID",
+            "dataType": "string",
+            "sourceColumn": "CONTACTID",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "ACCOUNTID",
+            "dataType": "string",
+            "sourceColumn": "ACCOUNTID",
+            "sourceProviderType": "VarChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "factContactAcctRelationship",
+            "dataView": "full",
+            "source": {
+              "query": [
+                "select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
+                "    from SIEBEL_DEV.S_PARTY_PER PARTY",
+                "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+                "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
+                "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                "        on PARTY.PARTY_ID = ACCNT.ROW_ID"
+              ],
+              "dataSource": "CRM"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
+                  "    from SIEBEL_DEV.S_PARTY_PER PARTY",
+                  "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+                  "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
+                  "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                  "        on PARTY.PARTY_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
+              "    from SIEBEL_DEV.S_PARTY_PER PARTY",
+              "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+              "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
+              "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "        on PARTY.PARTY_ID = ACCNT.ROW_ID"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "factContactAcctRelationship"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
+              "    from SIEBEL_DEV.S_PARTY_PER PARTY",
+              "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+              "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
+              "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "        on PARTY.PARTY_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
       }
     ],
     "relationships": [
@@ -2594,38 +2749,6 @@
         "crossFilteringBehavior": "bothDirections"
       },
       {
-        "name": "ced7f0c0-49fb-4399-919c-5a07fa51d02d",
-        "fromTable": "factAddress",
-        "fromColumn": "ADDRESSID",
-        "toTable": "dimAddress",
-        "toColumn": "ADDRESSID",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "99920670-a4e0-49b3-a0bf-dfeb77ccad85",
-        "fromTable": "factAddress",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "9cf9e49d-7bc5-4555-bb24-afde494a2c33",
-        "fromTable": "factSubscription",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "0d8f1ea0-c5dd-4776-8313-9ebc2d2934b4",
-        "fromTable": "factSubscription",
-        "fromColumn": "SUBSCRIPTIONID",
-        "toTable": "dimSubscription",
-        "toColumn": "SUBSCRIPTIONID",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
         "name": "6bff43f1-0c88-4df5-a747-1178f7bc4999",
         "fromTable": "factAgreement",
         "fromColumn": "AGREEMENTID",
@@ -2645,6 +2768,69 @@
         "fromColumn": "CRM_CUSTOMER_NUMBER",
         "toTable": "dimContact",
         "toColumn": "CUSTOMERNUMBER"
+      },
+      {
+        "name": "e47d6946-0f2e-446f-a142-a0d93009429b",
+        "fromTable": "factSubscription",
+        "fromColumn": "AGREEMENTID",
+        "toTable": "dimAgreement",
+        "toColumn": "AGREEMENTID"
+      },
+      {
+        "name": "cfa348a7-88c6-4b3f-8ead-91ab47be9e06",
+        "fromTable": "factAddress",
+        "fromColumn": "ADDRESSID",
+        "toTable": "dimAddress",
+        "toColumn": "ADDRESSID"
+      },
+      {
+        "name": "9451218c-7404-4cb0-8741-96def47629ea",
+        "fromTable": "factAddress",
+        "fromColumn": "CONTACTID",
+        "toTable": "dimContact",
+        "toColumn": "CONTACTID"
+      },
+      {
+        "name": "40762bf5-f9fe-4206-b3fa-17ed5e09e51f",
+        "fromTable": "factSubscription",
+        "fromColumn": "CONTACTID",
+        "toTable": "dimContact",
+        "toColumn": "CONTACTID"
+      },
+      {
+        "name": "a16fa199-8681-4757-b61f-d22979e46bab",
+        "fromTable": "factSubscription",
+        "fromColumn": "SUBSCRIPTIONID",
+        "toTable": "dimSubscription",
+        "toColumn": "SUBSCRIPTIONID"
+      },
+      {
+        "name": "b363b778-9390-42b1-adf2-5f0a05373812",
+        "fromTable": "factSubscription",
+        "fromColumn": "ACCOUNTID",
+        "toTable": "dimAccount",
+        "toColumn": "ACCOUNTID"
+      },
+      {
+        "name": "b910e6c1-26ab-4678-a60c-5a45218ca279",
+        "fromTable": "factAgreement",
+        "fromColumn": "ACCOUNTID",
+        "toTable": "dimAccount",
+        "toColumn": "ACCOUNTID"
+      },
+      {
+        "name": "0ea212b1-eafd-4a94-bb2f-29f9822ba504",
+        "fromTable": "factContactAcctRelationship",
+        "fromColumn": "ACCOUNTID",
+        "toTable": "dimAccount",
+        "toColumn": "ACCOUNTID"
+      },
+      {
+        "name": "3a62e6e4-98b2-4f00-9b84-43a60f6325af",
+        "fromTable": "factContactAcctRelationship",
+        "fromColumn": "CONTACTID",
+        "toTable": "dimContact",
+        "toColumn": "CONTACTID"
       }
     ],
     "annotations": [
