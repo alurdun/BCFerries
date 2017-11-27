@@ -9,6 +9,13 @@ Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "BCFerries_CRM_SSAS", "BCFer
 EndProject
 Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "BCFerries_CRM_SSAS_eBookingFocused", "BCFerries_CRM_SSAS_eBookingFocused\BCFerries_CRM_SSAS_eBookingFocused.smproj", "{651A32EA-BAFC-4E37-843F-24AD6882C07B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{401F4082-B6BB-430C-9F17-D887D745E5F2}"
+	ProjectSection(SolutionItems) = preProject
+		..\Users\joanders\Downloads\CRM data loads.pbix = ..\Users\joanders\Downloads\CRM data loads.pbix
+		..\Users\joanders\Downloads\Space Availability.pbix = ..\Users\joanders\Downloads\Space Availability.pbix
+		..\Users\joanders\Downloads\Space Availability_testing.pbix = ..\Users\joanders\Downloads\Space Availability_testing.pbix
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|x86 = Development|x86
