@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\Users\joanders\Downloads\Space Availability_testing.pbix = ..\Users\joanders\Downloads\Space Availability_testing.pbix
 	EndProjectSection
 EndProject
+Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "BC Ferries - HR", "BC Ferries - HR\BC Ferries - HR.smproj", "{D69FE19C-7165-4072-8404-8A9387E5D0FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|x86 = Development|x86
@@ -30,6 +32,9 @@ Global
 		{651A32EA-BAFC-4E37-843F-24AD6882C07B}.Development|x86.ActiveCfg = Development|x86
 		{651A32EA-BAFC-4E37-843F-24AD6882C07B}.Development|x86.Build.0 = Development|x86
 		{651A32EA-BAFC-4E37-843F-24AD6882C07B}.Development|x86.Deploy.0 = Development|x86
+		{D69FE19C-7165-4072-8404-8A9387E5D0FF}.Development|x86.ActiveCfg = Development|x86
+		{D69FE19C-7165-4072-8404-8A9387E5D0FF}.Development|x86.Build.0 = Development|x86
+		{D69FE19C-7165-4072-8404-8A9387E5D0FF}.Development|x86.Deploy.0 = Development|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

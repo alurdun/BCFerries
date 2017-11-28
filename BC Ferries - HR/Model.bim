@@ -1,0 +1,2265 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "name": "BCF",
+        "connectionString": "Provider=SQLNCLI11;Data Source=VDCWPBIXDEV01;Initial Catalog=BCF;Integrated Security=SSPI;Persist Security Info=false",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "EmployeeAbsenteeism",
+        "columns": [
+          {
+            "name": "RowID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "RowID",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "_Absence Hours",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Absence Hours",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "_Absence Dollars",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Absence Dollars",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "_Compensatory Hours",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Compensatory Hours",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "_Compensatory Dollars",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Compensatory Dollars",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Absence Date",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Emp Number",
+            "dataType": "string",
+            "sourceColumn": "Emp Number"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "EmployeeAbsenteeism",
+            "dataView": "full",
+            "source": {
+              "query": [
+                "SELECT * ",
+                "FROM ",
+                "[Fact].[EmployeeAbsenteeism]"
+              ],
+              "dataSource": "BCF"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * ",
+                  "FROM ",
+                  "[Fact].[EmployeeAbsenteeism]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "Absence Hours",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    EmployeeAbsenteeism[Absence Hours Base],",
+              "    FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeAge,",
+              "                         Employee[Emp Age Active Base] >= SegmentsEmployeeAge[Min Value]",
+              "                        && Employee[Emp Age Active Base] < SegmentsEmployeeAge[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        ),",
+              " FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeTenure,",
+              "                         Employee[Emp Tenure Active Base] >= SegmentsEmployeeTenure[Min Value]",
+              "                        && Employee[Emp Tenure Active Base] < SegmentsEmployeeTenure[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Compensatory Hours",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    EmployeeAbsenteeism[Compensatory Hours Base],",
+              "    FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeAge,",
+              "                         Employee[Emp Age Active Base] >= SegmentsEmployeeAge[Min Value]",
+              "                        && Employee[Emp Age Active Base] < SegmentsEmployeeAge[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        ),",
+              " FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeTenure,",
+              "                         Employee[Emp Tenure Active Base] >= SegmentsEmployeeTenure[Min Value]",
+              "                        && Employee[Emp Tenure Active Base] < SegmentsEmployeeTenure[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Absence Dollars",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    EmployeeAbsenteeism[Absence Dollars Base],",
+              "    FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeAge,",
+              "                         Employee[Emp Age Active Base] >= SegmentsEmployeeAge[Min Value]",
+              "                        && Employee[Emp Age Active Base] < SegmentsEmployeeAge[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        ),",
+              " FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeTenure,",
+              "                         Employee[Emp Tenure Active Base] >= SegmentsEmployeeTenure[Min Value]",
+              "                        && Employee[Emp Tenure Active Base] < SegmentsEmployeeTenure[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        )",
+              ")"
+            ],
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Dollars",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    EmployeeAbsenteeism[Compensatory Dollars Base],",
+              "    FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeAge,",
+              "                         Employee[Emp Age Active Base] >= SegmentsEmployeeAge[Min Value]",
+              "                        && Employee[Emp Age Active Base] < SegmentsEmployeeAge[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        ),",
+              " FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeTenure,",
+              "                         Employee[Emp Tenure Active Base] >= SegmentsEmployeeTenure[Min Value]",
+              "                        && Employee[Emp Tenure Active Base] < SegmentsEmployeeTenure[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        )",
+              ")"
+            ],
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Hours%",
+            "expression": "DIVIDE([Absence Hours],[Compensatory Hours])",
+            "formatString": "#,0.00 %;-#,0.00 %;#,0.00 %"
+          },
+          {
+            "name": "Absence Hours YTD",
+            "expression": " TOTALYTD([Absence Hours],'Date'[Date])",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Absence Hours FYTD",
+            "expression": " TOTALYTD([Absence Hours],'Date'[Date],ALL('Date'),\"3/31\")",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Compensatory Hours YTD",
+            "expression": " TOTALYTD([Compensatory Hours],'Date'[Date])",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Compensatory Hours FYTD",
+            "expression": " TOTALYTD([Compensatory Hours],'Date'[Date],ALL('Date'),\"3/31\")",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Absence Hours% YTD",
+            "expression": "DIVIDE([Absence Hours YTD],[Compensatory Hours YTD])",
+            "formatString": "#,0.00 %;-#,0.00 %;#,0.00 %"
+          },
+          {
+            "name": "Absence Hours% FYTD",
+            "expression": "DIVIDE([Absence Hours FYTD],[Compensatory Hours FYTD])",
+            "formatString": "#,0.00 %;-#,0.00 %;#,0.00 %"
+          },
+          {
+            "name": "Absence Dollars YTD",
+            "expression": " TOTALYTD([Absence Dollars],'Date'[Date])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Dollars FYTD",
+            "expression": " TOTALYTD([Absence Dollars],'Date'[Date],ALL('Date'),\"3/31\")",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Dollars FYTD",
+            "expression": " TOTALYTD([Compensatory Dollars],'Date'[Date],ALL('Date'),\"3/31\")",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Dollars YTD",
+            "expression": " TOTALYTD([Compensatory Dollars],'Date'[Date])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Dollars AVG",
+            "expression": "DIVIDE([Absence Dollars],[Absence Hours])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Dollars AVG YTD",
+            "expression": "DIVIDE([Absence Dollars YTD],[Absence Hours YTD])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Dollars AVG FYTD",
+            "expression": "DIVIDE([Absence Dollars FYTD],[Absence Hours FYTD])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Hours 12M",
+            "expression": [
+              " CALCULATE (",
+              "    [Absence Hours],",
+              "    DATESBETWEEN (",
+              "        'Date'[Date],",
+              "        NEXTDAY ( SAMEPERIODLASTYEAR ( LASTDATE ( 'Date'[Date] ) ) ),",
+              "        LASTDATE ( 'Date'[Date])",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Compensatory Hours 12M",
+            "expression": [
+              " CALCULATE (",
+              "    [Compensatory Hours],",
+              "    DATESBETWEEN (",
+              "        'Date'[Date],",
+              "        NEXTDAY ( SAMEPERIODLASTYEAR ( LASTDATE ( 'Date'[Date] ) ) ),",
+              "        LASTDATE ( 'Date'[Date])",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Absence Hours% 12M",
+            "expression": "DIVIDE([Absence Hours 12M],[Compensatory Hours 12M])",
+            "formatString": "#,0.00 %;-#,0.00 %;#,0.00 %"
+          },
+          {
+            "name": "Absence Hours Base",
+            "expression": " CALCULATE(EmployeeAbsenteeism[Absence Hours Total])",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Compensatory Hours Base",
+            "expression": " CALCULATE(EmployeeAbsenteeism[Compensatory Hours Total])",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Absence Hours Total",
+            "expression": " SUM(EmployeeAbsenteeism[_Absence Hours])",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Absence Dollars Total",
+            "expression": " SUM(EmployeeAbsenteeism[_Absence Dollars])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Absence Dollars Base",
+            "expression": " CALCULATE(EmployeeAbsenteeism[Absence Dollars Total])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Hours Total",
+            "expression": " SUM(EmployeeAbsenteeism[_Compensatory Hours])",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Compensatory Dollars Total",
+            "expression": " SUM(EmployeeAbsenteeism[_Compensatory Dollars])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Dollars Base",
+            "expression": " CALCULATE(EmployeeAbsenteeism[Compensatory Dollars Total])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Dollars AVG",
+            "expression": "DIVIDE([Compensatory Dollars],[Compensatory Hours])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Dollars AVG YTD",
+            "expression": "DIVIDE([Compensatory Dollars YTD],[Compensatory Hours YTD])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Compensatory Dollars AVG FYTD",
+            "expression": "DIVIDE([Compensatory Dollars FYTD],[Compensatory Hours FYTD])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"4105\" DisplayName=\"$ English (Canada)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "SELECT * ",
+              "FROM ",
+              "[Fact].[EmployeeAbsenteeism]"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "EmployeeAbsenteeism"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * ",
+              "FROM ",
+              "[Fact].[EmployeeAbsenteeism]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "EmployeeCompetence",
+        "columns": [
+          {
+            "name": "Competence Classification",
+            "dataType": "string",
+            "sourceColumn": "Competence Classification",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Competence Category",
+            "dataType": "string",
+            "sourceColumn": "Competence Category",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Competence Name",
+            "dataType": "string",
+            "sourceColumn": "Competence Name",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Education Description",
+            "dataType": "string",
+            "sourceColumn": "Education Description",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Issue Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Issue Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Expiry Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Expiry Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "RowID",
+            "dataType": "int64",
+            "sourceColumn": "RowID",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Competence Expires",
+            "dataType": "string",
+            "sourceColumn": "Competence Expires"
+          },
+          {
+            "name": "Emp Number",
+            "dataType": "string",
+            "sourceColumn": "Emp Number"
+          },
+          {
+            "name": "Competence Start Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Competence Start Date",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Competence End Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Competence End Date",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "EmployeeCompetence",
+            "dataView": "full",
+            "source": {
+              "query": "SELECT * FROM [Fact].[EmployeeCompetence]",
+              "dataSource": "BCF"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Fact].[EmployeeCompetence]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              }
+            ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "_Emp Count Competence",
+            "expression": " DISTINCTCOUNT(EmployeeCompetence[Emp Number])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Competence",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    EmployeeCompetence[_Emp Count Competence],",
+              "    FILTER (",
+              "        EmployeeCompetence,",
+              "        EmployeeCompetence[Issue Date] <= MAX ( 'Date'[Date] )",
+              "            &&( EmployeeCompetence[Expiry Date] >= MIN ( 'Date'[Date]) ||ISBLANK(EmployeeCompetence[Expiry Date])",
+              "    )",
+              "))"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Competence Issued",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    EmployeeCompetence[_Emp Count Competence],",
+              "    USERELATIONSHIP( EmployeeCompetence[Issue Date], 'Date'[Date] )",
+              ")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Competence Expired",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    EmployeeCompetence[_Emp Count Competence],",
+              "    USERELATIONSHIP( EmployeeCompetence[Expiry Date], 'Date'[Date] )",
+              ")"
+            ],
+            "formatString": "#,0"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": "SELECT * FROM [Fact].[EmployeeCompetence]"
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "EmployeeCompetence"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Fact].[EmployeeCompetence]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+          }
+        ]
+      },
+      {
+        "name": "Employee",
+        "columns": [
+          {
+            "name": "People Group Segment 2",
+            "dataType": "string",
+            "sourceColumn": "People Group Segment 2",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "People Group Segment 3",
+            "dataType": "string",
+            "sourceColumn": "People Group Segment 3",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Emp Number",
+            "dataType": "string",
+            "sourceColumn": "Emp Number",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Emp Name",
+            "dataType": "string",
+            "sourceColumn": "Emp Name",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Job Function",
+            "dataType": "string",
+            "sourceColumn": "Job Function",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Job",
+            "dataType": "string",
+            "sourceColumn": "Job",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Job Description",
+            "dataType": "string",
+            "sourceColumn": "Job Description",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Date of Birth",
+            "dataType": "dateTime",
+            "sourceColumn": "Date of Birth",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Gender",
+            "dataType": "string",
+            "sourceColumn": "Gender",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Latest Start Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Latest Start Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Original Date of Hire",
+            "dataType": "dateTime",
+            "sourceColumn": "Original Date of Hire",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Service Seniority Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Service Seniority Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Flag Date",
+            "dataType": "string",
+            "sourceColumn": "Flag Date",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Adjusted Service Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Adjusted Service Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Years of Service",
+            "dataType": "double",
+            "sourceColumn": "Years of Service",
+            "formatString": "#,0.00",
+            "sourceProviderType": "Decimal",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Service Recognition",
+            "dataType": "double",
+            "sourceColumn": "Service Recognition",
+            "formatString": "#,0.00",
+            "sourceProviderType": "Decimal",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Month of Recognition",
+            "dataType": "string",
+            "sourceColumn": "Month of Recognition",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Seniority Group Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Seniority Group Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Seniority Group",
+            "dataType": "string",
+            "sourceColumn": "Seniority Group",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Employee POA Recall Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Employee POA Recall Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Organization Name",
+            "dataType": "string",
+            "sourceColumn": "Organization Name",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "POA",
+            "dataType": "string",
+            "sourceColumn": "POA",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Location",
+            "dataType": "string",
+            "sourceColumn": "Location",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Position Number",
+            "dataType": "string",
+            "sourceColumn": "Position Number",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Position Description",
+            "dataType": "string",
+            "sourceColumn": "Position Description",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Primary",
+            "dataType": "string",
+            "sourceColumn": "Primary",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assignment Category",
+            "dataType": "string",
+            "sourceColumn": "Assignment Category",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assignment Status",
+            "dataType": "string",
+            "sourceColumn": "Assignment Status",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assign Reason",
+            "dataType": "string",
+            "sourceColumn": "Assign Reason",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assign Isolation Points",
+            "dataType": "string",
+            "sourceColumn": "Assign Isolation Points",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assign Override Payfactor",
+            "dataType": "string",
+            "sourceColumn": "Assign Override Payfactor",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assign Off Responsibility",
+            "dataType": "string",
+            "sourceColumn": "Assign Off Responsibility",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assign Off Activity",
+            "dataType": "string",
+            "sourceColumn": "Assign Off Activity",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Assign Off Locator",
+            "dataType": "string",
+            "sourceColumn": "Assign Off Locator",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Effective From Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Effective From Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Assign Salary",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Assign Salary",
+            "formatString": "#,0.00",
+            "sourceProviderType": "Decimal",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Position Monthly Rate",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Position Monthly Rate",
+            "formatString": "#,0.00",
+            "sourceProviderType": "Decimal",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Position Hourly Rate",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Position Hourly Rate",
+            "formatString": "#,0.00",
+            "sourceProviderType": "Decimal",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Position Location",
+            "dataType": "string",
+            "sourceColumn": "Position Location",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Position Watch",
+            "dataType": "string",
+            "sourceColumn": "Position Watch",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Address Line1",
+            "dataType": "string",
+            "sourceColumn": "Address Line1",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Address Line2",
+            "dataType": "string",
+            "sourceColumn": "Address Line2",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Address Line3",
+            "dataType": "string",
+            "sourceColumn": "Address Line3",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Province",
+            "dataType": "string",
+            "sourceColumn": "Province",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Postal Code",
+            "dataType": "string",
+            "sourceColumn": "Postal Code",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Home Phone",
+            "dataType": "string",
+            "sourceColumn": "Home Phone",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Work Phone",
+            "dataType": "string",
+            "sourceColumn": "Work Phone",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Cell Phone",
+            "dataType": "string",
+            "sourceColumn": "Cell Phone",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Crewing Phone",
+            "dataType": "string",
+            "sourceColumn": "Crewing Phone",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Person First Name",
+            "dataType": "string",
+            "sourceColumn": "Person First Name",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Person Last Name",
+            "dataType": "string",
+            "sourceColumn": "Person Last Name",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Payroll Name",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Payroll Name",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Supr Employee Number",
+            "dataType": "string",
+            "sourceColumn": "Supr Employee Number",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Supr Full Name",
+            "dataType": "string",
+            "sourceColumn": "Supr Full Name",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Email Address",
+            "dataType": "string",
+            "sourceColumn": "Email Address",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "RowID",
+            "dataType": "int64",
+            "sourceColumn": "RowID",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RowSource",
+            "dataType": "string",
+            "sourceColumn": "RowSource"
+          },
+          {
+            "name": "Benefit Group",
+            "dataType": "string",
+            "sourceColumn": "Benefit Group"
+          },
+          {
+            "name": "Actual Termination Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Actual Termination Date"
+          },
+          {
+            "name": "Leaving Reason",
+            "dataType": "string",
+            "sourceColumn": "Leaving Reason"
+          },
+          {
+            "name": "RowNumber",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "RowNumber",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Eligible Retirement Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Eligible Retirement Date",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Calculated Termination Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Calculated Termination Date",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Age Current",
+            "dataType": "int64",
+            "sourceColumn": "Age Current",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Calculated Leaving Reason",
+            "dataType": "string",
+            "sourceColumn": "Calculated Leaving Reason"
+          },
+          {
+            "name": "Eligible Retirement Age",
+            "dataType": "int64",
+            "sourceColumn": "Eligible Retirement Age",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Actual Eligible Retirement Age",
+            "dataType": "int64",
+            "sourceColumn": "Actual Eligible Retirement Age",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Actual Eligible Retirement Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Actual Eligible Retirement Date",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Actual Retirement Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Actual Retirement Date",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Eligible Retirement Date Rule 85",
+            "dataType": "dateTime",
+            "sourceColumn": "Eligible Retirement Date Rule 85",
+            "formatString": "yyyy-MM-dd",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Leaving Reason Type",
+            "dataType": "string",
+            "sourceColumn": "Leaving Reason Type"
+          },
+          {
+            "name": "Calculated Leaving Reason Type",
+            "dataType": "string",
+            "sourceColumn": "Calculated Leaving Reason Type"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "EmployeeData",
+            "dataView": "full",
+            "source": {
+              "query": [
+                "SELECT * FROM [Dim].[Employee]",
+                " --WHERE [emp number] = 106066"
+              ],
+              "dataSource": "BCF"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[Employee]",
+                  " --WHERE [emp number] = 106066</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "Emp Count Retired",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Count Active],",
+              "    USERELATIONSHIP ( Employee[Actual Retirement Date], 'Date'[Date] ),",
+              "    Employee[Leaving Reason] = \"Retirement\"",
+              ")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Eligible to Retire 55-59",
+            "expression": [
+              "",
+              "    CALCULATE (",
+              "       Employee[Emp Count Active Eligible to Retire],",
+              "Employee[Actual Eligible Retirement Age]<60 && Employee[Actual Eligible Retirement Age] >=55",
+              "    )"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Eligible to Retire 60-65",
+            "expression": [
+              "",
+              "    CALCULATE (",
+              "       Employee[Emp Count Active Eligible to Retire],",
+              "Employee[Actual Eligible Retirement Age]>=60 && Employee[Actual Eligible Retirement Age]<=65",
+              "    )"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp% Retired by Eligible",
+            "expression": "DIVIDE([Emp Count Retired],[Emp Count Active Eligible to Retire])",
+            "formatString": "0 %;-0 %;0 %"
+          },
+          {
+            "name": "Emp Count Total",
+            "expression": [
+              "",
+              "DISTINCTCOUNT ( Employee[Emp Number] )"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Active",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Count Active Base],",
+              "    FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeAge,",
+              "                         Employee[Emp Age Active Base] >= SegmentsEmployeeAge[Min Value]",
+              "                        && Employee[Emp Age Active Base] < SegmentsEmployeeAge[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        ),",
+              " FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeTenure,",
+              "                         Employee[Emp Tenure Active Base] >= SegmentsEmployeeTenure[Min Value]",
+              "                        && Employee[Emp Tenure Active Base] < SegmentsEmployeeTenure[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        )",
+              ")",
+              ""
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Active Eligible to Retire",
+            "expression": [
+              "",
+              "    CALCULATE (",
+              "       Employee[Emp Count Active],",
+              "USERELATIONSHIP ( Employee[Actual Eligible Retirement Date],'Date'[Date] )",
+              "    )"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Eligible to Retire 65+",
+            "expression": [
+              "",
+              "    CALCULATE (",
+              "       Employee[Emp Count Active Eligible to Retire],",
+              "Employee[Actual Eligible Retirement Age]>65",
+              "    )"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Age Total",
+            "expression": "AVERAGEX(Employee,(MAX('Date'[Date])-Employee[Date of Birth])/365.25)",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Emp Age Active",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Age Active Base],",
+              "    FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeAge,",
+              "                         Employee[Emp Age Active Base] >= SegmentsEmployeeAge[Min Value]",
+              "                        && Employee[Emp Age Active Base] < SegmentsEmployeeAge[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        ),",
+              "           FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeTenure,",
+              "                         Employee[Emp Tenure Active Base] >= SegmentsEmployeeTenure[Min Value]",
+              "                        && Employee[Emp Tenure Active Base] < SegmentsEmployeeTenure[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Emp Tenure Total",
+            "expression": "AVERAGEX(Employee,(MAX('Date'[Date])-Employee[Adjusted Service Date])/365.25)",
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Emp Count Active Base",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Count Total],",
+              "    FILTER (",
+              "        Employee,",
+              "        Employee[Adjusted Service Date]",
+              "            <= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MAX ( 'Date'[Date] ), TODAY () )",
+              "            && Employee[Calculated Termination Date]",
+              "                >= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MIN ( 'Date'[Date] ), TODAY () )",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Age Active Base",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Age Total],",
+              " FILTER (",
+              "        Employee,",
+              "        Employee[Adjusted Service Date]",
+              "            <= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MAX ( 'Date'[Date] ), TODAY () )",
+              "            && Employee[Calculated Termination Date]",
+              "                >= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MIN ( 'Date'[Date] ), TODAY () )",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Emp Tenure Active Base",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Tenure Total],",
+              "    FILTER (",
+              "        Employee,",
+              "        Employee[Adjusted Service Date]",
+              "            <= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MAX ( 'Date'[Date] ), TODAY () )",
+              "            && Employee[Calculated Termination Date]",
+              "                >= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MIN ( 'Date'[Date] ), TODAY () )",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Emp Tenure Active",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Tenure Active Base],",
+              "    FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeTenure,",
+              "                         Employee[Emp Tenure Active Base] >= SegmentsEmployeeTenure[Min Value]",
+              "                        && Employee[Emp Tenure Active Base] < SegmentsEmployeeTenure[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        ),",
+              "           FILTER (",
+              "            VALUES ( Employee[Emp Number] ),",
+              "            COUNTROWS (",
+              "                FILTER (",
+              "                    SegmentsEmployeeAge,",
+              "                         Employee[Emp Age Active Base] >= SegmentsEmployeeAge[Min Value]",
+              "                        && Employee[Emp Age Active Base] < SegmentsEmployeeAge[Max Value]",
+              "                )",
+              "            )",
+              "                > 0",
+              "        )",
+              ")"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Emp Count Terminated Calc",
+            "expression": [
+              "",
+              "CALCULATE (",
+              "    Employee[Emp Count Active],",
+              "    FILTER (",
+              "        Employee,",
+              "        Employee[Calculated Termination Date]",
+              "            <= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MAX ( 'Date'[Date] ), TODAY () )",
+              "            && Employee[Calculated Termination Date]",
+              "                >= IF ( ISCROSSFILTERED ( 'Date'[Date] ), MIN ( 'Date'[Date] ), TODAY () )",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Avg Age Retired",
+            "expression": [
+              " ",
+              "    CALCULATE (",
+              "       Employee[Emp Age Active],",
+              "USERELATIONSHIP ( Employee[Actual Retirement Date],'Date'[Date] ),Employee[Leaving Reason]=\"Retirement\"",
+              "    )"
+            ]
+          },
+          {
+            "name": "Avg Tenure Retired",
+            "expression": [
+              " ",
+              "    CALCULATE (",
+              "       Employee[Emp Tenure Active],",
+              "USERELATIONSHIP ( Employee[Actual Retirement Date],'Date'[Date] ),Employee[Leaving Reason]=\"Retirement\"",
+              "    )"
+            ]
+          },
+          {
+            "name": "Emp Count Retired LY1",
+            "expression": [
+              "",
+              "VAR MaxRetirementDate = MAXX (ALL(Employee),[Actual Retirement Date])",
+              "VAR MaxRetirementFY = CALCULATE(MAX('Date'[F_YYYY]),'Date'[Date] = MaxRetirementDate)",
+              "VAR MinRetirementDate = MINX (ALL(Employee),[Actual Retirement Date])",
+              "VAR MinRetirementFY = CALCULATE(MIN('Date'[F_YYYY]),'Date'[Date] = MinRetirementDate)",
+              "RETURN",
+              "SUMX (",
+              "    VALUES ( 'Date'[F_YYYY] ),",
+              "    CALCULATE (",
+              "        [Emp Count Retired],'Date'[F_YYYY]<MaxRetirementFY ,'Date'[F_YYYY]>MinRetirementFY,",
+              "        ALL ( 'Date' ),",
+              "        USERELATIONSHIP ( Employee[Actual Retirement Date], 'Date'[Date] ),",
+              "        FILTER (",
+              "            ALL ( 'Date'[F_YYYY] ),",
+              "            'Date'[F_YYYY]",
+              "                = EARLIER ( 'Date'[F_YYYY] ) - 1",
+              "        )",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Retired LY2",
+            "expression": [
+              "",
+              "VAR MaxRetirementDate = MAXX (ALL(Employee),[Actual Retirement Date])",
+              "VAR MaxRetirementFY = CALCULATE(MAX('Date'[F_YYYY]),'Date'[Date] = MaxRetirementDate)",
+              "VAR MinRetirementDate = MINX (ALL(Employee),[Actual Retirement Date])",
+              "VAR MinRetirementFY = CALCULATE(MIN('Date'[F_YYYY]),'Date'[Date] = MinRetirementDate)",
+              "RETURN",
+              "SUMX (",
+              "    VALUES ( 'Date'[F_YYYY] ),",
+              "    CALCULATE (",
+              "        [Emp Count Retired],'Date'[F_YYYY]<MaxRetirementFY ,'Date'[F_YYYY]>MinRetirementFY,",
+              "        ALL ( 'Date' ),",
+              "        USERELATIONSHIP ( Employee[Actual Retirement Date], 'Date'[Date] ),",
+              "        FILTER (",
+              "            ALL ( 'Date'[F_YYYY] ),",
+              "            'Date'[F_YYYY]",
+              "                = EARLIER ( 'Date'[F_YYYY] ) - 2",
+              "        )",
+              "    )",
+              ")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Emp Count Retired LY3",
+            "expression": [
+              "",
+              "VAR MaxRetirementDate = MAXX (ALL(Employee),[Actual Retirement Date])",
+              "VAR MaxRetirementFY = CALCULATE(MAX('Date'[F_YYYY]),'Date'[Date] = MaxRetirementDate)",
+              "VAR MinRetirementDate = MINX (ALL(Employee),[Actual Retirement Date])",
+              "VAR MinRetirementFY = CALCULATE(MIN('Date'[F_YYYY]),'Date'[Date] = MinRetirementDate)",
+              "RETURN",
+              "SUMX (",
+              "    VALUES ( 'Date'[F_YYYY] ),",
+              "    CALCULATE (",
+              "        [Emp Count Retired],'Date'[F_YYYY]<MaxRetirementFY ,'Date'[F_YYYY]>MinRetirementFY,",
+              "        ALL ( 'Date' ),",
+              "        USERELATIONSHIP ( Employee[Actual Retirement Date], 'Date'[Date] ),",
+              "        FILTER (",
+              "            ALL ( 'Date'[F_YYYY] ),",
+              "            'Date'[F_YYYY]",
+              "                = EARLIER ( 'Date'[F_YYYY] ) - 3",
+              "        )",
+              "    )",
+              ")",
+              ""
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Retired Forecast",
+            "expression": [
+              "",
+              "DIVIDE (",
+              "    ( [Emp Count Retired LY1] + [Emp Count Retired LY2]",
+              "        + [Emp Count Retired LY3] ),",
+              "    3",
+              "        - (",
+              "            ISBLANK ( [Emp Count Retired LY1] ) + ISBLANK ( [Emp Count Retired LY2] )",
+              "                + ISBLANK ( [Emp Count Retired LY3] )",
+              "        )",
+              ")"
+            ],
+            "formatString": "#,0"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "SELECT * FROM [Dim].[Employee]",
+              " --WHERE [emp number] = 106066"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "EmployeeData"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[Employee]",
+              " --WHERE [emp number] = 106066</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Date",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "isUnique": true,
+            "isKey": true,
+            "sourceColumn": "Date",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "YYYY",
+            "dataType": "int64",
+            "sourceColumn": "YYYY",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "H",
+            "dataType": "int64",
+            "sourceColumn": "H",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Q",
+            "dataType": "int64",
+            "sourceColumn": "Q",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "MM",
+            "dataType": "int64",
+            "sourceColumn": "MM",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "DD",
+            "dataType": "int64",
+            "sourceColumn": "DD",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "YYYYMM",
+            "dataType": "int64",
+            "sourceColumn": "YYYYMM",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "YYYYMMDD",
+            "dataType": "int64",
+            "sourceColumn": "YYYYMMDD",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "MonthEnd",
+            "dataType": "dateTime",
+            "sourceColumn": "MonthEnd",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "MonthStart",
+            "dataType": "dateTime",
+            "sourceColumn": "MonthStart",
+            "formatString": "yyyy-MM-dd",
+            "sourceProviderType": "Date",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1033\" Group=\"ShortDate\" FormatString=\"yyyy-MM-dd\" /></DateTimes></Format>"
+              }
+            ]
+          },
+          {
+            "name": "MonthDaysCount",
+            "dataType": "int64",
+            "sourceColumn": "MonthDaysCount",
+            "formatString": "0",
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "YYYYH",
+            "dataType": "int64",
+            "sourceColumn": "YYYYH",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "YYYYQ",
+            "dataType": "int64",
+            "sourceColumn": "YYYYQ",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_YYYY",
+            "dataType": "int64",
+            "sourceColumn": "F_YYYY",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_H",
+            "dataType": "int64",
+            "sourceColumn": "F_H",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_Q",
+            "dataType": "int64",
+            "sourceColumn": "F_Q",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_MM",
+            "dataType": "int64",
+            "sourceColumn": "F_MM",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_DD",
+            "dataType": "int64",
+            "sourceColumn": "F_DD",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_YYYYH",
+            "dataType": "int64",
+            "sourceColumn": "F_YYYYH",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_YYYYQ",
+            "dataType": "int64",
+            "sourceColumn": "F_YYYYQ",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_YYYYMM",
+            "dataType": "int64",
+            "sourceColumn": "F_YYYYMM",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "YY",
+            "dataType": "int64",
+            "sourceColumn": "YY",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "YY qQ",
+            "dataType": "string",
+            "sourceColumn": "YY qQ"
+          },
+          {
+            "name": "F_YY",
+            "dataType": "int64",
+            "sourceColumn": "F_YY",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "F_YY qQ",
+            "dataType": "string",
+            "sourceColumn": "F_YY qQ"
+          },
+          {
+            "name": "qQ",
+            "dataType": "string",
+            "sourceColumn": "qQ"
+          },
+          {
+            "name": "YY str",
+            "dataType": "string",
+            "sourceColumn": "YY str"
+          },
+          {
+            "name": "F_YY str",
+            "dataType": "string",
+            "sourceColumn": "F_YY str",
+            "sortByColumn": "F_YY"
+          },
+          {
+            "name": "F_qQ",
+            "dataType": "string",
+            "sourceColumn": "F_qQ",
+            "sortByColumn": "F_Q"
+          },
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalendarDay",
+            "dataView": "full",
+            "source": {
+              "query": "SELECT * FROM [Dim].[Date]",
+              "dataSource": "BCF"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[Date]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              }
+            ]
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "YYYY-H-Q-M-DD",
+            "levels": [
+              {
+                "name": "YYYY",
+                "ordinal": 0,
+                "column": "YYYY"
+              },
+              {
+                "name": "H",
+                "ordinal": 1,
+                "column": "H"
+              },
+              {
+                "name": "Q",
+                "ordinal": 2,
+                "column": "Q"
+              },
+              {
+                "name": "MM",
+                "ordinal": 3,
+                "column": "MM"
+              },
+              {
+                "name": "DD",
+                "ordinal": 4,
+                "column": "DD"
+              }
+            ]
+          },
+          {
+            "name": "Fiscal Calendar",
+            "levels": [
+              {
+                "name": "F_YYYY",
+                "ordinal": 0,
+                "column": "F_YYYY"
+              },
+              {
+                "name": "F_H",
+                "ordinal": 1,
+                "column": "F_H"
+              },
+              {
+                "name": "F_Q",
+                "ordinal": 2,
+                "column": "F_Q"
+              },
+              {
+                "name": "F_MM",
+                "ordinal": 3,
+                "column": "F_MM"
+              }
+            ]
+          },
+          {
+            "name": "Fiscal Calendar Qurter",
+            "levels": [
+              {
+                "name": "F_YY str",
+                "ordinal": 0,
+                "column": "F_YY str"
+              },
+              {
+                "name": "F_qQ",
+                "ordinal": 1,
+                "column": "F_qQ"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": "SELECT * FROM [Dim].[Date]"
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "CalendarDay"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[Date]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+          }
+        ]
+      },
+      {
+        "name": "Segments",
+        "columns": [
+          {
+            "name": "Segment Group",
+            "dataType": "string",
+            "sourceColumn": "Segment Group"
+          },
+          {
+            "name": "Segment Position",
+            "dataType": "int64",
+            "sourceColumn": "Segment Position",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Segment Name",
+            "dataType": "string",
+            "sourceColumn": "Segment Name",
+            "sortByColumn": "Segment Position"
+          },
+          {
+            "name": "Min Value",
+            "dataType": "int64",
+            "sourceColumn": "Min Value",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Max Value",
+            "dataType": "int64",
+            "sourceColumn": "Max Value",
+            "formatString": "0",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "EmpAgeBoundary",
+            "dataView": "full",
+            "source": {
+              "query": "SELECT * FROM [Dim].[Segments]",
+              "dataSource": "BCF"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[Segments]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": "SELECT * FROM [Dim].[Segments]"
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "EmpAgeBoundary"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[Segments]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+          }
+        ]
+      },
+      {
+        "name": "SegmentsEmployeeAge",
+        "columns": [
+          {
+            "name": "Segment Group",
+            "dataType": "string",
+            "sourceColumn": "Segment Group",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Segment Position",
+            "dataType": "int64",
+            "sourceColumn": "Segment Position",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Segment Name",
+            "dataType": "string",
+            "sourceColumn": "Segment Name",
+            "sortByColumn": "Segment Position",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Min Value",
+            "dataType": "double",
+            "sourceColumn": "Min Value",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "Max Value",
+            "dataType": "double",
+            "sourceColumn": "Max Value",
+            "sourceProviderType": "Decimal"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "SegmentsEmployeeAge",
+            "dataView": "full",
+            "source": {
+              "query": "SELECT * FROM [Dim].[SegmentsEmployeeAge]",
+              "dataSource": "BCF"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[SegmentsEmployeeAge]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": "SELECT * FROM [Dim].[SegmentsEmployeeAge]"
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "SegmentsEmployeeAge"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[SegmentsEmployeeAge]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+          }
+        ]
+      },
+      {
+        "name": "SegmentsEmployeeTenure",
+        "columns": [
+          {
+            "name": "Segment Group",
+            "dataType": "string",
+            "sourceColumn": "Segment Group",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Segment Position",
+            "dataType": "int64",
+            "sourceColumn": "Segment Position",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Segment Name",
+            "dataType": "string",
+            "sourceColumn": "Segment Name",
+            "sortByColumn": "Segment Position",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "Min Value",
+            "dataType": "double",
+            "sourceColumn": "Min Value",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "Max Value",
+            "dataType": "double",
+            "sourceColumn": "Max Value",
+            "sourceProviderType": "Decimal"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "SegmentsEmployeeTenure",
+            "dataView": "full",
+            "source": {
+              "query": "SELECT * FROM [Dim].[SegmentsEmployeeTenure]",
+              "dataSource": "BCF"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[SegmentsEmployeeTenure]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": "SELECT * FROM [Dim].[SegmentsEmployeeTenure]"
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "SegmentsEmployeeTenure"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT * FROM [Dim].[SegmentsEmployeeTenure]</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "a0b207d6-05fc-4d3d-92d8-29ee3425afec",
+        "fromTable": "EmployeeCompetence",
+        "fromColumn": "Expiry Date",
+        "toTable": "Date",
+        "toColumn": "Date",
+        "isActive": false
+      },
+      {
+        "name": "200c40e6-da7a-46d4-9d28-d1d3cb7afd14",
+        "fromTable": "Employee",
+        "fromColumn": "Eligible Retirement Date",
+        "toTable": "Date",
+        "toColumn": "Date",
+        "isActive": false
+      },
+      {
+        "name": "223919af-d024-450e-bf7e-52dc94243938",
+        "fromTable": "Employee",
+        "fromColumn": "Actual Eligible Retirement Date",
+        "toTable": "Date",
+        "toColumn": "Date",
+        "isActive": false
+      },
+      {
+        "name": "9329b849-d151-4072-b82f-3aeadc6205d2",
+        "fromTable": "Employee",
+        "fromColumn": "Actual Retirement Date",
+        "toTable": "Date",
+        "toColumn": "Date",
+        "isActive": false
+      },
+      {
+        "name": "79b35b2f-4cc9-4a2e-8e4c-c3ee198829e3",
+        "fromTable": "EmployeeCompetence",
+        "fromColumn": "Issue Date",
+        "toTable": "Date",
+        "toColumn": "Date",
+        "isActive": false
+      },
+      {
+        "name": "d30de1a1-8ca2-409a-991b-034b79f8e1f2",
+        "fromTable": "EmployeeAbsenteeism",
+        "fromColumn": "Absence Date",
+        "toTable": "Date",
+        "toColumn": "Date"
+      },
+      {
+        "name": "313e92d4-feb0-483c-a75e-3e3f38ef4b5c",
+        "fromTable": "EmployeeCompetence",
+        "fromColumn": "Emp Number",
+        "toTable": "Employee",
+        "toColumn": "Emp Number",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "487b457a-186e-4cb2-adc4-fca122a9952f",
+        "fromTable": "EmployeeAbsenteeism",
+        "fromColumn": "Emp Number",
+        "toTable": "Employee",
+        "toColumn": "Emp Number"
+      },
+      {
+        "name": "c194a8b8-4018-4ac3-98a4-f3611bbbc2e7",
+        "fromTable": "Employee",
+        "fromColumn": "Calculated Termination Date",
+        "toTable": "Date",
+        "toColumn": "Date",
+        "isActive": false
+      }
+    ],
+    "roles": [
+      {
+        "name": "Read",
+        "modelPermission": "read",
+        "members": [
+          {
+            "memberName": "PowerBIReportReader",
+            "memberId": "S-1-5-21-1645301273-1691242003-3327039898-1009"
+          },
+          {
+            "memberName": "BCFERRIES\\oafuwape",
+            "memberId": "S-1-5-21-839522115-682003330-2147125571-308320"
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
