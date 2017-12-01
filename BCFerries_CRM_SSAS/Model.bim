@@ -6,7 +6,7 @@
     "dataSources": [
       {
         "name": "CRM",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corp;User ID=joanders;Persist Security Info=false",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corpt;User ID=joanders;Persist Security Info=false",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -16,8 +16,8 @@
         ]
       },
       {
-        "name": "aBooking",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corpt;User ID=report_proxy_user;Persist Security Info=true",
+        "name": "Booking",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corptBooking;User ID=report_proxy_user;Persist Security Info=true",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -193,22 +193,26 @@
           {
             "name": "PRIMARYADDRESSCITY",
             "dataType": "string",
-            "sourceColumn": "PRIMARYADDRESSCITY"
+            "sourceColumn": "PRIMARYADDRESSCITY",
+            "dataCategory": "City"
           },
           {
             "name": "PRIMARYADDRESSPROVINCESTATE",
             "dataType": "string",
-            "sourceColumn": "PRIMARYADDRESSPROVINCESTATE"
+            "sourceColumn": "PRIMARYADDRESSPROVINCESTATE",
+            "dataCategory": "StateOrProvince"
           },
           {
             "name": "PRIMARYADDRESSCOUNTRY",
             "dataType": "string",
-            "sourceColumn": "PRIMARYADDRESSCOUNTRY"
+            "sourceColumn": "PRIMARYADDRESSCOUNTRY",
+            "dataCategory": "Country"
           },
           {
             "name": "PRIMARYPOSTALZIP",
             "dataType": "string",
-            "sourceColumn": "PRIMARYPOSTALZIP"
+            "sourceColumn": "PRIMARYPOSTALZIP",
+            "dataCategory": "PostalCode"
           }
         ],
         "partitions": [
@@ -247,14 +251,14 @@
                 "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
                 "    , CONTACT.LAST_UPD as LastUpdated",
                 "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-                "from SIEBEL_DEV.S_CONTACT CONTACT",
-                "left outer join SIEBEL_DEV.S_PER_COMM_ADDR PHONE",
+                "from BCFSBLTST.S_CONTACT CONTACT",
+                "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
                 "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-                "left outer join SIEBEL_DEV.S_PER_COMM_ADDR EMAIL ",
-                "    on CONTACT.PR_EMAIL_ADDR_ID = PHONE.ROW_ID",
-                "left outer join SIEBEL_DEV.S_ADDR_PER PERSONALADDRESS",
+                "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+                "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
+                "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
                 "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-                "left outer join SIEBEL_DEV.S_CONTACT_X CONTACTX ",
+                "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
                 "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
                 "union",
                 "select 'NOREL' as ContactID",
@@ -328,14 +332,14 @@
                   "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
                   "    , CONTACT.LAST_UPD as LastUpdated",
                   "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-                  "from SIEBEL_DEV.S_CONTACT CONTACT",
-                  "left outer join SIEBEL_DEV.S_PER_COMM_ADDR PHONE",
+                  "from BCFSBLTST.S_CONTACT CONTACT",
+                  "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
                   "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-                  "left outer join SIEBEL_DEV.S_PER_COMM_ADDR EMAIL ",
-                  "    on CONTACT.PR_EMAIL_ADDR_ID = PHONE.ROW_ID",
-                  "left outer join SIEBEL_DEV.S_ADDR_PER PERSONALADDRESS",
+                  "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+                  "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
+                  "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
                   "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-                  "left outer join SIEBEL_DEV.S_CONTACT_X CONTACTX ",
+                  "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
                   "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
                   "union",
                   "select 'NOREL' as ContactID",
@@ -411,14 +415,14 @@
               "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
               "    , CONTACT.LAST_UPD as LastUpdated",
               "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-              "from SIEBEL_DEV.S_CONTACT CONTACT",
-              "left outer join SIEBEL_DEV.S_PER_COMM_ADDR PHONE",
+              "from BCFSBLTST.S_CONTACT CONTACT",
+              "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
               "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-              "left outer join SIEBEL_DEV.S_PER_COMM_ADDR EMAIL ",
-              "    on CONTACT.PR_EMAIL_ADDR_ID = PHONE.ROW_ID",
-              "left outer join SIEBEL_DEV.S_ADDR_PER PERSONALADDRESS",
+              "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+              "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
+              "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
               "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-              "left outer join SIEBEL_DEV.S_CONTACT_X CONTACTX ",
+              "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
               "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
               "union",
               "select 'NOREL' as ContactID",
@@ -494,14 +498,14 @@
               "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
               "    , CONTACT.LAST_UPD as LastUpdated",
               "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-              "from SIEBEL_DEV.S_CONTACT CONTACT",
-              "left outer join SIEBEL_DEV.S_PER_COMM_ADDR PHONE",
+              "from BCFSBLTST.S_CONTACT CONTACT",
+              "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
               "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-              "left outer join SIEBEL_DEV.S_PER_COMM_ADDR EMAIL ",
-              "    on CONTACT.PR_EMAIL_ADDR_ID = PHONE.ROW_ID",
-              "left outer join SIEBEL_DEV.S_ADDR_PER PERSONALADDRESS",
+              "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+              "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
+              "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
               "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-              "left outer join SIEBEL_DEV.S_CONTACT_X CONTACTX ",
+              "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
               "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
               "union",
               "select 'NOREL' as ContactID",
@@ -618,7 +622,7 @@
                 "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
                 "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
                 "    , SUBSCRIPTION.NAME as Comments",
-                "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+                "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
                 "union",
                 "select ",
                 "    'NOREL' as SubscriptionID",
@@ -648,7 +652,7 @@
                   "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
                   "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
                   "    , SUBSCRIPTION.NAME as Comments",
-                  "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+                  "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
                   "union",
                   "select ",
                   "    'NOREL' as SubscriptionID",
@@ -680,7 +684,7 @@
               "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
               "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
               "    , SUBSCRIPTION.NAME as Comments",
-              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
               "union",
               "select ",
               "    'NOREL' as SubscriptionID",
@@ -712,7 +716,7 @@
               "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
               "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
               "    , SUBSCRIPTION.NAME as Comments",
-              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
+              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
               "union",
               "select ",
               "    'NOREL' as SubscriptionID",
@@ -731,6 +735,7 @@
       },
       {
         "name": "factSubscription",
+        "isHidden": true,
         "columns": [
           {
             "name": "SUBSCRIPTIONDATE",
@@ -837,10 +842,10 @@
                 "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
                 "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
                 "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-                "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
-                "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-                "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-                "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
+                "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+                "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+                "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+                "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
               ],
               "dataSource": "CRM"
             },
@@ -862,10 +867,10 @@
                   "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
                   "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
                   "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-                  "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
-                  "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-                  "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-                  "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+                  "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+                  "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+                  "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -889,10 +894,10 @@
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
               "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
-              "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-              "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
+              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+              "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+              "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+              "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
             ]
           },
           {
@@ -916,16 +921,17 @@
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
               "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-              "    from SIEBEL_DEV.S_CALL_LST SUBSCRIPTION",
-              "    left join SIEBEL_DEV.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-              "    left join SIEBEL_DEV.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+              "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+              "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+              "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
       },
       {
         "name": "factAgreement",
+        "isHidden": true,
         "columns": [
           {
             "name": "AGREEMENTSTARTDATE",
@@ -971,16 +977,16 @@
             "source": {
               "query": [
                 "select ",
-                "    AGREEMENT.ROW_ID as fAgreementId",
+                "    AGREEMENT.ROW_ID || COALESCE(CONTACT.ROW_ID, 'NOREL') as fAgreementId",
                 "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
                 "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
                 "    , AGREEMENT.ROW_ID as AgreementId",
                 "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
                 "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-                "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
-                "left join SIEBEL_DEV.S_CONTACT CONTACT",
+                "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+                "left join BCFSBLTST.S_CONTACT CONTACT",
                 "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-                "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+                "left join BCFSBLTST.S_ORG_EXT ACCNT",
                 "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID"
               ],
               "dataSource": "CRM"
@@ -990,16 +996,16 @@
                 "name": "QueryEditorSerialization",
                 "value": [
                   "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
-                  "    AGREEMENT.ROW_ID as fAgreementId",
+                  "    AGREEMENT.ROW_ID || COALESCE(CONTACT.ROW_ID, 'NOREL') as fAgreementId",
                   "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
                   "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
                   "    , AGREEMENT.ROW_ID as AgreementId",
                   "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
                   "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-                  "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
-                  "left join SIEBEL_DEV.S_CONTACT CONTACT",
+                  "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+                  "left join BCFSBLTST.S_CONTACT CONTACT",
                   "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-                  "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+                  "left join BCFSBLTST.S_ORG_EXT ACCNT",
                   "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -1011,16 +1017,16 @@
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
               "select ",
-              "    AGREEMENT.ROW_ID as fAgreementId",
+              "    AGREEMENT.ROW_ID || COALESCE(CONTACT.ROW_ID, 'NOREL') as fAgreementId",
               "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
               "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
               "    , AGREEMENT.ROW_ID as AgreementId",
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-              "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
-              "left join SIEBEL_DEV.S_CONTACT CONTACT",
+              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+              "left join BCFSBLTST.S_CONTACT CONTACT",
               "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-              "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+              "left join BCFSBLTST.S_ORG_EXT ACCNT",
               "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID"
             ]
           },
@@ -1032,16 +1038,16 @@
             "name": "QueryEditorSerialization",
             "value": [
               "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
-              "    AGREEMENT.ROW_ID as fAgreementId",
+              "    AGREEMENT.ROW_ID || COALESCE(CONTACT.ROW_ID, 'NOREL') as fAgreementId",
               "    , AGREEMENT.EFF_START_DT as AgreementStartDate",
               "    , AGREEMENT.EFF_END_DT as AgreementEndDate",
               "    , AGREEMENT.ROW_ID as AgreementId",
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-              "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
-              "left join SIEBEL_DEV.S_CONTACT CONTACT",
+              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+              "left join BCFSBLTST.S_CONTACT CONTACT",
               "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-              "left join SIEBEL_DEv.S_ORG_EXT ACCNT",
+              "left join BCFSBLTST.S_ORG_EXT ACCNT",
               "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
@@ -1049,6 +1055,7 @@
       },
       {
         "name": "dimAgreement",
+        "isHidden": true,
         "columns": [
           {
             "name": "AGREEMENTID",
@@ -1123,7 +1130,7 @@
                 "    , AGREEMENT.STAT_CD as AgreementStatus",
                 "    , AGREEMENT.REV_NUM as RevisionNumber",
                 "    , AGREEMENT.DESC_TEXT as Notes",
-                "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
+                "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
                 "union",
                 "select ",
                 "    'NOREL' as AgreementId",
@@ -1153,7 +1160,7 @@
                   "    , AGREEMENT.STAT_CD as AgreementStatus",
                   "    , AGREEMENT.REV_NUM as RevisionNumber",
                   "    , AGREEMENT.DESC_TEXT as Notes",
-                  "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
+                  "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
                   "union",
                   "select ",
                   "    'NOREL' as AgreementId",
@@ -1185,7 +1192,7 @@
               "    , AGREEMENT.STAT_CD as AgreementStatus",
               "    , AGREEMENT.REV_NUM as RevisionNumber",
               "    , AGREEMENT.DESC_TEXT as Notes",
-              "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
+              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
               "union",
               "select ",
               "    'NOREL' as AgreementId",
@@ -1217,7 +1224,7 @@
               "    , AGREEMENT.STAT_CD as AgreementStatus",
               "    , AGREEMENT.REV_NUM as RevisionNumber",
               "    , AGREEMENT.DESC_TEXT as Notes",
-              "from SIEBEL_DEV.S_DOC_AGREE AGREEMENT",
+              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
               "union",
               "select ",
               "    'NOREL' as AgreementId",
@@ -1236,6 +1243,7 @@
       },
       {
         "name": "factAddress",
+        "isHidden": true,
         "columns": [
           {
             "name": "FADDRESSID",
@@ -1305,12 +1313,12 @@
                 "    , ADDRESS.CREATED_BY as CreatedByUserID",
                 "    , ADDRESS.LAST_UPD as LastUpdatedDate",
                 "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-                "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
-                "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+                "    from BCFSBLTST.S_CON_ADDR ADDRESS",
+                "    left join BCFSBLTST.S_CONTACT CONTACT",
                 "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-                "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                "    left join BCFSBLTST.S_ORG_EXT ACCNT",
                 "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-                "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+                "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
                 "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID"
               ],
               "dataSource": "CRM"
@@ -1328,12 +1336,12 @@
                   "    , ADDRESS.CREATED_BY as CreatedByUserID",
                   "    , ADDRESS.LAST_UPD as LastUpdatedDate",
                   "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-                  "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
-                  "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+                  "    from BCFSBLTST.S_CON_ADDR ADDRESS",
+                  "    left join BCFSBLTST.S_CONTACT CONTACT",
                   "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-                  "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                  "    left join BCFSBLTST.S_ORG_EXT ACCNT",
                   "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-                  "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+                  "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
                   "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -1359,12 +1367,12 @@
               "    , ADDRESS.CREATED_BY as CreatedByUserID",
               "    , ADDRESS.LAST_UPD as LastUpdatedDate",
               "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-              "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
-              "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+              "    from BCFSBLTST.S_CON_ADDR ADDRESS",
+              "    left join BCFSBLTST.S_CONTACT CONTACT",
               "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "    left join BCFSBLTST.S_ORG_EXT ACCNT",
               "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-              "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+              "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
               "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID"
             ]
           },
@@ -1384,12 +1392,12 @@
               "    , ADDRESS.CREATED_BY as CreatedByUserID",
               "    , ADDRESS.LAST_UPD as LastUpdatedDate",
               "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-              "    from SIEBEL_DEV.S_CON_ADDR ADDRESS",
-              "    left join SIEBEL_DEV.S_CONTACT CONTACT",
+              "    from BCFSBLTST.S_CON_ADDR ADDRESS",
+              "    left join BCFSBLTST.S_CONTACT CONTACT",
               "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-              "    left join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "    left join BCFSBLTST.S_ORG_EXT ACCNT",
               "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-              "    left join SIEBEL_DEV.S_ADDR_PER ADDRESSES",
+              "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
               "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
@@ -1397,6 +1405,7 @@
       },
       {
         "name": "dimAddress",
+        "isHidden": true,
         "columns": [
           {
             "name": "ADDRESSID",
@@ -1464,7 +1473,7 @@
                 "    , COUNTRY as Country",
                 "    , STATE as ProvinceState",
                 "    , ZIPCODE as PostalZip",
-                "     from SIEBEL_DEV.S_ADDR_PER",
+                "     from BCFSBLTST.S_ADDR_PER",
                 "union",
                 "select 'NOREL' as AddressID",
                 "    , 'NOREL' as Name",
@@ -1491,7 +1500,7 @@
                   "    , COUNTRY as Country",
                   "    , STATE as ProvinceState",
                   "    , ZIPCODE as PostalZip",
-                  "     from SIEBEL_DEV.S_ADDR_PER",
+                  "     from BCFSBLTST.S_ADDR_PER",
                   "union",
                   "select 'NOREL' as AddressID",
                   "    , 'NOREL' as Name",
@@ -1520,7 +1529,7 @@
               "    , COUNTRY as Country",
               "    , STATE as ProvinceState",
               "    , ZIPCODE as PostalZip",
-              "     from SIEBEL_DEV.S_ADDR_PER",
+              "     from BCFSBLTST.S_ADDR_PER",
               "union",
               "select 'NOREL' as AddressID",
               "    , 'NOREL' as Name",
@@ -1549,7 +1558,7 @@
               "    , COUNTRY as Country",
               "    , STATE as ProvinceState",
               "    , ZIPCODE as PostalZip",
-              "     from SIEBEL_DEV.S_ADDR_PER",
+              "     from BCFSBLTST.S_ADDR_PER",
               "union",
               "select 'NOREL' as AddressID",
               "    , 'NOREL' as Name",
@@ -1674,6 +1683,43 @@
             "name": "ACCOUNTNUMBER",
             "dataType": "string",
             "sourceColumn": "ACCOUNTNUMBER"
+          },
+          {
+            "type": "calculated",
+            "name": "AcccountName",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " LOOKUPVALUE ([Name], [AccountId], PATHITEM ([HierarchyPath], 2))"
+          },
+          {
+            "name": "PRIMARYADDRESS",
+            "dataType": "string",
+            "sourceColumn": "PRIMARYADDRESS"
+          },
+          {
+            "name": "PRIMARYADDRESSLINE2",
+            "dataType": "string",
+            "sourceColumn": "PRIMARYADDRESSLINE2"
+          },
+          {
+            "name": "PRIMARYADDRESSCITY",
+            "dataType": "string",
+            "sourceColumn": "PRIMARYADDRESSCITY"
+          },
+          {
+            "name": "PRIMARYADDRESSPROVINCESTATE",
+            "dataType": "string",
+            "sourceColumn": "PRIMARYADDRESSPROVINCESTATE"
+          },
+          {
+            "name": "PRIMARYADDRESSCOUNTRY",
+            "dataType": "string",
+            "sourceColumn": "PRIMARYADDRESSCOUNTRY"
+          },
+          {
+            "name": "PRIMARYPOSTALZIP",
+            "dataType": "string",
+            "sourceColumn": "PRIMARYPOSTALZIP"
           }
         ],
         "partitions": [
@@ -1684,9 +1730,15 @@
               "query": [
                 "select ",
                 "        ACCOUNT.ROW_ID as AccountID",
-                "        , ACCOUNT.MASTER_OU_ID as ParentAccountID",
+                "        , case ACCOUNT.MASTER_OU_ID when ACCOUNT.ROW_ID then NULL else ACCOUNT.MASTER_OU_ID end as ParentAccountID",
                 "        , COALESCE(TO_CHAR(ACCOUNT.X_BCF_CUST_NUM), ACCOUNT.ROW_ID) as AccountNumber\t",
                 "        , ACCOUNT.NAME as Name",
+                "        , ADDRESS.ADDR as PrimaryAddress",
+                "    , ADDRESS.ADDR_LINE_2 as PrimaryAddressLine2",
+                "    , ADDRESS.CITY as PrimaryAddressCity",
+                "    , ADDRESS.STATE as PrimaryAddressProvinceState",
+                "    , ADDRESS.COUNTRY as PrimaryAddressCountry",
+                "    , ADDRESS.ZIPCODE as PrimaryPostalZip",
                 "        , ACCOUNT.LOC as Location",
                 "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
                 "        , ACCOUNTX.ATTRIB_07 as FINSAccountNumber",
@@ -1698,15 +1750,23 @@
                 "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
                 "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
                 "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-                "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
-                "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
+                "from BCFSBLTST.S_ORG_EXT ACCOUNT",
+                "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
                 "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
+                "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+                "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
                 "union",
                 "select",
                 "    'NOREL' as AccountID",
                 "        , 'NOREL' as ParentAccountID",
                 "        , 'NOREL' as AccountNumber",
                 "        , 'NOREL' as Name",
+                "        , 'NOREL' as PrimaryAddress",
+                "    , 'NOREL' as PrimaryAddressLine2",
+                "    , 'NOREL' as PrimaryAddressCity",
+                "    , 'NOREL' as PrimaryAddressProvinceState",
+                "    , 'NOREL' as PrimaryAddressCountry",
+                "    , 'NOREL' as PrimaryPostalZip",
                 "        , 'NOREL' as Location",
                 "        , 'NOREL' as AccountStatus",
                 "        , 'NOREL' as FINSAccountNumber",
@@ -1728,9 +1788,15 @@
                 "value": [
                   "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
                   "        ACCOUNT.ROW_ID as AccountID",
-                  "        , ACCOUNT.MASTER_OU_ID as ParentAccountID",
+                  "        , case ACCOUNT.MASTER_OU_ID when ACCOUNT.ROW_ID then NULL else ACCOUNT.MASTER_OU_ID end as ParentAccountID",
                   "        , COALESCE(TO_CHAR(ACCOUNT.X_BCF_CUST_NUM), ACCOUNT.ROW_ID) as AccountNumber\t",
                   "        , ACCOUNT.NAME as Name",
+                  "        , ADDRESS.ADDR as PrimaryAddress",
+                  "    , ADDRESS.ADDR_LINE_2 as PrimaryAddressLine2",
+                  "    , ADDRESS.CITY as PrimaryAddressCity",
+                  "    , ADDRESS.STATE as PrimaryAddressProvinceState",
+                  "    , ADDRESS.COUNTRY as PrimaryAddressCountry",
+                  "    , ADDRESS.ZIPCODE as PrimaryPostalZip",
                   "        , ACCOUNT.LOC as Location",
                   "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
                   "        , ACCOUNTX.ATTRIB_07 as FINSAccountNumber",
@@ -1742,15 +1808,23 @@
                   "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
                   "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
                   "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-                  "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
-                  "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
+                  "from BCFSBLTST.S_ORG_EXT ACCOUNT",
+                  "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
                   "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
+                  "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+                  "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
                   "union",
                   "select",
                   "    'NOREL' as AccountID",
                   "        , 'NOREL' as ParentAccountID",
                   "        , 'NOREL' as AccountNumber",
                   "        , 'NOREL' as Name",
+                  "        , 'NOREL' as PrimaryAddress",
+                  "    , 'NOREL' as PrimaryAddressLine2",
+                  "    , 'NOREL' as PrimaryAddressCity",
+                  "    , 'NOREL' as PrimaryAddressProvinceState",
+                  "    , 'NOREL' as PrimaryAddressCountry",
+                  "    , 'NOREL' as PrimaryPostalZip",
                   "        , 'NOREL' as Location",
                   "        , 'NOREL' as AccountStatus",
                   "        , 'NOREL' as FINSAccountNumber",
@@ -1778,9 +1852,9 @@
                 "column": "ParentAccountName"
               },
               {
-                "name": "NAME",
+                "name": "AcccountName",
                 "ordinal": 1,
-                "column": "NAME"
+                "column": "AcccountName"
               }
             ]
           }
@@ -1791,9 +1865,15 @@
             "value": [
               "select ",
               "        ACCOUNT.ROW_ID as AccountID",
-              "        , ACCOUNT.MASTER_OU_ID as ParentAccountID",
+              "        , case ACCOUNT.MASTER_OU_ID when ACCOUNT.ROW_ID then NULL else ACCOUNT.MASTER_OU_ID end as ParentAccountID",
               "        , COALESCE(TO_CHAR(ACCOUNT.X_BCF_CUST_NUM), ACCOUNT.ROW_ID) as AccountNumber\t",
               "        , ACCOUNT.NAME as Name",
+              "        , ADDRESS.ADDR as PrimaryAddress",
+              "    , ADDRESS.ADDR_LINE_2 as PrimaryAddressLine2",
+              "    , ADDRESS.CITY as PrimaryAddressCity",
+              "    , ADDRESS.STATE as PrimaryAddressProvinceState",
+              "    , ADDRESS.COUNTRY as PrimaryAddressCountry",
+              "    , ADDRESS.ZIPCODE as PrimaryPostalZip",
               "        , ACCOUNT.LOC as Location",
               "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
               "        , ACCOUNTX.ATTRIB_07 as FINSAccountNumber",
@@ -1805,15 +1885,23 @@
               "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
               "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
               "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-              "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
-              "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
+              "from BCFSBLTST.S_ORG_EXT ACCOUNT",
+              "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
               "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
+              "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+              "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
               "union",
               "select",
               "    'NOREL' as AccountID",
               "        , 'NOREL' as ParentAccountID",
               "        , 'NOREL' as AccountNumber",
               "        , 'NOREL' as Name",
+              "        , 'NOREL' as PrimaryAddress",
+              "    , 'NOREL' as PrimaryAddressLine2",
+              "    , 'NOREL' as PrimaryAddressCity",
+              "    , 'NOREL' as PrimaryAddressProvinceState",
+              "    , 'NOREL' as PrimaryAddressCountry",
+              "    , 'NOREL' as PrimaryPostalZip",
               "        , 'NOREL' as Location",
               "        , 'NOREL' as AccountStatus",
               "        , 'NOREL' as FINSAccountNumber",
@@ -1837,9 +1925,15 @@
             "value": [
               "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select ",
               "        ACCOUNT.ROW_ID as AccountID",
-              "        , ACCOUNT.MASTER_OU_ID as ParentAccountID",
+              "        , case ACCOUNT.MASTER_OU_ID when ACCOUNT.ROW_ID then NULL else ACCOUNT.MASTER_OU_ID end as ParentAccountID",
               "        , COALESCE(TO_CHAR(ACCOUNT.X_BCF_CUST_NUM), ACCOUNT.ROW_ID) as AccountNumber\t",
               "        , ACCOUNT.NAME as Name",
+              "        , ADDRESS.ADDR as PrimaryAddress",
+              "    , ADDRESS.ADDR_LINE_2 as PrimaryAddressLine2",
+              "    , ADDRESS.CITY as PrimaryAddressCity",
+              "    , ADDRESS.STATE as PrimaryAddressProvinceState",
+              "    , ADDRESS.COUNTRY as PrimaryAddressCountry",
+              "    , ADDRESS.ZIPCODE as PrimaryPostalZip",
               "        , ACCOUNT.LOC as Location",
               "        , ACCOUNT.CUST_STAT_CD as AccountStatus",
               "        , ACCOUNTX.ATTRIB_07 as FINSAccountNumber",
@@ -1851,15 +1945,23 @@
               "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
               "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
               "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-              "from SIEBEL_DEV.S_ORG_EXT ACCOUNT",
-              "left join SIEBEL_DEV.S_ORG_EXT_X ACCOUNTX",
+              "from BCFSBLTST.S_ORG_EXT ACCOUNT",
+              "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
               "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
+              "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+              "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
               "union",
               "select",
               "    'NOREL' as AccountID",
               "        , 'NOREL' as ParentAccountID",
               "        , 'NOREL' as AccountNumber",
               "        , 'NOREL' as Name",
+              "        , 'NOREL' as PrimaryAddress",
+              "    , 'NOREL' as PrimaryAddressLine2",
+              "    , 'NOREL' as PrimaryAddressCity",
+              "    , 'NOREL' as PrimaryAddressProvinceState",
+              "    , 'NOREL' as PrimaryAddressCountry",
+              "    , 'NOREL' as PrimaryPostalZip",
               "        , 'NOREL' as Location",
               "        , 'NOREL' as AccountStatus",
               "        , 'NOREL' as FINSAccountNumber",
@@ -1959,8 +2061,8 @@
                 "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
                 "    , ACTIVITYX.ATTRIB_07 as SourceName",
                 "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-                "    from SIEBEL_DEV.S_EVT_ACT ACTIVITY",
-                "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+                "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
+                "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
                 "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
                 "union",
                 "select ",
@@ -1993,8 +2095,8 @@
                   "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
                   "    , ACTIVITYX.ATTRIB_07 as SourceName",
                   "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-                  "    from SIEBEL_DEV.S_EVT_ACT ACTIVITY",
-                  "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+                  "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
+                  "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
                   "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
                   "union",
                   "select ",
@@ -2029,8 +2131,8 @@
               "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
               "    , ACTIVITYX.ATTRIB_07 as SourceName",
               "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-              "    from SIEBEL_DEV.S_EVT_ACT ACTIVITY",
-              "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+              "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
+              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
               "union",
               "select ",
@@ -2065,8 +2167,8 @@
               "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
               "    , ACTIVITYX.ATTRIB_07 as SourceName",
               "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-              "    from SIEBEL_DEV.S_EVT_ACT ACTIVITY",
-              "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+              "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
+              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
               "union",
               "select ",
@@ -2164,12 +2266,12 @@
                 "    , ACTCON.CREATED as CreateDate",
                 "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
                 "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-                "    from SIEBEL_DEV.S_ACT_CONTACT ACTCON",
-                "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
+                "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
+                "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
                 "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-                "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+                "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
                 "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-                "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
+                "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
               ],
               "dataSource": "CRM"
             },
@@ -2187,12 +2289,12 @@
                   "    , ACTCON.CREATED as CreateDate",
                   "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
                   "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-                  "    from SIEBEL_DEV.S_ACT_CONTACT ACTCON",
-                  "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
+                  "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
+                  "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
                   "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-                  "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+                  "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
                   "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-                  "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -2212,12 +2314,12 @@
               "    , ACTCON.CREATED as CreateDate",
               "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
               "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-              "    from SIEBEL_DEV.S_ACT_CONTACT ACTCON",
-              "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
+              "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
+              "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
               "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-              "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-              "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
+              "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
             ]
           },
           {
@@ -2237,12 +2339,12 @@
               "    , ACTCON.CREATED as CreateDate",
               "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
               "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-              "    from SIEBEL_DEV.S_ACT_CONTACT ACTCON",
-              "    left join SIEBEL_DEV.S_EVT_ACT ACTIVITY",
+              "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
+              "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
               "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-              "    left join SIEBEL_DEV.S_EVT_ACT_X ACTIVITYX",
+              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-              "    left join SIEBEL_DEV.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -2251,163 +2353,182 @@
         "name": "factBooking",
         "columns": [
           {
-            "name": "CRM_CUSTOMER_NUMBER",
+            "name": "CrmCustomerNumber",
             "dataType": "string",
             "sourceColumn": "CRM_CUSTOMER_NUMBER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BOOKINGHOLDER_ID",
+            "name": "BookingHolderID",
             "dataType": "double",
             "sourceColumn": "BOOKINGHOLDER_ID",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "BOOKINGHOLDER_NAME",
+            "name": "BookingHolderName",
             "dataType": "string",
             "sourceColumn": "BOOKINGHOLDER_NAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BOOKINGHOLDER_SURNAME",
+            "name": "BookingHolderSurname",
             "dataType": "string",
             "sourceColumn": "BOOKINGHOLDER_SURNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BOOKINGHOLDER_PHONENUMBER",
+            "name": "BookingHolderPhoneNumber",
             "dataType": "string",
             "sourceColumn": "BOOKINGHOLDER_PHONENUMBER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CRM_ACCOUNT_NUMBER",
+            "name": "CRMAccountNumber",
             "dataType": "string",
             "sourceColumn": "CRM_ACCOUNT_NUMBER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CRM_ACCOUNT_NAME",
+            "name": "CRMAccountName",
             "dataType": "string",
             "sourceColumn": "CRM_ACCOUNT_NAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BOOKING_REFERENCE",
+            "name": "BookingReference",
             "dataType": "string",
             "sourceColumn": "BOOKING_REFERENCE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BCF_REFERENCE_CODE",
+            "name": "BCFReferenceCode",
             "dataType": "string",
             "sourceColumn": "BCF_REFERENCE_CODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BOOKING_STATUS",
+            "name": "BookingStatus",
             "dataType": "string",
             "sourceColumn": "BOOKING_STATUS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "STANDBY_STATUS",
+            "name": "StandbyStatus",
             "dataType": "string",
             "sourceColumn": "STANDBY_STATUS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "TOTAL_AMOUNT",
+            "name": "TotalAmount",
             "dataType": "double",
             "sourceColumn": "TOTAL_AMOUNT",
-            "sourceProviderType": "Decimal"
+            "sourceProviderType": "Decimal",
+            "summarizeBy": "sum"
           },
           {
-            "name": "AMOUNT_PAID",
+            "name": "AmountPaid",
             "dataType": "double",
             "sourceColumn": "AMOUNT_PAID",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "AMOUNT_OWING",
+            "name": "AmountOwing",
             "dataType": "double",
             "sourceColumn": "AMOUNT_OWING",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "SPECIAL_INSTRUCTIONS",
+            "name": "SpecialInstructions",
             "dataType": "string",
             "sourceColumn": "SPECIAL_INSTRUCTIONS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SALES_CHANNEL",
+            "name": "SalesChannel",
             "dataType": "string",
             "sourceColumn": "SALES_CHANNEL",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DEPARTURE_PORT",
+            "name": "DeparturePort",
             "dataType": "string",
             "sourceColumn": "DEPARTURE_PORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ARRIVAL_PORT",
+            "name": "ArrivalPort",
             "dataType": "string",
             "sourceColumn": "ARRIVAL_PORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DEPARTURE_DATE",
+            "name": "DepartureDate",
             "dataType": "dateTime",
             "sourceColumn": "DEPARTURE_DATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "ARRIVAL_DATE",
+            "name": "ArrivalDate",
             "dataType": "dateTime",
             "sourceColumn": "ARRIVAL_DATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "VEHICLE_LENGTH",
+            "name": "VehicleLength",
             "dataType": "double",
             "sourceColumn": "VEHICLE_LENGTH",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "VEHICLE_TYPE",
+            "name": "VehicleType",
             "dataType": "string",
             "sourceColumn": "VEHICLE_TYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SAILING_CODE",
+            "name": "SailingCode",
             "dataType": "string",
             "sourceColumn": "SAILING_CODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "RESTRICTED_FLAG",
+            "name": "RestrictedFlag",
             "dataType": "string",
             "sourceColumn": "RESTRICTED_FLAG",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "HIDE_INFORMATION",
+            "name": "HideInformation",
             "dataType": "string",
             "sourceColumn": "HIDE_INFORMATION",
             "sourceProviderType": "VarChar"
           },
           {
             "type": "calculated",
-            "name": "PortsID",
+            "name": "Route",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "factBooking[DEPARTURE_PORT] & \"-\" & factBooking[ARRIVAL_PORT]"
+            "expression": "factBooking[DeparturePort] & \"-\" & factBooking[ArrivalPort]"
+          },
+          {
+            "type": "calculated",
+            "name": "ContactID",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimContact) , ",
+              "        FILTER(dimContact, ",
+              "        dimContact[CUSTOMERNUMBER] = factBooking[CrmCustomerNumber]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimContact[ContactID], 0) , ",
+              "        FILTER(dimContact, ",
+              "        dimContact[CUSTOMERNUMBER] = factBooking[CrmCustomerNumber]) ) ",
+              "    )"
+            ]
           }
         ],
         "partitions": [
@@ -2471,7 +2592,7 @@
                 "   and b.BOOKINGVERSION  = bc.BOOKINGVERSION (+)",
                 "   and b.STARTDATE = bc.BOOKINGSTARTDATE (+)"
               ],
-              "dataSource": "aBooking"
+              "dataSource": "Booking"
             },
             "annotations": [
               {
@@ -2663,7 +2784,6 @@
       },
       {
         "name": "factContactAcctRelationship",
-        "isHidden": true,
         "columns": [
           {
             "name": "FCONACCTRELID",
@@ -2704,10 +2824,10 @@
             "source": {
               "query": [
                 "select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-                "    from SIEBEL_DEV.S_PARTY_PER PARTY",
-                "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+                "    from BCFSBLTST.S_PARTY_PER PARTY",
+                "    inner join BCFSBLTST.S_CONTACT CONTACT",
                 "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-                "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
                 "        on PARTY.PARTY_ID = ACCNT.ROW_ID"
               ],
               "dataSource": "CRM"
@@ -2717,10 +2837,10 @@
                 "name": "QueryEditorSerialization",
                 "value": [
                   "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-                  "    from SIEBEL_DEV.S_PARTY_PER PARTY",
-                  "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+                  "    from BCFSBLTST.S_PARTY_PER PARTY",
+                  "    inner join BCFSBLTST.S_CONTACT CONTACT",
                   "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-                  "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+                  "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
                   "        on PARTY.PARTY_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -2732,10 +2852,10 @@
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
               "select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-              "    from SIEBEL_DEV.S_PARTY_PER PARTY",
-              "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+              "    from BCFSBLTST.S_PARTY_PER PARTY",
+              "    inner join BCFSBLTST.S_CONTACT CONTACT",
               "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-              "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
               "        on PARTY.PARTY_ID = ACCNT.ROW_ID"
             ]
           },
@@ -2747,10 +2867,10 @@
             "name": "QueryEditorSerialization",
             "value": [
               "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-              "    from SIEBEL_DEV.S_PARTY_PER PARTY",
-              "    inner join SIEBEL_DEV.S_CONTACT CONTACT",
+              "    from BCFSBLTST.S_PARTY_PER PARTY",
+              "    inner join BCFSBLTST.S_CONTACT CONTACT",
               "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-              "    inner join SIEBEL_DEV.S_ORG_EXT ACCNT",
+              "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
               "        on PARTY.PARTY_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
@@ -2915,39 +3035,47 @@
         ]
       },
       {
-        "name": "factBookingPivot",
+        "name": "factRouteMap",
         "columns": [
           {
             "type": "calculatedTableColumn",
-            "name": "DepLat",
+            "name": "Lat",
             "dataType": "double",
-            "isNameInferred": true,
-            "isDataTypeInferred": true,
+            "isNameInferred": false,
+            "isDataTypeInferred": false,
             "sourceColumn": "dimPorts[DepLat]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "DepLong",
+            "name": "Long",
             "dataType": "double",
-            "isNameInferred": true,
-            "isDataTypeInferred": true,
+            "isNameInferred": false,
+            "isDataTypeInferred": false,
             "sourceColumn": "dimPorts[DepLong]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "DEPARTURE_DATE",
+            "name": "Date",
             "dataType": "dateTime",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "factBooking[DEPARTURE_DATE]"
+            "sourceColumn": "factBooking[DepartureDate]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "SAILING_CODE",
+            "name": "SailingCode",
             "dataType": "string",
             "isNameInferred": true,
             "isDataTypeInferred": true,
-            "sourceColumn": "factBooking[SAILING_CODE]"
+            "sourceColumn": "factBooking[SailingCode]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Route",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "factBooking[Route]"
           }
         ],
         "partitions": [
@@ -2957,8 +3085,8 @@
               "type": "calculated",
               "expression": [
                 "UNION(",
-                "SUMMARIZE(factBooking, dimPorts[DepLat], dimPorts[DepLong], factBooking[DEPARTURE_DATE], factBooking[SAILING_CODE]),",
-                "SUMMARIZE(factBooking, dimPorts[ArrLat], dimPorts[ArrLong], factBooking[ARRIVAL_DATE], factBooking[SAILING_CODE]))"
+                "SUMMARIZE(factBooking, dimPorts[DepLat], dimPorts[DepLong], factBooking[DepartureDate], factBooking[SailingCode], factBooking[Route]),",
+                "SUMMARIZE(factBooking, dimPorts[ArrLat], dimPorts[ArrLong], factBooking[ArrivalDate], factBooking[SailingCode], factBooking[Route]))"
               ]
             }
           }
@@ -2970,11 +3098,11 @@
         "columns": [
           {
             "type": "calculatedTableColumn",
-            "name": "SAILING_CODE",
+            "name": "SailingCode",
             "dataType": "string",
             "isNameInferred": true,
             "isDataTypeInferred": true,
-            "sourceColumn": "factBooking[SAILING_CODE]"
+            "sourceColumn": "factBooking[SailingCode]"
           }
         ],
         "partitions": [
@@ -2982,7 +3110,77 @@
             "name": "CalculatedTable 1",
             "source": {
               "type": "calculated",
-              "expression": "distinct(factBooking[SAILING_CODE])"
+              "expression": "distinct(factBooking[SailingCode])"
+            }
+          }
+        ]
+      },
+      {
+        "name": "dimBookingAccount",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "ParentAccountName",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "dimAccount[ParentAccountName]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "AcccountName",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "dimAccount[AcccountName]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "CUSTOMERNUMBER",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "dimContact[CUSTOMERNUMBER]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "FIRSTNAME",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "dimContact[FIRSTNAME]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "LASTNAME",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "dimContact[LASTNAME]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "CONTACTID",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "dimContact[CONTACTID]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "ACCOUNTID",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "dimAccount[ACCOUNTID]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "summarize(factContactAcctRelationship, dimAccount[ParentAccountName], dimAccount[AcccountName], dimContact[CUSTOMERNUMBER], dimContact[FIRSTNAME], dimContact[LASTNAME], dimContact[CONTACTID], dimAccount[AccountID])"
             }
           }
         ]
@@ -3026,28 +3224,6 @@
         "toColumn": "AGREEMENTID"
       },
       {
-        "name": "40762bf5-f9fe-4206-b3fa-17ed5e09e51f",
-        "fromTable": "factSubscription",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID"
-      },
-      {
-        "name": "a16fa199-8681-4757-b61f-d22979e46bab",
-        "fromTable": "factSubscription",
-        "fromColumn": "SUBSCRIPTIONID",
-        "toTable": "dimSubscription",
-        "toColumn": "SUBSCRIPTIONID"
-      },
-      {
-        "name": "41257138-3916-43e0-8fae-340145b47e51",
-        "fromTable": "factContactAcctRelationship",
-        "fromColumn": "ACCOUNTID",
-        "toTable": "dimAccount",
-        "toColumn": "ACCOUNTID",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
         "name": "9e12c69a-4154-4dfe-97fe-2c284833dcd8",
         "fromTable": "factAddress",
         "fromColumn": "CONTACTID",
@@ -3064,7 +3240,67 @@
         "crossFilteringBehavior": "bothDirections"
       },
       {
-        "name": "57255507-4c38-476b-8c9e-4ccff6882031",
+        "name": "2bd9eef8-195a-4517-ad6b-5e879f2c851f",
+        "fromTable": "factBooking",
+        "fromColumn": "Route",
+        "toTable": "dimPorts",
+        "toColumn": "PortsID"
+      },
+      {
+        "name": "c32d2128-d736-4968-ad5a-26dc4f7fbed9",
+        "fromTable": "factRouteMap",
+        "fromColumn": "SailingCode",
+        "toTable": "dimSailing",
+        "toColumn": "SailingCode",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "aa2511bf-b061-440a-a7b8-b9e0c96bc144",
+        "fromTable": "factBooking",
+        "fromColumn": "SailingCode",
+        "toTable": "dimSailing",
+        "toColumn": "SailingCode",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "0d81c023-138c-4e95-89f9-f56ea0bbdcdd",
+        "fromTable": "factBooking",
+        "fromColumn": "DeparturePort",
+        "toTable": "DeparturePortLatLong",
+        "toColumn": "DeparturePortCode"
+      },
+      {
+        "name": "5eb6c3a2-3072-409f-93bc-71e55b403390",
+        "fromTable": "factBooking",
+        "fromColumn": "ArrivalPort",
+        "toTable": "ArrivalPortLatLong",
+        "toColumn": "ArrivalPortCode"
+      },
+      {
+        "name": "fbca9fef-4656-4e7e-ac2f-4d1a62c977cf",
+        "fromTable": "factSubscription",
+        "fromColumn": "CONTACTID",
+        "toTable": "dimContact",
+        "toColumn": "CONTACTID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "52ba4238-3987-45f2-b855-096fe55bffa9",
+        "fromTable": "factSubscription",
+        "fromColumn": "SUBSCRIPTIONID",
+        "toTable": "dimSubscription",
+        "toColumn": "SUBSCRIPTIONID"
+      },
+      {
+        "name": "99e03c81-b0d6-40e5-b6c9-4590277f81f5",
+        "fromTable": "factContactAcctRelationship",
+        "fromColumn": "ACCOUNTID",
+        "toTable": "dimAccount",
+        "toColumn": "ACCOUNTID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "2691f607-3ee3-4199-b0db-83d3064e1206",
         "fromTable": "factContactAcctRelationship",
         "fromColumn": "CONTACTID",
         "toTable": "dimContact",
@@ -3072,34 +3308,11 @@
         "crossFilteringBehavior": "bothDirections"
       },
       {
-        "name": "5372ace6-91b3-4cfb-9205-a82bbb7754e3",
+        "name": "8ee7cbc4-4b69-4234-9870-0d79ac981c30",
         "fromTable": "factBooking",
-        "fromColumn": "CRM_CUSTOMER_NUMBER",
+        "fromColumn": "CrmCustomerNumber",
         "toTable": "dimContact",
         "toColumn": "CUSTOMERNUMBER",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "2bd9eef8-195a-4517-ad6b-5e879f2c851f",
-        "fromTable": "factBooking",
-        "fromColumn": "PortsID",
-        "toTable": "dimPorts",
-        "toColumn": "PortsID"
-      },
-      {
-        "name": "3f0ed472-e480-4c0b-8fa6-f2c8c325347d",
-        "fromTable": "factBookingPivot",
-        "fromColumn": "SAILING_CODE",
-        "toTable": "dimSailing",
-        "toColumn": "SAILING_CODE",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "4ec446fa-444a-41d5-8725-d7673bfb1443",
-        "fromTable": "factBooking",
-        "fromColumn": "SAILING_CODE",
-        "toTable": "dimSailing",
-        "toColumn": "SAILING_CODE",
         "crossFilteringBehavior": "bothDirections"
       }
     ],
