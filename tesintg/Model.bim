@@ -16,17 +16,6 @@
         ]
       },
       {
-        "name": "Booking",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corptBooking;User ID=report_proxy_user;Persist Security Info=true",
-        "impersonationMode": "impersonateServiceAccount",
-        "annotations": [
-          {
-            "name": "ConnectionEditUISource",
-            "value": "Oracle"
-          }
-        ]
-      },
-      {
         "name": "Text PortLatLong",
         "connectionString": "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\\\vdcwpbixdev01\\Data Files;Persist Security Info=false;Extended Properties=\"Text;HDR=Yes;FMT=CSVDelimited\";Jet OLEDB:Registry Path=Software\\Wow6432Node\\Microsoft\\Microsoft SQL Server\\Microsoft Analysis Services\\Settings\\",
         "impersonationMode": "impersonateServiceAccount",
@@ -34,6 +23,17 @@
           {
             "name": "ConnectionEditUISource",
             "value": "Text$*$FilePath=\\\\vdcwpbixdev01\\Data Files\\PortLatLong.csv$*$"
+          }
+        ]
+      },
+      {
+        "name": "Booking",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corptBooking;User ID=report_proxy_user;Persist Security Info=true",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "Oracle"
           }
         ]
       }
@@ -1473,7 +1473,6 @@
       },
       {
         "name": "dimActivity",
-        "isHidden": true,
         "columns": [
           {
             "name": "ACTIVITYID",
@@ -1683,7 +1682,6 @@
       },
       {
         "name": "factActivity",
-        "isHidden": true,
         "columns": [
           {
             "name": "FACTIVITYID",
@@ -1884,6 +1882,50 @@
             "sourceProviderType": "VarChar"
           },
           {
+            "name": "AmountOwing",
+            "dataType": "double",
+            "sourceColumn": "AMOUNT_OWING",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "SpecialInstructions",
+            "dataType": "string",
+            "sourceColumn": "SPECIAL_INSTRUCTIONS",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "DeparturePort",
+            "dataType": "string",
+            "sourceColumn": "DEPARTURE_PORT",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "ArrivalPort",
+            "dataType": "string",
+            "sourceColumn": "ARRIVAL_PORT",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "DepartureDate",
+            "dataType": "dateTime",
+            "sourceColumn": "DEPARTURE_DATE",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "ArrivalDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ARRIVAL_DATE",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "SalesChannel",
+            "dataType": "string",
+            "sourceColumn": "SALES_CHANNEL",
+            "sourceProviderType": "VarChar"
+          },
+          {
             "name": "CRMAccountName",
             "dataType": "string",
             "sourceColumn": "CRM_ACCOUNT_NAME",
@@ -1927,50 +1969,6 @@
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "AmountOwing",
-            "dataType": "double",
-            "sourceColumn": "AMOUNT_OWING",
-            "sourceProviderType": "Decimal"
-          },
-          {
-            "name": "SpecialInstructions",
-            "dataType": "string",
-            "sourceColumn": "SPECIAL_INSTRUCTIONS",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "SalesChannel",
-            "dataType": "string",
-            "sourceColumn": "SALES_CHANNEL",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "DeparturePort",
-            "dataType": "string",
-            "sourceColumn": "DEPARTURE_PORT",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "ArrivalPort",
-            "dataType": "string",
-            "sourceColumn": "ARRIVAL_PORT",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "DepartureDate",
-            "dataType": "dateTime",
-            "sourceColumn": "DEPARTURE_DATE",
-            "formatString": "General Date",
-            "sourceProviderType": "Date"
-          },
-          {
-            "name": "ArrivalDate",
-            "dataType": "dateTime",
-            "sourceColumn": "ARRIVAL_DATE",
-            "formatString": "General Date",
-            "sourceProviderType": "Date"
-          },
-          {
             "name": "VehicleLength",
             "dataType": "double",
             "sourceColumn": "VEHICLE_LENGTH",
@@ -2009,58 +2007,21 @@
           },
           {
             "type": "calculated",
-            "name": "BookingAccountID",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": "factBooking[CrmCustomerNumber] & factBooking[CRMAccountNumber]"
-          },
-          {
-            "type": "calculated",
-            "name": "LastCity",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "isHidden": true,
-            "expression": [
-              "IF(ISBLANK(CALCULATE(",
-              "    VALUES( dimAddress[City] )",
-              "    ,FIRSTNONBLANK(TOPN(",
-              "        1",
-              "        ,FILTER(",
-              "            factAddress",
-              "            ,factAddress[CONTACTID] = factBooking[ContactID]",
-              "            && factAddress[CreatedDate] <= factBooking[DepartureDate] ",
-              "        )",
-              "        ,factAddress[CREATEDDATE]",
-              "        ,DESC",
-              "    ), 0",
-              "))), related(dimContact[PRIMARYADDRESSCITY]), CALCULATE(",
-              "    VALUES( dimAddress[City] )",
-              "    ,FIRSTNONBLANK(TOPN(",
-              "        1",
-              "        ,FILTER(",
-              "            factAddress",
-              "            ,factAddress[CONTACTID] = factBooking[ContactID]",
-              "            && factAddress[CreatedDate] <= factBooking[DepartureDate] ",
-              "        )",
-              "        ,factAddress[CREATEDDATE]",
-              "        ,DESC",
-              "    ), 0",
-              ")))"
-            ]
-          },
-          {
-            "type": "calculated",
-            "name": "SailingTime",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": "FORMAT(factBooking[DepartureDate], \"hh:mm:ss\")"
-          },
-          {
-            "type": "calculated",
             "name": "ContactID",
-            "dataType": "string",
+            "dataType": "unknown",
             "isDataTypeInferred": true,
-            "expression": "related(dimContact[ContactID])"
+            "expression": [
+              "IF( CALCULATE( ",
+              "        COUNTROWS(dimContact) , ",
+              "        FILTER(dimContact, ",
+              "        dimContact[CUSTOMERNUMBER] = factBooking[CrmCustomerNumber]) ) = 0, ",
+              "    \"NOREL\", ",
+              "      CALCULATE( ",
+              "        FIRSTNONBLANK(dimContact[ContactID], 0) , ",
+              "        FILTER(dimContact, ",
+              "        dimContact[CUSTOMERNUMBER] = factBooking[CrmCustomerNumber]) ) ",
+              "    )"
+            ]
           }
         ],
         "partitions": [
@@ -2320,8 +2281,6 @@
           {
             "name": "FCONACCTRELID",
             "dataType": "string",
-            "isUnique": true,
-            "isKey": true,
             "sourceColumn": "FCONACCTRELID",
             "sourceProviderType": "VarChar"
           },
@@ -2569,8 +2528,30 @@
         ]
       },
       {
-        "name": "factRouteMap",
+        "name": "dimSailing",
         "isHidden": true,
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "SailingCode",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "factBooking[SailingCode]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "distinct(factBooking[SailingCode])"
+            }
+          }
+        ]
+      },
+      {
+        "name": "factRouteMap",
         "columns": [
           {
             "type": "calculatedTableColumn",
@@ -2623,29 +2604,6 @@
                 "SUMMARIZE(factBooking, dimPorts[DepLat], dimPorts[DepLong], factBooking[DepartureDate], factBooking[SailingCode], factBooking[Route]),",
                 "SUMMARIZE(factBooking, dimPorts[ArrLat], dimPorts[ArrLong], factBooking[ArrivalDate], factBooking[SailingCode], factBooking[Route]))"
               ]
-            }
-          }
-        ]
-      },
-      {
-        "name": "dimSailing",
-        "isHidden": true,
-        "columns": [
-          {
-            "type": "calculatedTableColumn",
-            "name": "SailingCode",
-            "dataType": "string",
-            "isNameInferred": true,
-            "isDataTypeInferred": true,
-            "sourceColumn": "factBooking[SailingCode]"
-          }
-        ],
-        "partitions": [
-          {
-            "name": "CalculatedTable 1",
-            "source": {
-              "type": "calculated",
-              "expression": "distinct(factBooking[SailingCode])"
             }
           }
         ]
@@ -2708,21 +2666,6 @@
             "isNameInferred": true,
             "isDataTypeInferred": true,
             "sourceColumn": "dimAccount[ACCOUNTID]"
-          },
-          {
-            "type": "calculatedTableColumn",
-            "name": "ACCOUNTNUMBER",
-            "dataType": "string",
-            "isNameInferred": true,
-            "isDataTypeInferred": true,
-            "sourceColumn": "dimAccount[ACCOUNTNUMBER]"
-          },
-          {
-            "type": "calculated",
-            "name": "BookingAccountID",
-            "dataType": "string",
-            "isDataTypeInferred": true,
-            "expression": "dimBookingAccount[CUSTOMERNUMBER] & dimBookingAccount[ACCOUNTNUMBER]"
           }
         ],
         "partitions": [
@@ -2730,45 +2673,13 @@
             "name": "CalculatedTable 1",
             "source": {
               "type": "calculated",
-              "expression": "summarize(factContactAcctRelationship, dimAccount[ParentAccountName], dimAccount[AcccountName], dimContact[CUSTOMERNUMBER], dimAccount[AccountNumber], dimContact[FIRSTNAME], dimContact[LASTNAME], dimContact[CONTACTID], dimAccount[AccountID])"
+              "expression": "summarize(factContactAcctRelationship, dimAccount[ParentAccountName], dimAccount[AcccountName], dimContact[CUSTOMERNUMBER], dimContact[FIRSTNAME], dimContact[LASTNAME], dimContact[CONTACTID], dimAccount[AccountID])"
             }
-          }
-        ],
-        "hierarchies": [
-          {
-            "name": "Hierarchy1",
-            "levels": [
-              {
-                "name": "ParentAccountName",
-                "ordinal": 0,
-                "column": "ParentAccountName"
-              },
-              {
-                "name": "AcccountName",
-                "ordinal": 1,
-                "column": "AcccountName"
-              },
-              {
-                "name": "FIRSTNAME",
-                "ordinal": 2,
-                "column": "FIRSTNAME"
-              },
-              {
-                "name": "LASTNAME",
-                "ordinal": 3,
-                "column": "LASTNAME"
-              },
-              {
-                "name": "CUSTOMERNUMBER",
-                "ordinal": 4,
-                "column": "CUSTOMERNUMBER"
-              }
-            ]
           }
         ]
       },
       {
-        "name": "dimContact",
+        "name": "Query2",
         "columns": [
           {
             "name": "CONTACTID",
@@ -2836,22 +2747,19 @@
             "name": "PRIMARYADDRESSCITY",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSCITY",
-            "sourceProviderType": "VarChar",
-            "dataCategory": "City"
+            "sourceProviderType": "VarChar"
           },
           {
             "name": "PRIMARYADDRESSPROVINCESTATE",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSPROVINCESTATE",
-            "sourceProviderType": "VarChar",
-            "dataCategory": "StateOrProvince"
+            "sourceProviderType": "VarChar"
           },
           {
             "name": "PRIMARYADDRESSCOUNTRY",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSCOUNTRY",
-            "sourceProviderType": "VarChar",
-            "dataCategory": "Country"
+            "sourceProviderType": "VarChar"
           },
           {
             "name": "PRIMARYPOSTALZIP",
@@ -3280,320 +3188,6 @@
             ]
           }
         ]
-      },
-      {
-        "name": "factAllocation",
-        "columns": [
-          {
-            "name": "SAILINGCODE",
-            "dataType": "string",
-            "sourceColumn": "SAILINGCODE",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "DEPARTUREPORT",
-            "dataType": "string",
-            "sourceColumn": "DEPARTUREPORT",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "ARRIVALPORT",
-            "dataType": "string",
-            "sourceColumn": "ARRIVALPORT",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "LEGCODE",
-            "dataType": "string",
-            "sourceColumn": "LEGCODE",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "PHYSICALRESOURCECODE",
-            "dataType": "string",
-            "sourceColumn": "PHYSICALRESOURCECODE",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "SELLABLECAPACITY",
-            "dataType": "double",
-            "sourceColumn": "SELLABLECAPACITY",
-            "sourceProviderType": "Decimal"
-          },
-          {
-            "name": "SOLDCAPACITY",
-            "dataType": "double",
-            "sourceColumn": "SOLDCAPACITY",
-            "sourceProviderType": "Decimal"
-          },
-          {
-            "name": "AVAILABLECAPACITY",
-            "dataType": "double",
-            "sourceColumn": "AVAILABLECAPACITY",
-            "sourceProviderType": "Decimal"
-          },
-          {
-            "type": "calculated",
-            "name": "AvailablePercent",
-            "dataType": "double",
-            "isDataTypeInferred": true,
-            "expression": "factAllocation[AvailableCapacity]/factAllocation[SellableCapacity]",
-            "formatString": "0.00 %;-0.00 %;0.00 %"
-          }
-        ],
-        "partitions": [
-          {
-            "name": "factAllocation",
-            "dataView": "full",
-            "source": {
-              "query": [
-                "SELECT ",
-                "SAILINGSELLABLEPRODUCT.SAILINGCODE,",
-                "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 1,3) AS DEPARTUREPORT,",
-                "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 5,3) AS ARRIVALPORT,",
-                "SAILINGSELLABLEPRODUCT.LEGCODE,",
-                "SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE,",
-                "SAILINGSELLABLEPRODUCT.SELLABLECAPACITY,",
-                "SAILINGSELLABLEPRODUCT.SOLDCAPACITY,",
-                "SAILINGSELLABLEPRODUCT.AVAILABLECAPACITY",
-                "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-                "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-                "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-                "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-                "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0"
-              ],
-              "dataSource": "Booking"
-            },
-            "annotations": [
-              {
-                "name": "QueryEditorSerialization",
-                "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT ",
-                  "SAILINGSELLABLEPRODUCT.SAILINGCODE,",
-                  "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 1,3) AS DEPARTUREPORT,",
-                  "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 5,3) AS ARRIVALPORT,",
-                  "SAILINGSELLABLEPRODUCT.LEGCODE,",
-                  "SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE,",
-                  "SAILINGSELLABLEPRODUCT.SELLABLECAPACITY,",
-                  "SAILINGSELLABLEPRODUCT.SOLDCAPACITY,",
-                  "SAILINGSELLABLEPRODUCT.AVAILABLECAPACITY",
-                  "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-                  "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-                  "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-                  "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-                  "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
-                ]
-              }
-            ]
-          }
-        ],
-        "annotations": [
-          {
-            "name": "_TM_ExtProp_QueryDefinition",
-            "value": [
-              "SELECT ",
-              "SAILINGSELLABLEPRODUCT.SAILINGCODE,",
-              "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 1,3) AS DEPARTUREPORT,",
-              "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 5,3) AS ARRIVALPORT,",
-              "SAILINGSELLABLEPRODUCT.LEGCODE,",
-              "SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE,",
-              "SAILINGSELLABLEPRODUCT.SELLABLECAPACITY,",
-              "SAILINGSELLABLEPRODUCT.SOLDCAPACITY,",
-              "SAILINGSELLABLEPRODUCT.AVAILABLECAPACITY",
-              "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-              "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-              "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-              "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-              "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0"
-            ]
-          },
-          {
-            "name": "_TM_ExtProp_DbTableName",
-            "value": "factAllocation"
-          },
-          {
-            "name": "QueryEditorSerialization",
-            "value": [
-              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>SELECT ",
-              "SAILINGSELLABLEPRODUCT.SAILINGCODE,",
-              "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 1,3) AS DEPARTUREPORT,",
-              "SUBSTR(SAILINGSELLABLEPRODUCT.LEGCODE, 5,3) AS ARRIVALPORT,",
-              "SAILINGSELLABLEPRODUCT.LEGCODE,",
-              "SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE,",
-              "SAILINGSELLABLEPRODUCT.SELLABLECAPACITY,",
-              "SAILINGSELLABLEPRODUCT.SOLDCAPACITY,",
-              "SAILINGSELLABLEPRODUCT.AVAILABLECAPACITY",
-              "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-              "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-              "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-              "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-              "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "dimPhysicalResources",
-        "columns": [
-          {
-            "name": "PHYSICALRESOURCECODE",
-            "dataType": "string",
-            "sourceColumn": "PHYSICALRESOURCECODE",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "RESOURCETYPE",
-            "dataType": "string",
-            "sourceColumn": "RESOURCETYPE",
-            "sourceProviderType": "VarChar"
-          },
-          {
-            "name": "RESOURCETYPESORT",
-            "dataType": "double",
-            "sourceColumn": "RESOURCETYPESORT",
-            "sourceProviderType": "Decimal"
-          },
-          {
-            "name": "RESOURCECODE",
-            "dataType": "string",
-            "sourceColumn": "RESOURCECODE",
-            "sourceProviderType": "VarChar"
-          }
-        ],
-        "partitions": [
-          {
-            "name": "dimPhysicalResources",
-            "dataView": "full",
-            "source": {
-              "query": [
-                "select distinct PHYSICALRESOURCECODE,",
-                "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
-                "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
-                "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
-                "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
-                "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
-                "END RESOURCETYPE, ",
-                "CASE  ",
-                "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
-                "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
-                "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
-                "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
-                "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
-                "END RESOURCETYPESORT, ",
-                "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
-                "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
-                "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
-                "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
-                "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
-                "END AS RESOURCECODE",
-                "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-                "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-                "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-                "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-                "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0"
-              ],
-              "dataSource": "Booking"
-            },
-            "annotations": [
-              {
-                "name": "QueryEditorSerialization",
-                "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select distinct PHYSICALRESOURCECODE,",
-                  "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
-                  "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
-                  "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
-                  "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
-                  "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
-                  "END RESOURCETYPE, ",
-                  "CASE  ",
-                  "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
-                  "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
-                  "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
-                  "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
-                  "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
-                  "END RESOURCETYPESORT, ",
-                  "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
-                  "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
-                  "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
-                  "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
-                  "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
-                  "END AS RESOURCECODE",
-                  "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-                  "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-                  "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-                  "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-                  "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
-                ]
-              }
-            ]
-          }
-        ],
-        "annotations": [
-          {
-            "name": "_TM_ExtProp_QueryDefinition",
-            "value": [
-              "select distinct PHYSICALRESOURCECODE,",
-              "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
-              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
-              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
-              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
-              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
-              "END RESOURCETYPE, ",
-              "CASE  ",
-              "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
-              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
-              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
-              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
-              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
-              "END RESOURCETYPESORT, ",
-              "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
-              "END AS RESOURCECODE",
-              "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-              "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-              "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-              "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-              "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0"
-            ]
-          },
-          {
-            "name": "_TM_ExtProp_DbTableName",
-            "value": "dimPhysicalResources"
-          },
-          {
-            "name": "QueryEditorSerialization",
-            "value": [
-              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select distinct PHYSICALRESOURCECODE,",
-              "CASE WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 'PASSENGER'     ",
-              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 'CAR DECK '",
-              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 'CABIN    '",
-              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 'CHAIR    '",
-              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 'ONBOARD  '     ",
-              "END RESOURCETYPE, ",
-              "CASE  ",
-              "     WHEN PHYSICALRESOURCECODE IN ('PAX', 'CHILD') THEN 1 ",
-              "     WHEN PHYSICALRESOURCECODE IN ('BUS', 'CV', 'FOH', 'GWD', 'GWT', 'POH',  'UH')  THEN 2",
-              "     WHEN PHYSICALRESOURCECODE IN ('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B') THEN 3",
-              "     WHEN PHYSICALRESOURCECODE IN ('SEA', 'SEAWC') THEN 4",
-              "     WHEN PHYSICALRESOURCECODE IN ('CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM','WCPSH', 'WCXPSH') THEN 5     ",
-              "END RESOURCETYPESORT, ",
-              "CASE WHEN PHYSICALRESOURCECODE IN ('BUS') THEN 'BUS (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE IN ('FOH') THEN 'FOH (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE IN ('POH') THEN 'POH (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' WHEN PHYSICALRESOURCECODE IN ('UH') THEN 'UH (FT)' ",
-              "     WHEN PHYSICALRESOURCECODE NOT IN ('BUS', 'FOH', 'POH', 'UH') THEN PHYSICALRESOURCECODE  ",
-              "END AS RESOURCECODE",
-              "FROM EBOOKING.MSP_SAILINGSELLABLEPRODUCT SAILINGSELLABLEPRODUCT",
-              "WHERE SAILINGSELLABLEPRODUCT.ENDDATE = '99991231000000'",
-              "AND   SAILINGSELLABLEPRODUCT.PHYSICALRESOURCECODE IN ",
-              "('I2B', 'I4B', 'O2B', 'O4B', 'P2B', 'P4B', 'W2B', 'SEA', 'SEAWC', 'BUS', 'CV', 'FOH', 'POH', 'UH', 'PAX', 'CONFRM', 'NBUFBK', 'NBUFDN', 'PACBUF', 'SEAWST', 'SITKA', 'STATRM', 'CHILD', 'WCPSH', 'WCXPSH')",
-              "AND SAILINGSELLABLEPRODUCT.SELLABLECAPACITY > 0</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
-            ]
-          }
-        ]
       }
     ],
     "relationships": [
@@ -3665,6 +3259,13 @@
         "toColumn": "ArrivalPortCode"
       },
       {
+        "name": "52ba4238-3987-45f2-b855-096fe55bffa9",
+        "fromTable": "factSubscription",
+        "fromColumn": "SUBSCRIPTIONID",
+        "toTable": "dimSubscription",
+        "toColumn": "SUBSCRIPTIONID"
+      },
+      {
         "name": "99e03c81-b0d6-40e5-b6c9-4590277f81f5",
         "fromTable": "factContactAcctRelationship",
         "fromColumn": "ACCOUNTID",
@@ -3673,77 +3274,11 @@
         "crossFilteringBehavior": "bothDirections"
       },
       {
-        "name": "fe015a3d-a1d1-4181-be21-1f53d0e0ff23",
-        "fromTable": "factContactAcctRelationship",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "b10b6319-260d-4e4f-9421-8db83e78b108",
-        "fromTable": "factActivity",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID"
-      },
-      {
-        "name": "d571bd49-571b-4d85-a13d-5e2ab17b0c40",
-        "fromTable": "factAgreement",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID"
-      },
-      {
-        "name": "01d97794-7edd-4430-adc6-c42bf0aa816d",
-        "fromTable": "factAddress",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID"
-      },
-      {
-        "name": "96684956-1bb7-4ed2-a0a8-3c08056fda5c",
+        "name": "aa998fbd-fc73-41ab-8abd-f2c3eb281ed2",
         "fromTable": "factBooking",
         "fromColumn": "CrmCustomerNumber",
-        "toTable": "dimContact",
-        "toColumn": "CUSTOMERNUMBER",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "2173de33-dfb3-4e56-a788-f4853fdff6b9",
-        "fromTable": "factBooking",
-        "fromColumn": "BookingAccountID",
-        "toTable": "dimBookingAccount",
-        "toColumn": "BookingAccountID"
-      },
-      {
-        "name": "f454d49c-2573-49df-88f9-9b5585c3fef1",
-        "fromTable": "factAllocation",
-        "fromColumn": "SAILINGCODE",
-        "toTable": "dimSailing",
-        "toColumn": "SailingCode"
-      },
-      {
-        "name": "68cf20f2-2a5a-40a4-a05e-a9bba412ca55",
-        "fromTable": "factAllocation",
-        "fromColumn": "PHYSICALRESOURCECODE",
-        "toTable": "dimPhysicalResources",
-        "toColumn": "PHYSICALRESOURCECODE"
-      },
-      {
-        "name": "2f9e9127-8460-4a02-befe-3ece683436e6",
-        "fromTable": "factSubscription",
-        "fromColumn": "CONTACTID",
-        "toTable": "dimContact",
-        "toColumn": "CONTACTID",
-        "crossFilteringBehavior": "bothDirections"
-      },
-      {
-        "name": "aa8f2354-0b5a-4836-b004-1b919f7a2645",
-        "fromTable": "factSubscription",
-        "fromColumn": "SUBSCRIPTIONID",
-        "toTable": "dimSubscription",
-        "toColumn": "SUBSCRIPTIONID"
+        "toTable": "Query2",
+        "toColumn": "CUSTOMERNUMBER"
       }
     ],
     "annotations": [
