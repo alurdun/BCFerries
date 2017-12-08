@@ -6,7 +6,7 @@
     "dataSources": [
       {
         "name": "CRM",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corpt;User ID=joanders;Persist Security Info=false",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corps;User ID=joanders;Persist Security Info=false",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -17,7 +17,7 @@
       },
       {
         "name": "Booking",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corptBooking;User ID=report_proxy_user;Persist Security Info=true",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corpsBooking;User ID=report_proxy_user;Persist Security Info=true",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -3744,6 +3744,22 @@
         "fromColumn": "SUBSCRIPTIONID",
         "toTable": "dimSubscription",
         "toColumn": "SUBSCRIPTIONID"
+      }
+    ],
+    "roles": [
+      {
+        "name": "Browse",
+        "modelPermission": "read",
+        "members": [
+          {
+            "memberName": "BCFERRIES\\MRegules",
+            "memberId": "S-1-5-21-839522115-682003330-2147125571-290108"
+          },
+          {
+            "memberName": "BCFERRIES\\atorrico",
+            "memberId": "S-1-5-21-839522115-682003330-2147125571-255055"
+          }
+        ]
       }
     ],
     "annotations": [
