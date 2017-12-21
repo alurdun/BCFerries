@@ -22,11 +22,11 @@
     <OverwriteDatasets>False</OverwriteDatasets>
     <OverwriteDataSources>False</OverwriteDataSources>
     <TargetServerVersion>SSRS2016</TargetServerVersion>
-    <TargetReportFolder>Report Project1</TargetReportFolder>
+    <TargetReportFolder>Operational</TargetReportFolder>
     <TargetDatasetFolder>Datasets</TargetDatasetFolder>
     <TargetDatasourceFolder>Data Sources</TargetDatasourceFolder>
     <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
-    <TargetServerURL>http://localhost/reportserver</TargetServerURL>
+    <TargetServerURL>http://vdcwpbixdev01/reportserver</TargetServerURL>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <FullPath>Release</FullPath>
@@ -49,8 +49,8 @@
     <Reports>@(Report)</Reports>
   </PropertyGroup>
   <ItemGroup>
-    <Report Include="MDX Report1.rdl" />
-    <Report Include="Report1.rdl" />
+    <Report Include="Sailing Manifest - Booking Details.rdl" />
+    <Report Include="Sailing Manifest - Cabin Seat Bookings.rdl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Reporting Services\Microsoft.ReportingServices.MSBuilder.targets" />
 </Project>

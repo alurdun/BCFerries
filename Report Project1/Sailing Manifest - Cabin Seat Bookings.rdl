@@ -1,0 +1,2846 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="eBooking_Live">
+      <ConnectionProperties>
+        <DataProvider>OLEDB-MD</DataProvider>
+        <ConnectString>Data Source=vdcwpbixdev01;Initial Catalog=BCFerries_eBooking_Live_SSAS</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>a9c1c6fe-84f9-43b6-afc6-9bf01bc6175f</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsBookings">
+      <Query>
+        <DataSourceName>eBooking_Live</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="FromSailingsDepartureDate">
+            <Value>=CStr(FORMAT(Parameters!parFromDepartureDate.Value, "yy-MM-dd"))</Value>
+          </QueryParameter>
+          <QueryParameter Name="ToSailingsDepartureDate">
+            <Value>=CStr(FORMAT(Parameters!parToDepartureDate.Value, "yy-MM-dd"))</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>DEFINE
+    VAR FromSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @FromSailingsDepartureDate ) = 1,
+            IF ( @FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @FromSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @FromSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR FromSailingsDepartureDate1ALL =
+        PATHLENGTH ( @FromSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @FromSailingsDepartureDate, 1, 1 ) &lt; 1
+    VAR ToSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @ToSailingsDepartureDate ) = 1,
+            IF ( @ToSailingsDepartureDate &lt;&gt; "", @ToSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @ToSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @ToSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR ToSailingsDepartureDate1ALL =
+        PATHLENGTH ( @ToSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @ToSailingsDepartureDate, 1, 1 ) &lt; 1
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Sailings'[LineCode],
+    'Sailings'[DepartureTime],
+    'Sailings'[SailingDetail],
+    'Sailings'[DepartureDate],
+    'Sailings'[ArrivalPortName],
+    'Sailings'[DeparturePortName],
+    'Bookings'[BookingCustomerDetail],
+    'Bookings'[PrdCode],
+    'Bookings'[PrdType],
+    'Bookings'[STANDBYPRODUCT],
+    'Bookings'[VESSELTRANSFER],
+    'Bookings'[PAID],
+    'Bookings'[DEFERREDPAYMENT],
+    'Bookings'[SURCHARGEAMOUNT],
+    'Bookings'[TOTALPRICE],
+    'Bookings'[UNITGROSSAMOUNT],
+    'Sailings'[ArrivalPortCode],
+    'Sailings'[DeparturePortCode],
+    'Bookings'[BookingReference],
+    'Sailings'[ShipPhysicalDescription],
+    'Bookings'[SpecialInstructionsFlag],
+    'Bookings'[GROSSAMOUNT],
+    'Bookings'[BHSURNAME],
+    'Bookings'[BHFIRSTNAME],
+    'Bookings'[PASSENGERFULLNAME],
+    'Bookings'[ALLOCATEDLEG],
+    'Bookings'[CABINNUMBER],
+    'Bookings'[RouteArrivalPort],
+    FILTER (
+        VALUES ( 'Sailings'[DepartureDate] ),
+        (
+            FromSailingsDepartureDate1ALL
+                || 'Sailings'[DepartureDate]
+                    &gt;= DATEVALUE ( FromSailingsDepartureDate1 )
+                        + TIMEVALUE ( FromSailingsDepartureDate1 )
+        )
+            &amp;&amp; (
+                ToSailingsDepartureDate1ALL
+                    || 'Sailings'[DepartureDate]
+                        &lt;= DATEVALUE ( ToSailingsDepartureDate1 ) + TIMEVALUE ( ToSailingsDepartureDate1 )
+            )
+    ),
+    FILTER(
+    	VALUES('Bookings'[PrdType]) ,
+    	'Bookings'[PrdType] = "CABIN" || 'Bookings'[PrdType] = "CHAIR"
+    ),
+    "TotalAmount", [TotalAmount]
+)</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>DAX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>LineCode</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[LineCode]</HierarchyUniqueName>
+                      <LevelName>LineCode</LevelName>
+                      <UniqueName>[Sailings].[LineCode].[LineCode]</UniqueName>
+                    </ID>
+                    <ItemCaption>LineCode</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>DepartureTime</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[DepartureTime]</HierarchyUniqueName>
+                      <LevelName>DepartureTime</LevelName>
+                      <UniqueName>[Sailings].[DepartureTime].[DepartureTime]</UniqueName>
+                    </ID>
+                    <ItemCaption>DepartureTime</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>SailingDetail</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[SailingDetail]</HierarchyUniqueName>
+                      <LevelName>SailingDetail</LevelName>
+                      <UniqueName>[Sailings].[SailingDetail].[SailingDetail]</UniqueName>
+                    </ID>
+                    <ItemCaption>SailingDetail</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>DepartureDate</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[DepartureDate]</HierarchyUniqueName>
+                      <LevelName>DepartureDate</LevelName>
+                      <UniqueName>[Sailings].[DepartureDate].[DepartureDate]</UniqueName>
+                    </ID>
+                    <ItemCaption>DepartureDate</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>ArrivalPortName</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[ArrivalPortName]</HierarchyUniqueName>
+                      <LevelName>ArrivalPortName</LevelName>
+                      <UniqueName>[Sailings].[ArrivalPortName].[ArrivalPortName]</UniqueName>
+                    </ID>
+                    <ItemCaption>ArrivalPortName</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>DeparturePortName</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[DeparturePortName]</HierarchyUniqueName>
+                      <LevelName>DeparturePortName</LevelName>
+                      <UniqueName>[Sailings].[DeparturePortName].[DeparturePortName]</UniqueName>
+                    </ID>
+                    <ItemCaption>DeparturePortName</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>BookingCustomerDetail</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[BookingCustomerDetail]</HierarchyUniqueName>
+                      <LevelName>BookingCustomerDetail</LevelName>
+                      <UniqueName>[Bookings].[BookingCustomerDetail].[BookingCustomerDetail]</UniqueName>
+                    </ID>
+                    <ItemCaption>BookingCustomerDetail</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>PrdCode</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[PrdCode]</HierarchyUniqueName>
+                      <LevelName>PrdCode</LevelName>
+                      <UniqueName>[Bookings].[PrdCode].[PrdCode]</UniqueName>
+                    </ID>
+                    <ItemCaption>PrdCode</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>PrdType</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[PrdType]</HierarchyUniqueName>
+                      <LevelName>PrdType</LevelName>
+                      <UniqueName>[Bookings].[PrdType].[PrdType]</UniqueName>
+                    </ID>
+                    <ItemCaption>PrdType</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>STANDBYPRODUCT</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[STANDBYPRODUCT]</HierarchyUniqueName>
+                      <LevelName>STANDBYPRODUCT</LevelName>
+                      <UniqueName>[Bookings].[STANDBYPRODUCT].[STANDBYPRODUCT]</UniqueName>
+                    </ID>
+                    <ItemCaption>STANDBYPRODUCT</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>VESSELTRANSFER</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[VESSELTRANSFER]</HierarchyUniqueName>
+                      <LevelName>VESSELTRANSFER</LevelName>
+                      <UniqueName>[Bookings].[VESSELTRANSFER].[VESSELTRANSFER]</UniqueName>
+                    </ID>
+                    <ItemCaption>VESSELTRANSFER</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>PAID</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[PAID]</HierarchyUniqueName>
+                      <LevelName>PAID</LevelName>
+                      <UniqueName>[Bookings].[PAID].[PAID]</UniqueName>
+                    </ID>
+                    <ItemCaption>PAID</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>DEFERREDPAYMENT</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[DEFERREDPAYMENT]</HierarchyUniqueName>
+                      <LevelName>DEFERREDPAYMENT</LevelName>
+                      <UniqueName>[Bookings].[DEFERREDPAYMENT].[DEFERREDPAYMENT]</UniqueName>
+                    </ID>
+                    <ItemCaption>DEFERREDPAYMENT</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>SURCHARGEAMOUNT</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[SURCHARGEAMOUNT]</HierarchyUniqueName>
+                      <LevelName>SURCHARGEAMOUNT</LevelName>
+                      <UniqueName>[Bookings].[SURCHARGEAMOUNT].[SURCHARGEAMOUNT]</UniqueName>
+                    </ID>
+                    <ItemCaption>SURCHARGEAMOUNT</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>TOTALPRICE</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[TOTALPRICE]</HierarchyUniqueName>
+                      <LevelName>TOTALPRICE</LevelName>
+                      <UniqueName>[Bookings].[TOTALPRICE].[TOTALPRICE]</UniqueName>
+                    </ID>
+                    <ItemCaption>TOTALPRICE</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>UNITGROSSAMOUNT</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[UNITGROSSAMOUNT]</HierarchyUniqueName>
+                      <LevelName>UNITGROSSAMOUNT</LevelName>
+                      <UniqueName>[Bookings].[UNITGROSSAMOUNT].[UNITGROSSAMOUNT]</UniqueName>
+                    </ID>
+                    <ItemCaption>UNITGROSSAMOUNT</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>ArrivalPortCode</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[ArrivalPortCode]</HierarchyUniqueName>
+                      <LevelName>ArrivalPortCode</LevelName>
+                      <UniqueName>[Sailings].[ArrivalPortCode].[ArrivalPortCode]</UniqueName>
+                    </ID>
+                    <ItemCaption>ArrivalPortCode</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>DeparturePortCode</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[DeparturePortCode]</HierarchyUniqueName>
+                      <LevelName>DeparturePortCode</LevelName>
+                      <UniqueName>[Sailings].[DeparturePortCode].[DeparturePortCode]</UniqueName>
+                    </ID>
+                    <ItemCaption>DeparturePortCode</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>BookingReference</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[BookingReference]</HierarchyUniqueName>
+                      <LevelName>BookingReference</LevelName>
+                      <UniqueName>[Bookings].[BookingReference].[BookingReference]</UniqueName>
+                    </ID>
+                    <ItemCaption>BookingReference</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>ShipPhysicalDescription</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[ShipPhysicalDescription]</HierarchyUniqueName>
+                      <LevelName>ShipPhysicalDescription</LevelName>
+                      <UniqueName>[Sailings].[ShipPhysicalDescription].[ShipPhysicalDescription]</UniqueName>
+                    </ID>
+                    <ItemCaption>ShipPhysicalDescription</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>SpecialInstructionsFlag</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[SpecialInstructionsFlag]</HierarchyUniqueName>
+                      <LevelName>SpecialInstructionsFlag</LevelName>
+                      <UniqueName>[Bookings].[SpecialInstructionsFlag].[SpecialInstructionsFlag]</UniqueName>
+                    </ID>
+                    <ItemCaption>SpecialInstructionsFlag</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>GROSSAMOUNT</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[GROSSAMOUNT]</HierarchyUniqueName>
+                      <LevelName>GROSSAMOUNT</LevelName>
+                      <UniqueName>[Bookings].[GROSSAMOUNT].[GROSSAMOUNT]</UniqueName>
+                    </ID>
+                    <ItemCaption>GROSSAMOUNT</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>BHSURNAME</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[BHSURNAME]</HierarchyUniqueName>
+                      <LevelName>BHSURNAME</LevelName>
+                      <UniqueName>[Bookings].[BHSURNAME].[BHSURNAME]</UniqueName>
+                    </ID>
+                    <ItemCaption>BHSURNAME</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>BHFIRSTNAME</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[BHFIRSTNAME]</HierarchyUniqueName>
+                      <LevelName>BHFIRSTNAME</LevelName>
+                      <UniqueName>[Bookings].[BHFIRSTNAME].[BHFIRSTNAME]</UniqueName>
+                    </ID>
+                    <ItemCaption>BHFIRSTNAME</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>PASSENGERFULLNAME</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[PASSENGERFULLNAME]</HierarchyUniqueName>
+                      <LevelName>PASSENGERFULLNAME</LevelName>
+                      <UniqueName>[Bookings].[PASSENGERFULLNAME].[PASSENGERFULLNAME]</UniqueName>
+                    </ID>
+                    <ItemCaption>PASSENGERFULLNAME</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>ALLOCATEDLEG</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[ALLOCATEDLEG]</HierarchyUniqueName>
+                      <LevelName>ALLOCATEDLEG</LevelName>
+                      <UniqueName>[Bookings].[ALLOCATEDLEG].[ALLOCATEDLEG]</UniqueName>
+                    </ID>
+                    <ItemCaption>ALLOCATEDLEG</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>CABINNUMBER</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[CABINNUMBER]</HierarchyUniqueName>
+                      <LevelName>CABINNUMBER</LevelName>
+                      <UniqueName>[Bookings].[CABINNUMBER].[CABINNUMBER]</UniqueName>
+                    </ID>
+                    <ItemCaption>CABINNUMBER</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Bookings</DimensionName>
+                      <HierarchyName>RouteArrivalPort</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[RouteArrivalPort]</HierarchyUniqueName>
+                      <LevelName>RouteArrivalPort</LevelName>
+                      <UniqueName>[Bookings].[RouteArrivalPort].[RouteArrivalPort]</UniqueName>
+                    </ID>
+                    <ItemCaption>RouteArrivalPort</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>TotalAmount</MeasureName>
+                      <UniqueName>[Measures].[TotalAmount]</UniqueName>
+                    </ID>
+                    <ItemCaption>TotalAmount</ItemCaption>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Model</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>DEFINE
+    VAR FromSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @FromSailingsDepartureDate ) = 1,
+            IF ( @FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @FromSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @FromSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR FromSailingsDepartureDate1ALL =
+        PATHLENGTH ( @FromSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @FromSailingsDepartureDate, 1, 1 ) &lt; 1
+    VAR ToSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @ToSailingsDepartureDate ) = 1,
+            IF ( @ToSailingsDepartureDate &lt;&gt; "", @ToSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @ToSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @ToSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR ToSailingsDepartureDate1ALL =
+        PATHLENGTH ( @ToSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @ToSailingsDepartureDate, 1, 1 ) &lt; 1
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Sailings'[LineCode],
+    'Sailings'[DepartureTime],
+    'Sailings'[SailingDetail],
+    'Sailings'[DepartureDate],
+    'Sailings'[ArrivalPortName],
+    'Sailings'[DeparturePortName],
+    'Bookings'[BookingCustomerDetail],
+    'Bookings'[PrdCode],
+    'Bookings'[PrdType],
+    'Bookings'[STANDBYPRODUCT],
+    'Bookings'[VESSELTRANSFER],
+    'Bookings'[PAID],
+    'Bookings'[DEFERREDPAYMENT],
+    'Bookings'[SURCHARGEAMOUNT],
+    'Bookings'[TOTALPRICE],
+    'Bookings'[UNITGROSSAMOUNT],
+    'Sailings'[ArrivalPortCode],
+    'Sailings'[DeparturePortCode],
+    'Bookings'[BookingReference],
+    'Sailings'[ShipPhysicalDescription],
+    'Bookings'[SpecialInstructionsFlag],
+    'Bookings'[GROSSAMOUNT],
+    'Bookings'[BHSURNAME],
+    'Bookings'[BHFIRSTNAME],
+    'Bookings'[PASSENGERFULLNAME],
+    'Bookings'[ALLOCATEDLEG],
+    'Bookings'[CABINNUMBER],
+    'Bookings'[RouteArrivalPort],
+    FILTER (
+        VALUES ( 'Sailings'[DepartureDate] ),
+        (
+            FromSailingsDepartureDate1ALL
+                || 'Sailings'[DepartureDate]
+                    &gt;= DATEVALUE ( FromSailingsDepartureDate1 )
+                        + TIMEVALUE ( FromSailingsDepartureDate1 )
+        )
+            &amp;&amp; (
+                ToSailingsDepartureDate1ALL
+                    || 'Sailings'[DepartureDate]
+                        &lt;= DATEVALUE ( ToSailingsDepartureDate1 ) + TIMEVALUE ( ToSailingsDepartureDate1 )
+            )
+    ),
+    FILTER(
+    	VALUES('Bookings'[PrdType]) ,
+    	'Bookings'[PrdType] = "CABIN" || 'Bookings'[PrdType] = "CHAIR"
+    ),
+    "TotalAmount", [TotalAmount]
+)</Statement>
+              <ParameterDefinitions>
+                <ParameterDefinition>
+                  <Name>FromSailingsDepartureDate</Name>
+                  <Usage>RangeFrom</Usage>
+                  <DefaultValues>
+                    <DefaultValue />
+                  </DefaultValues>
+                  <Caption>From DepartureDate</Caption>
+                  <HierarchyUniqueName>[Sailings].[DepartureDate]</HierarchyUniqueName>
+                  <ParameterValuesQuery>
+                    <Statement>WITH MEMBER [Measures].[ParameterCaption] AS [Sailings].[DepartureDate].CURRENTMEMBER.MEMBER_CAPTION MEMBER [Measures].[ParameterValue] AS [Sailings].[DepartureDate].CURRENTMEMBER.UNIQUENAME MEMBER [Measures].[ParameterLevel] AS [Sailings].[DepartureDate].CURRENTMEMBER.LEVEL.ORDINAL SELECT {[Measures].[ParameterCaption], [Measures].[ParameterValue], [Measures].[ParameterLevel]} ON COLUMNS , [Sailings].[DepartureDate].ALLMEMBERS ON ROWS FROM [Model]</Statement>
+                    <ParameterizedStatement>
+                      <ReferencedParameters />
+                    </ParameterizedStatement>
+                  </ParameterValuesQuery>
+                  <AllowBlank>true</AllowBlank>
+                </ParameterDefinition>
+                <ParameterDefinition>
+                  <Name>ToSailingsDepartureDate</Name>
+                  <Usage>RangeTo</Usage>
+                  <DefaultValues>
+                    <DefaultValue />
+                  </DefaultValues>
+                  <Caption>To DepartureDate</Caption>
+                  <HierarchyUniqueName>[Sailings].[DepartureDate]</HierarchyUniqueName>
+                  <ParameterValuesQuery>
+                    <Statement>WITH MEMBER [Measures].[ParameterCaption] AS [Sailings].[DepartureDate].CURRENTMEMBER.MEMBER_CAPTION MEMBER [Measures].[ParameterValue] AS [Sailings].[DepartureDate].CURRENTMEMBER.UNIQUENAME MEMBER [Measures].[ParameterLevel] AS [Sailings].[DepartureDate].CURRENTMEMBER.LEVEL.ORDINAL SELECT {[Measures].[ParameterCaption], [Measures].[ParameterValue], [Measures].[ParameterLevel]} ON COLUMNS , [Sailings].[DepartureDate].ALLMEMBERS ON ROWS FROM [Model]</Statement>
+                    <ParameterizedStatement>
+                      <ReferencedParameters />
+                    </ParameterizedStatement>
+                  </ParameterValuesQuery>
+                  <AllowBlank>true</AllowBlank>
+                </ParameterDefinition>
+              </ParameterDefinitions>
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="LineCode">
+          <DataField>Sailings[LineCode]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DepartureTime">
+          <DataField>Sailings[DepartureTime]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SailingDetail">
+          <DataField>Sailings[SailingDetail]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DepartureDate">
+          <DataField>Sailings[DepartureDate]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ArrivalPortName">
+          <DataField>Sailings[ArrivalPortName]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DeparturePortName">
+          <DataField>Sailings[DeparturePortName]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BookingCustomerDetail">
+          <DataField>Bookings[BookingCustomerDetail]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PrdCode">
+          <DataField>Bookings[PrdCode]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PrdType">
+          <DataField>Bookings[PrdType]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="STANDBYPRODUCT">
+          <DataField>Bookings[STANDBYPRODUCT]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VESSELTRANSFER">
+          <DataField>Bookings[VESSELTRANSFER]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GROSSAMOUNT">
+          <DataField>Bookings[GROSSAMOUNT]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PAID">
+          <DataField>Bookings[PAID]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DEFERREDPAYMENT">
+          <DataField>Bookings[DEFERREDPAYMENT]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SURCHARGEAMOUNT">
+          <DataField>Bookings[SURCHARGEAMOUNT]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TOTALPRICE">
+          <DataField>Bookings[TOTALPRICE]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="UNITGROSSAMOUNT">
+          <DataField>Bookings[UNITGROSSAMOUNT]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ArrivalPortCode">
+          <DataField>Sailings[ArrivalPortCode]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BookingReference">
+          <DataField>Bookings[BookingReference]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ShipPhysicalDescription">
+          <DataField>Sailings[ShipPhysicalDescription]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalAmount">
+          <DataField>[TotalAmount]</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="DeparturePortCode">
+          <DataField>Sailings[DeparturePortCode]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SpecialInstructionsFlag">
+          <DataField>Bookings[SpecialInstructionsFlag]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BHSURNAME">
+          <DataField>Bookings[BHSURNAME]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BHFIRSTNAME">
+          <DataField>Bookings[BHFIRSTNAME]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PASSENGERFULLNAME">
+          <DataField>Bookings[PASSENGERFULLNAME]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ALLOCATEDLEG">
+          <DataField>Bookings[ALLOCATEDLEG]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RouteArrivalPort">
+          <DataField>Bookings[RouteArrivalPort]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CABINNUMBER">
+          <DataField>Bookings[CABINNUMBER]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsDeparturePort">
+      <Query>
+        <DataSourceName>eBooking_Live</DataSourceName>
+        <CommandText>EVALUATE ALLNOBLANKROW('Sailings'[DeparturePortCode])</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>DAX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>DeparturePortCode</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[DeparturePortCode]</HierarchyUniqueName>
+                      <LevelName>DeparturePortCode</LevelName>
+                      <UniqueName>[Sailings].[DeparturePortCode].[DeparturePortCode]</UniqueName>
+                    </ID>
+                    <ItemCaption>DeparturePortCode</ItemCaption>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Model</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>EVALUATE ALLNOBLANKROW('Sailings'[DeparturePortCode])</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="DeparturePortCode">
+          <DataField>Sailings[DeparturePortCode]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsArrivalPort">
+      <Query>
+        <DataSourceName>eBooking_Live</DataSourceName>
+        <CommandText>EVALUATE ALLNOBLANKROW('Sailings'[ArrivalPortCode])</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>DAX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>ArrivalPortCode</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[ArrivalPortCode]</HierarchyUniqueName>
+                      <LevelName>ArrivalPortCode</LevelName>
+                      <UniqueName>[Sailings].[ArrivalPortCode].[ArrivalPortCode]</UniqueName>
+                    </ID>
+                    <ItemCaption>ArrivalPortCode</ItemCaption>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Model</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>EVALUATE ALLNOBLANKROW('Sailings'[ArrivalPortCode])</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="ArrivalPortCode">
+          <DataField>Sailings[ArrivalPortCode]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsDepartureTime">
+      <Query>
+        <DataSourceName>eBooking_Live</DataSourceName>
+        <CommandText>EVALUATE ALLNOBLANKROW('Sailings'[DepartureTime])</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>DAX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>DepartureTime</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[DepartureTime]</HierarchyUniqueName>
+                      <LevelName>DepartureTime</LevelName>
+                      <UniqueName>[Sailings].[DepartureTime].[DepartureTime]</UniqueName>
+                    </ID>
+                    <ItemCaption>DepartureTime</ItemCaption>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Model</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>EVALUATE ALLNOBLANKROW('Sailings'[DepartureTime])</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="DepartureTime">
+          <DataField>Sailings[DepartureTime]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsVesselName">
+      <Query>
+        <DataSourceName>eBooking_Live</DataSourceName>
+        <CommandText>EVALUATE ALLNOBLANKROW('Sailings'[ShipPhysicalDescription])</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>DAX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Sailings</DimensionName>
+                      <HierarchyName>ShipPhysicalDescription</HierarchyName>
+                      <HierarchyUniqueName>[Sailings].[ShipPhysicalDescription]</HierarchyUniqueName>
+                      <LevelName>ShipPhysicalDescription</LevelName>
+                      <UniqueName>[Sailings].[ShipPhysicalDescription].[ShipPhysicalDescription]</UniqueName>
+                    </ID>
+                    <ItemCaption>ShipPhysicalDescription</ItemCaption>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Model</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>EVALUATE ALLNOBLANKROW('Sailings'[ShipPhysicalDescription])</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="ShipPhysicalDescription">
+          <DataField>Sailings[ShipPhysicalDescription]</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="List1">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>1.40625in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.11458in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.66667in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.91666in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.60417in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.55208in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.54167in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.38542in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.55208in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox28">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Booking Holder</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox28</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox143">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Booking Ref</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox143</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox197">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Product</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox197</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox198">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>StandBy</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox198</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox201">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Booking Payment Status</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox201</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox148">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Trsfr Final Port</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox148</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox45">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Passenger Name</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox45</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox204">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Amount</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox204</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox48">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Allocated Legs</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox48</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox53">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Cabin Seat #</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox53</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox58">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Assigned Cabin / Seat No.</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox58</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox29">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox29</rd:DefaultName>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox221">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox221</rd:DefaultName>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>7</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox49">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox49</rd:DefaultName>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox54">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox54</rd:DefaultName>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox59">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox59</rd:DefaultName>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.53125in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox30">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox30</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Dotted</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="SailingDetail">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!SailingDetail.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>SailingDetail</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Dotted</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>7</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox50">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox50</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Dotted</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox55">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox55</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Dotted</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox60">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox60</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Dotted</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.23958in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox32">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!BHSURNAME.Value + ", " + Fields!BHFIRSTNAME.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox32</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="BookingReference">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!BookingReference.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>BookingReference</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>None</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="PrdCode">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!PrdCode.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>PrdCode</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="STANDBYPRODUCT">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!STANDBYPRODUCT.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>STANDBYPRODUCT</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox121">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(Sum(Fields!GROSSAMOUNT.Value) = Sum(Fields!PAID.Value), "Fully Paid", iif(Sum(Fields!GROSSAMOUNT.Value) &gt; Sum(Fields!PAID.Value), "Partially Paid", iif(Sum(Fields!GROSSAMOUNT.Value) &lt; Sum(Fields!PAID.Value), "To Refund", "Not Paid")))</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox120</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>None</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox85">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!VESSELTRANSFER.Value &amp; "-" &amp; Fields!RouteArrivalPort.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox85</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>None</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="PASSENGERFULLNAME">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!PASSENGERFULLNAME.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>PASSENGERFULLNAME</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="UNITGROSSAMOUNT">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!UNITGROSSAMOUNT.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>UNITGROSSAMOUNT</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="ALLOCATEDLEG">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ALLOCATEDLEG.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>ALLOCATEDLEG</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="CABINNUMBER">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!CABINNUMBER.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>CABINNUMBER</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox61">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox61</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Dashed</Style>
+                            </BottomBorder>
+                            <BackgroundColor>=IIF(ROWNUMBER(NOTHING) MOD 2, "White", "WhiteSmoke")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.3125in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox35">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox35</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox241">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>="Total - " &amp; Fields!LineCode.Value &amp; " - " &amp; Fields!DepartureDate.Value &amp; " " &amp; Fields!DepartureTime.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox241</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox11">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox11</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox13">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox47">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox47</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox185">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!UNITGROSSAMOUNT.Value)</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox178</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox52">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox52</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox57">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox57</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox62">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>14pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox62</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>5pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <FixedData>true</FixedData>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                  <KeepTogether>true</KeepTogether>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="list1_Sailing_Detail">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!SailingDetail.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!DepartureDate.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixMembers>
+                    <TablixMember>
+                      <FixedData>true</FixedData>
+                    </TablixMember>
+                    <TablixMember />
+                    <TablixMember>
+                      <TablixMembers>
+                        <TablixMember>
+                          <TablixMembers>
+                            <TablixMember>
+                              <Group Name="PrdCode">
+                                <GroupExpressions>
+                                  <GroupExpression>=Fields!BookingReference.Value</GroupExpression>
+                                </GroupExpressions>
+                              </Group>
+                              <SortExpressions>
+                                <SortExpression>
+                                  <Value>=Fields!PrdCode.Value</Value>
+                                </SortExpression>
+                              </SortExpressions>
+                            </TablixMember>
+                          </TablixMembers>
+                        </TablixMember>
+                      </TablixMembers>
+                    </TablixMember>
+                    <TablixMember />
+                  </TablixMembers>
+                  <DataElementOutput>Output</DataElementOutput>
+                  <KeepTogether>true</KeepTogether>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsBookings</DataSetName>
+            <PageBreak>
+              <BreakLocation>End</BreakLocation>
+            </PageBreak>
+            <Filters>
+              <Filter>
+                <FilterExpression>=Fields!DeparturePortCode.Value</FilterExpression>
+                <Operator>In</Operator>
+                <FilterValues>
+                  <FilterValue>=Parameters!parDeparturePort.Value</FilterValue>
+                </FilterValues>
+              </Filter>
+              <Filter>
+                <FilterExpression>=Fields!ArrivalPortCode.Value</FilterExpression>
+                <Operator>In</Operator>
+                <FilterValues>
+                  <FilterValue>=Parameters!parArrivalPort.Value</FilterValue>
+                </FilterValues>
+              </Filter>
+              <Filter>
+                <FilterExpression>=Fields!DepartureTime.Value</FilterExpression>
+                <Operator>In</Operator>
+                <FilterValues>
+                  <FilterValue>=Parameters!parDepartureTime.Value</FilterValue>
+                </FilterValues>
+              </Filter>
+              <Filter>
+                <FilterExpression>=Fields!ShipPhysicalDescription.Value</FilterExpression>
+                <Operator>In</Operator>
+                <FilterValues>
+                  <FilterValue>=Parameters!parVesselName.Value</FilterValue>
+                </FilterValues>
+              </Filter>
+            </Filters>
+            <Top>0.01334in</Top>
+            <Left>0.3175cm</Left>
+            <Height>1.58333in</Height>
+            <Width>17.73958in</Width>
+            <Style>
+              <FontSize>14pt</FontSize>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>4.945in</Height>
+        <Style />
+      </Body>
+      <Width>17.86459in</Width>
+      <Page>
+        <PageHeader>
+          <Height>1.75917in</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Image Name="imgFerries">
+              <Source>Embedded</Source>
+              <Value>BC_Ferries_Logosvg</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.11333in</Top>
+              <Left>10.92583in</Left>
+              <Height>0.6875in</Height>
+              <Width>4.44792in</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
+            <Textbox Name="Textbox1">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Sailing Manifest - Cabin / Seat Bookings</Value>
+                      <Style>
+                        <FontSize>24pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0.11333in</Top>
+              <Left>0.13542in</Left>
+              <Height>0.71875in</Height>
+              <Width>6.79042in</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Run " &amp; NOW()</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.00569in</Top>
+              <Left>0.13542in</Left>
+              <Height>0.25in</Height>
+              <Width>4.41667in</Width>
+              <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="User: " &amp; User!UserID</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>1.00569in</Top>
+              <Left>4.95833in</Left>
+              <Height>0.25in</Height>
+              <Width>3.83333in</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageHeader>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="parFromDepartureDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=TODAY()</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Departure Date From</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="parToDepartureDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=TODAY()</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Departure Date To</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="parDeparturePort">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>dsDeparturePort</DataSetName>
+          <ValueField>DeparturePortCode</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Departure Port</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsDeparturePort</DataSetName>
+          <ValueField>DeparturePortCode</ValueField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="parArrivalPort">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>dsArrivalPort</DataSetName>
+          <ValueField>ArrivalPortCode</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Arrival Port</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsArrivalPort</DataSetName>
+          <ValueField>ArrivalPortCode</ValueField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="parDepartureTime">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>dsDepartureTime</DataSetName>
+          <ValueField>DepartureTime</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Departure Time</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsDepartureTime</DataSetName>
+          <ValueField>DepartureTime</ValueField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="parVesselName">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>dsVesselName</DataSetName>
+          <ValueField>ShipPhysicalDescription</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Vessel Name</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsVesselName</DataSetName>
+          <ValueField>ShipPhysicalDescription</ValueField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>parFromDepartureDate</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>parDeparturePort</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>parArrivalPort</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>parDepartureTime</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>parToDepartureDate</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>parVesselName</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="BC_Ferries_Logosvg">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAABAAAAACMCAYAAADiINszAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nOzdeXxU1fk/8M9z7iQkEEQ0ZO6EiKgoKmqpbNZaSyslc8NSt7hUrW3tz9ZWbbWLCkm4ZCaoVbFav/1Kq9VW69dCa1UgCbhRd1wq7qLUFZKZsIkkJCRzz/P7I4EiJpklM/fcGc779eLVCnfueQjJzD3Pec5zCJqmaZqmaZqmaR5UXF4XyPM5pSpjoC5fW9PKOe+ojEHT0sWnOgBN0zRN0zRN07Te+IS8liVdqDIGNpz7AZyrMgZNSxehOgBN0zRN0zRN07Q+TFYdAIFWq45B09JFJwA0TdM0TdM0TfOc4tnXDwUwVnUcDkudANByhk4AaJqmaZqmaZrmOUZnx2Son6905Q8tWqM4Bk1LG90DQNM0TUvY8GnXDRs6iHc/jO0wRGzTw1dtVxmTpmmalquMSQCrDmLN+iVXtqsOQtPSRScANE3T9jFjrFsHtYlth0rGYQQcDObRIDoYjIMADAFoCMD7ASgAUPT5V3ehU/73v3wSMK0Q0P2E9mn379JWgD/t/m/eSkSfMvNWJtoiJLYQIRoT1ALJ0cHtzoYPV9kdLvy1NU3TtCxDgiepn//r/f9abtEJAE3TtFw1YVFeaUn0GAf4MkF8GeBjABzWim1lkCDafSHttcCS0tMWARje8/rhe/42c/f/EgPcM5SQ3WN0FBrst0JNRHgfoP8w+F1ivCdZvDu4o+tdnRzQNE3bh7EHGgDq/f9ajqH4l2ialimmFbobwGzVcbigHaAOEG8Co4UIUSm5mQjvEYm3xE7xwYbH5mxWHWS2M60FI5jkicT8NQAnApgAIF9xWAMhAfoYkG+DaTUJrB6U7zz/4YP2p24F4LdqbyaoPX4q9/DzkYaaCtVRaJrmbcXldQGfkE2q43AMHLFxWfV7quPQtHTRFQCaphR9/fOrpTlrOMAA41AAYAao
+Z/2ZmeHkOzCt0MdEeAbgJwV8j2+on/Ou0oizwVTbFxjsOxGSg0wIAs544pxK7AqARwM0GgSLGejYaUjTCr0F0NMMrOI8WtXy8NxopgIg0Nexu7JBSwci6AdpTdPiyhdyiox/WaZt2bisah1QrToOTUsbnQDQNEVMa8EIwBmtOg4PGcWMUQCd68CBaYU+AlAPIZdEBh/1JJac5agO0BMmLMozSyLTQMZZzHwqM++fU1P++ASAYwA+hoAfUxezaYVeB3glBNdH2vgprLJj6RiorHJhYay17Zh03Ev7L2a8rDoGTdO8j8GT1Bcr82qAlHch0LR00gkATVNF8mTlB9t428EALoEUl5ita5vJCi0mxv82NVavVR2YCiXltV8ShrgY3HIOIA4A59ZS/wAQgOMAOg6SfmkWYitVhBoZ/KAw5LKmpfaOVG8st++YAEJeGmPVAEDqBICmaQkgmqy8ASDrBoBa7tEJAE1TxZAe6GybNQIM/IwJl5sVoX8KiTn7QiJg9FS7oL1QfIeIfgTG5J5uelr/hjPjXIDOlTGjLWCFHpIOqqIrqz9I9kYsoP7hM/fsiOyUOf+zq2naQDFJDk9UnegmAZ0A0HKOTgBomiqMSapDyEIExumSMNu0wncAoibSMGej6qDSbfi064bl53d9r53xKwJG6kloyoYwcG5ePv06lRczs/Lu07mGGGvStUVD07TcVRoMHyGB/RWHwWKn8aLiGDQt7XQBsqapoxMAqfMB/GPAecesCH1fdTDpUjK7zu+3am8elNfVRIzfEjBSdUw54IX1y6o2pPRKUn/8VK5h0uX/mqbFx4I88P7L7+kTirRcpCsANE0B//TQIQBGqI4jBxwAxp9MK3Sm0Wl8N1s/qEtn2cUyJq5Cl/wJQINVx5NLmPBQKq8zrQUjwM4h6Y5nn8ekEwCapsXFzOoXSfT+fy1H6QoATVOAfB74YMstFU6+fMksrx2nOpCk2LYwrdrvypjxNkC/BKAn/2km
+CA+m8jomZ0q6Y9EANnQCQNO0hKivAND7/7UcpRMAmqYCe6G0LdfwaAh6ym+FT1AdSSICFeGTzdXGGoD+DKBYdTy5iID3mpdXv53Sa9kDD5+5Z0e0resd1UFomuZt4yrtfADjVcdB0BUAWm7SCQBNU0NXAGTGcAKv8FfUenb1tnSWPdi0Qtcx8xMAjlUdTy7jFFf/u+kkXQa8qhsAapoWz+bt4ksABikOo+OAIbHXFMegaRmhEwCa5rbKxQaA41WHkcP2I6ZlpcHQWNWB7C1QEQrKmPEOgKug338zTkh6OLVXMgE8Mb3RaIAu/9c0LSHKF0mI8e83l9idquPQtEzQD6Ca5rKS7e+NA1CkOo4cVyyJHy6eff1Q1YEAwOipdkH3qj+WAzhIdTz7iJamoUc8l8oLR1ZceziAA9Mcj8ZSJwA0TYtPCOUJAKn3/2s5TCcANM1lRI5eWXQFHWHEOm9QHYVZXjuuo9B4CXrV32W0DEvOclJ5pZQxXf6fASz0EYCapiWApfr3YH0CgJbD9MOoprmMoD6zva8gxsVmMDRV1fj+itBMCHoGQHadTpADGKnv/2fS+/8zoCMa9esGgJqm9au7co+OVB0HcUwnALScpRMAmuY69myDuhxEIP4fTFiU5+6wTGZFyCbGwwCGuTu2BqAtr2jwowN4vU4ApN8avPyjLtVBaJrmbUZX5ySon5+0RBrtDxXHoGkZ41MdgKbtS0ZPtQs6gGNUx7FvoaNNf8v5EeAuV4arXGwE2sKLmHGRK+NpX0RYsX7Jle2pvHRcpZ2/uVX98VM5h3X5v6ZpCSA2waobhlJK/WM0LVvoBICmuai90DeewC6vRmtgXAXw3QBxJocZY906qLX1nb8y6IxMjqPFwfxQqi/d/JlvPASrPn4q9+j9/5qmJSBaX3MfgPtUx6FpuUx1iY2m7VtIl/8rMtYsr8to74WyyoWFrdhWDz35V80RPlmf8quFB5pP5SAphU4AaJqmaZoH6ASA
+prlLnwCgCsmzM3XrcZV2fqytdQmAb2ZqDC1hTzUttTel/GrWDQAzoKNlY/HbqoPQNE3TNE0nADTNVcSsJxeqEJ2DysVGum/bvWfc+CeYZqT73lryehovDuQGukon/V7VDQA1TdM0zRt0AkDTXDL6VHt/gA5XHcc+rDSw4530NnezbbG51fgLgIq03ldLmTSclPf/65/RDCHVDb00TdM0TdtFJwA0zSXt7cZEAKQ6jn0aI419AJj8q33/CyBjWwu0pL0WXW6/n+qLO3cak6F/RtOOWeoEgKZpmqZ5hD4FwKOKy+sChuCDieQokjSSCX6ARhDLAyURE6ELABjYAskbBYnNzNhgCHqvc0fXuo2r7FbVfwdtLwYmIaM96LUEHJWuGwWs8BwGLk7X/TxoM4C3ibCWJT6BwMcENEvwVkPSp7F88WmBIzp7e2GHIfPJ6RoiYAxyHN5fgIYDPBpEhwJ8NCDGAjwKaf4MYuYBlf9LQJf/ZwBLfQKApmmapnmFTgB4wIhye4wg4+sQmATGMQQcA8hhAAAm8O71KAYTdS9P9UwkCQCIwGCAAIcZRqEB0wp/CPBLAL1IUj7XvMn/vN6DqRjDC/v//yyBEAkn4VSEIcUwyTSMGT5DoMghLiamABGOYsax6J5Up31vfSYw06HpuI+/PDSNgfnpuJeHvE3Ej7AUT8eYnt60Ym5zRkebavtKCo2DDaLxkDyBCV8BMAnAkFRvKYRIufy/G0/yRAEA82Q25GbVYaRLS9HRH6mOQdM0TdO0bh540tn3jJ5qF7QXGNNJ0GlgngagzIVhWwGsAqFRxOjhppVVn7gwprYHvxVaT8BIRcNLgK6JNFT9Jt03HjHVLhKDjBNIcDkgzgR4dLrHSKPXIw3Vxw3kBiMtu8yB8W8AI9IUkyodAP2LGfUwYssGUjqfLmOsWwdtl9u+JgRmMnAqgIOTePn6SEPVKIBSrrMxrVAEgD/V16cHvR9pqDpMbQyapmmapuUqnQBw
+ybhKO39Tm88i5nMAzAAwVGE4DODfzPR3KWJ3b6y3Iwpj2ScUf8su9fmMDYqGb2XGedHG6oF1R08Ik2nVBgFxPYBjMz9e0j6LNFQPS/nVU22fWWg8AeCk9IXkupcBvlX45N+blto7VAfTNyYzGJoIorPR3Weh/0Qp0e8j9VU/TXU0M2iPBhkfpPr6tGHcE2ms/q7qMDRN0zRNy016C0CGlQbDJzmECza38pkEPkB1PD0IwAQinmCwUWtatQ8z6PfRhurHVQeWq/J9xmSpZuiPJIvZLY1zX3NnOOJIAxowYdGjgZKozaA57oybsP0wYVFeqtthzEJRjeyc/EtiXgrGTc0rap5SHUxiiCONeBHAi5hqX20W+E5j4p8R8NXerhbMAyv/F2KyF3p0kOBnVcegaZqmaVru0gmADCirXFjYtb3tO0LgMsn8JY+XWeQBdAYBZ5hW6CUA10emOA/AthXNV3MTK9hbzMAzcJzTW1ZWt7g6MAC8/KOuZmCuGQx9CkLatx0MRPHITws2vYykEwCmVft1gOZmIqYMYhD+ToR5zctr3lYdTMpW2bEIsATAEr8VPgHgqwj4Nv77Q7VteJGzqmkgYzB5oUcHJPCM6hg0TdM0Tctd+hjANDKtBSP8Vigca237hAh3MONLqmNK0kQAS8zV4m0zGL4QU22dIEobkcbj5+Ijwp3FRc43oytt9yf/e4g0Vt8A0J9UxrA32dWedCbGP/2GISC6C1nS7BAAQHiBBE+K1Fef1by8Onsn/3uJNlQ9H22oPo0ETwLxcgAgQv2bS+xeTyRIghdOAPgsOuTIt1QHoWmapmla7tITvDQonWWPYkf8gtn5IQGDVcczcHQEiO82C301HAwtiA4dezeWnOWojip7MUmEJ7m0/h9jwi8j9dW3ZLaFe+KEL3aVjBnfAVCgOhYA2NKOpPe9C1/7AmY6JBPxZEA7M10dnRK7LZcreZqX17wMYKYZrJ3k8AA/yyoXG2hd++X0RDYA
+jGf1e607xli3DmoT2w6VDg4XgsZIlgcBNEKAShjsB6jov1ezD6AYABDxdmbE0N1Y9yNm/lgIbGDH+ESQXNe0seR9feKOd4yxbh3UKraeyNL4CgEHAXwEEQ5kpqHoXgSTAG8F0AVCE4HXs6T1IHxgkPHahsmd63L5fbQvpcHQWBb8DWYaw+BDCTSKgP0YlIfur1k7gA6AW4ioiYH1DF7PEm+SLHwtuvJXbar/DrmPqXR6XZnMc8aQpMPBNJoFBcBcDEIJmIr3uHjXgu8e/3boAngDgdaD8REEfUwOfdA5yPfepoev2u7+3yd7jbFuHdROrQfHHGcUGTgITAcBGAHmEibsT8AwAD6AhwLCB/BgAIMAfEZAJwPNDHxCwBYwNrPgDeQYzZLwicz3fZCJfw+PV6d728hTFhwo851qBi4BkK86ngx6jYErdI+A1IysWHCEw85aF4baKkme3VI/7xEXxkqKaYX+BOD7quMA0BlpqB6UzAtKgrVfEURPIysqpvgtFsbZ0eVz31AdSTYZWVE33mH5iuo4iKm6ubEqrDqOnDNhUV7piI1TJPgrRBjP4PEAjUVmKnq6ALwL4HUQnpaMxpaG6v9kYBytD6Wz7MGyyzcDgs8BI4iBLcxsA+h5Iqx0mB/K5X9LM1g7CYIqwXQGwAM5MjfGwBvE/DgTLY8Wjf2XTmwO3MiKBUfEpPM1EnQ8SR7PhOMAFMV9YWrWA/QmQb7MTI9ENpY8oxOb3QIV4YNZYjKRHM+g49Dd8DqZE4uSxQB9QCxfl0RvAPQ6SL5VPESuHUjlo04ApGCMdeugVmy7FMBcAMNVx+MWYn5IGvJKLxwXlk0CVvg8Bt+b4WHedgx8e+Oy6vcyPE5K/MHwuUR8n+o4AEQjDdVm4pczmVZ4NbrPp/c2xj0sCy7RKy/JCwRDP2LC7arjgJDfjCyf94TqMHJBSbDuOEEcZPApPY0jh6iLhj4E+F9EtHQI77dsXcPlO9XFkhh/sPYcIegi
+t8dl5q7IFDkzlVX3ETNDhwuJXxDjO8jMSUsM4IlIQ9W03o4bLSu3D3AM428ZGDcuybg2lUWaMdatg1r504sgcBmYjsxEbACaJMnv9bk4UbnYMLevXUZCbVWyZKqONlQ9rzKGPfmn2yVkiCATfQuMbyg8RhoAWkH8L4AaOOYsUb291E2ls+xi7jJOZsJUANMBjFUc0i4xAO8x4WXBeJIc46mmlXPeSfTFegtAUpjMYN2ZrfjsOgADyY5mJSb6Nkmj3G+FboJTcK2eaCSI5GRwRnNtyzrhnLdlmf1ZJgcZiDwfnox5If/PlNT+an9F6FwweX3yv5OZvxdtrLlfdSBZS2CSB04AiDlt/KLqILJZYEbtBGbxAzDPBmQZ4JVVDh4NYDQzX9iKbVsDFaEHAPy9ecjYR7y6MkpEJzJjmoKRX0t28l82Mzwy5vACODgPme3TQgAKe5v8A4DjE4ewVPE1Awzwr5N6wVTb5y80LmnFtmtAFMjw+1+pcIxtff2hf8d7R4EQZMXvwYaDH6iNACgurwv4BF8AcCWA4wGI3r/bXFcEphkAZpBh/NZvhR4H8ZJBlPePj5dfs1V1cOnW3WxYnk2gaTKGcSCPfJR8ng/AUcQ4ioHz2XBgWqEWEJ4m0DMS8pnoZPliX++nOgGQILM8PJlFeCH6OIJqH1JAwFwYHRf4rdD39baA+DhzE0gm8LXNU2R1vAemkvLaL7WsqHk1Q3HENawwtnFzq/r+eUy8LtFru1dGPquDB2aG/WhlidOiK2oeVR1INmP2RAPAVzeusltVB5FtyioXFjptrRdKph+xxHiP/7wCwHBmXATgIrP13fc5GL4lb+jgP65fcmW76sD2ksmS1r4xEv+c6l45vjLm8Dy4VOHBQN/PPA4drGia0DUY+yec3O7Z1vYHAMdkMKbdGPg0ut8RL/f158TSC0n2aNPKqk/UDM1kWrVBQPwEkEF4f27mI2A6mKZ3cuxmv1V7R54hbly/rGqD6sAG
+orviwvc9Av+QwYd7JX2cpBIwTmfw6QSCudpogRVazqAVvk7x6IbH5mzedaHXv8mUK5ld56eYvBHM51GWfjdkyCgCHjGt2oVF2L8qG0oalZiwKA9oGZ+BO7eB+AfN9TWL0dD/hWZFyCaJfCCJB6s0e3OJ3WlaoRYAJapiAAACvZvotdux7WICRmcwnIFqA2NWdEX1KtWBZLMRU+0iAEepjoOI9fF/SSidZRdLx7g01tr2E4BGZOeHMx9KhFtirW2/8lu186JFR/7ZKxUBRDhYxYosCVqTyHVlM8Mjne1rFzPhxEzHtJf+Fj3UJE2AtxN6BrNt4V/tu5rA8+Hi879g7r8HAHthix2/4PqQExblmf6W88HhKwHhSjImA4oI9POYwz/2W7W3+zp94T0nmdmgZEb4RIP5UmacDvAgz6eQk1MC4PsE/r6T7zhmRehZYnrggKLY77OgqZUqTAGr9mLRJd8mxvnQk//eCIB+2UbbVpdateo7aHtQafGmYwEUpveu9KFB4qRIfc3ifi+rXGz4K0K3gzGPCf9ObwwpSfPXIQUSTyZyWVnlwkICrsl0OAPQTpKtSKOe/A+UUWBMhAeOd2RAJwASUFxeFzCt0I0yZnwIxjwAI1THlAZlBLrTbF37ihkMTVUdDABIVjOZldKJm6gOBEOnxxx+RcHkv6Ow3Xm2zz8lZQmAuEmT0ln2KHO18RiB6+Dy4p+EiFcpOtmVQPpFrm2/Gldp5wes2ovNko3vgvEnuFSJkWEFBPq5k++8Z1q1l8K2PT+/9FvhWaYVek5IfoYZ56K7K38uM8D4GoOveHPJvC5dAdALs7x2HET4dgadpDqWbMCMLzHoBdOqXegrKrI9WMqoDFPaS9tWAeKsDfVzNvZ30eipdkFH29q/gnE6AEhAaYfz4tnXD0VXZyaaMiVja6SfMsQ9OW07LgEQyHA8qXKI6bzmFdVPqQ4kJ5Anyv9hsOx7YqH1NN/97CpAXg0vJBMz41gQHjet
+0G2+oiFXqfosPcCy9yNgfxVj+7ry+p3MBoKhK5hwE1QsyjA99+Equ6OvP5bAwSpWioio36SJv6L2WBmjegBlLoX0OcTysb7+rKeptvIJMBFcSQD4rfCsza34bfcpCzm21txtOEC/CzxvnEvB0A+aGqvdOAErKYGK8MnM/BuAPfHZ7zYGPwAQez5D46qpti9gheZC0MsA9OQ/OT6Afh1r3fGaOWP+N1QH4xkinaVtdFukpWR6pKH/yf/wadcN6yg0GndN/hn4tKWhSunJDYNiscNUjg8ADNQnVF5budhg5p+5EFKqrmpurPqn6iByBnlh9QkfbWiw16sOwqvMGfO/0YpPX0N36XKuTv53IQCXxVpbXyoJ1h2nIgAf541WMS6AT/osH7Zt4bdCf2DCQiiqyKT+y/9BirYASOY+kyamNd8ipuegaPIPIBJZUd1nf4JW+dmX4IGVV2YjocWBVAUqwgebFbXLCPzwAI9YzApMOFESXg5Yof+nOpZdSmbX+U0rtISZ/wV4I/GvgsHiH0BWnGvtDn9F7bFmofE8A2F44M0oe/EYSPFYIBj+4+hTbSUrCF4xxrp1EIPT0TRyJ4MvijRUXRbvHNbSWfaoQXldTwP4+q7fI6ZX+upa7BYpeabK8Xv8KZGL/NvXzgAwKsOxpOovkYbqm1QHkVNYfQKAdPl/r0pn2YNNK3QrpHgMoCNUx+MuOlqQfN4Mhi90e2QBVnXMVR8r2Uz+1cbtBCidTDhG/wkAAEoS3b5Oo9evmz84/xRAPACFR2AS4Yl+nz8MVr//n/BBvIWVgQgEa89n5ld7uujvS4Yw8AfTCt1/gGXvpzIQMxiuFF3yDQBnqozDA5qbTog9C+gEAFC52AgEw1XE9BKACarDyRHExD/s2Gm8bVbUnqU6GNdNWJQXCIZ+1Ipt76XhXN0mJv56tKEm7uQ1MKN2gowZz2Pv/WTEyvf/S+Iz1EZA70cbqhI6X52IfpLpaFL0hvA5l6gOIpcU
+l9cFoG5lbDcm6PL/vQQqwhNlTLwC4DLsuz14CkF8d8CqrUOGz5L9PD7avbH2GLWPlWzTCl2nevIPYHtLZESfZeIls+v8AFRMcnqtmvBX1E4hEg8CKFAQ025Sos/yfwDeaAAoM1P+f4Bl72daof9jonsADMvEGFni7HwYj5eV2we4PbB/+g1DAlboryBeDKDY7fE96MFdp4bt0wmAspnhkWbr2seZOAQgX3U8OcgE099Mq7a+NBhStaLgnqm2z6wIfd/0t6xlwu0ADhrgHZ+LSTExWl+zOt6Ffis8iyX9C73sW2fFCQBzxvxvEJCJkxASxsCdiVRBlFihwwD+lhsxJaldOEZl01J7h+pAckke8QmqYwAAA0JXAOxi28K0wr9m5mf3vVX/3jFojllRd5uLSQAlCYDe9rKbVugqgJI74z4znuqvAs/X5YxxM5g9fPFrVl47jpjqARQpiOfzZLyqCS9UAKS/AWCgIjwxH8a/AZyT7ntnqQkxYTziZmVw6fTwQcLX8QwD33FrTK9jlv/Y9f/32QSAWV43I+bwGgAnq44l95ElCa/7K0ILh0+7LueyoOMq7XyzIvR9s9D3Nhh/AuOQgd6TmO4owrBvbFoxtznetaZVeymB/4k+yvyMmE9ZAmBcpZ0PKW5RNX6PHZxHdyZyoQBfDA++LzIo3LRyzjuq48g9Hnj4BLZvGHL466qD8IJxlXZ+4AXjXoCvB5CnOh5PYf6JaYVvcGMoElCSsN+7Wa2/IvxtANeqiKUX/U5kGaQkaYK9vmZl5fYBEPQQANdXW7+I3o+urP6grz/tPoKVPLA4JNOaADCt0JnM/BQUbQnxsOM7dhr1PUfvZpR/Rt0xjsHPMeNLmR4ri2yKdvC/dv2H5x50M27CojzTCt0IIZdCl4O4KY8YVwzK63rbHwyfqzqYdBh9qr2/Pxi+enOr8UH3US6cjhWATgA/aW6s+n9xz/W1beG3am8G6Hfo+xiz1qYTO99NQ1wp2bzd
+WAjgWFXjAwAzL2x5eG403nXjKu18gL7nQkjJeru4KHaj6iByEXvgBAACPe+Vs99VGjHVLtrS6lvWcxyT1rtfBIKhKzI7BBMzVKxmb2+Z4uyeLAZmhI4i5nvgke0fAtxvAkAq2jYB4LXd/69yseEI3/3wyMSTuP+kiVEoJkD9EayyEzJtpyQFrPDPAfwNirdeeNhXRKHxj+7nrcwIzKidQFKuImBkpsbIRsT0IFbZsV3/vU8lAPzTQ4eY/panAfwCHvlQ2QcFiPg+0wo9awZDFe7ua0wP//TQIQEr9NuOncYnRHwtgNI03ToimE6JNFT/b7wLS2fZg/2rxd8J9PM4l67Ztd/HbYGK2mtB+KmKsffwCWThdYlcuGW7MRNASYbjSRoDl765xO5UHUfO6T6neKLqMJh5ny//H32qvb9RaKxkb26/8RQm3FhSMT9jX6eymXWlUNA0joHXdn1WlVUuLGSJxQBUHx27y5amKbLfo/YExDi3gtnTnlUTZuu7c730MyTR9/F/3YQHKrD4nS0N9mfpuFPACs1l8M3Yx+ZWySJg+pY24/eZuLdZXjuOJT0O4MBM3D+bcXel8G77zDepaYXOJAOveKHjswYA+AoIy00r/KJZXpcFnVGZSq3QdNOqfZgMrGPgZ0jv/rrVPoMmNjVWPR3vQv90u0TGjMcJdFq8a0nB/v/SWfZgf0Xodma62u2x98Jg/Di68ldtCV1MmJ3pgJLH/4g2VMfrPK2lwFydfyTUNO36HOZ9+wSAkacsOLBjp/EYgK+ojiVLCMHiz6a1YEQmbt7VxUdl4r7x7Ln/v6ut7Wbs3cxWJcKqeIl0RRUAu6smSoPhkwCuURBDX5jzjf4b77IHtmCReCEdtwkEw1U9p4hpCWDGRek+4aR7+4t4GB74XPcaBj49cKjz6J6/51MVjFtGT7ULOgqNhQB092xvmgAhl5lWaDWDbo62jHgg3lF3bhp9qr1/x05xPhC+VAJjM1E4QoQ7h/Cw
+n94pjeQAACAASURBVK5bFqfkH8DIigVHOOzUI8ESP5bC1QRAoCJ8sozx7QQoeYjcy+2Rxur6hK60bYHVsDIcT7JYslGrOoicRc4UKD0cEwDgdAknLQ+g2ah49vVDna7OBgDHq44lywQA5w4A3077nQ2MU/FzQT0nAJRaoemScbH7EfSr3yRs93OCknLjV2Hbcox166BWbPsD1JfT7+mNuFvviCZD9ZuwHPj+/0BF+EpmDqUjnH0K8a2ls+wnmpbaHw/4XrYtYqvFvQAfmobIcg4xlu5dSZrTCQD/9NAh7QYeUN2BXEvIFALfb5a0NMEK3bqzK+/2rY9evU1FIGOsWwe18WcVTPK8jp00E8CgDA3VCeDnzfXxS/4BoNSq/arDzkNIorSJhXQlARCYUTuBJf2Smc+GN7bXvFLQ7lyZ6MUlz4spIG+V/zPwUEvj3NfiX6mlhNU/fDLwerrKT7PN6Kl2QUdX58OAB44By06zzWD4wkhj1Z/Telemo1X8XLCkVw+w7P0kcBe88RmyG1H/CYDOnWrK/8HdJwC08bZ5IE8k3XejOEmT0ll2sYzxaJfC6c+AEgD+itDPmPmmdAWzj9lPxoz/ATBroDcKrPZdzmCvLeJ4Bgv6x96/l7MJgEBFKMiMv8ITnVC1JJQCuG5QXtccMxh6iIAHKc9pzPTxZ+Mq7fzNrXQKICq3Y9tpRNg/k88gDGxgQWe1LK9K6PxvMxiulOC/ILnGMu3RHfLt1CKMb6Rll8VgnEbAd1mq30u9h03s4IwPV9kdib5AkPiW6sng3gTRzapjyG2sfDsY7bPl/0ztg8N/JMZU1ZFkNeKF/ul2Q3Sl3ZK2W4JVdM12RH7sjfyY8Qukr6dOujQ3L696B6ju8wIJOs7FeHZjwWvKZoZHxhyO1wvIdRLU7/5/GSMvJP46i2j/lJPsPfMMPfkfmJl+Kzwr2lC1NNUb9PwM6GrJvrXmDRm8cu/fzMEEAFMgWDeXmedjH+pxkIP2
+A+ECBi7gmNEaqAgtleBljmM8kcjReHHZtjCfE0eRoBMZmL6pFdMI2B9wYemB6QnOp3MT6UwPAKYV/mXPsVjJfj+/tmfHz9QxFZcvMPMMHgmWxzPTSSBMdoAjyGMrNQB2SObZLStr+jx6qFeMqV76mxDh1eb6qidVx5GryioXFsZa25SeTgEADNonEwBmRXgeGOerjiMHHECGYQP4SVru1r0VSsXe+3fb2wvyBuV1ZfiEg+Qx8DhAcbLDdJyKBDJJvOqA5wModH3w/sU6u3xxPr+MSR5Iur8W97SlPpjlteOYsRje2naRlQT4Jky1G1J9Xo05qIV3GoZ6D6N+/ZIr2/f+7ZxKAAyfdt2wQXnhvzC82MxLG4AiZpxLoHN9QsK0wu+D+SUQ/i2AV8D4yJEF63tv9sZUNrOu1JE4DMxjJfhoAn0Zq/FlCOy36+PHpbkfA/hNZOgRcxM69muq7TMLfb8D+McpjldqVoQWJ/siZvYJoqHMGAKgDAj7AeQzA4AHp/z/1QbGzJbGmueSedHoqXZBB7G3GpBJJLQtREuNbG09HiDl58wbebF9LgFgltfNAEsvNSvLdj8omxmuW7+sasNAbzTyhfwxDhzXTwAg4JX8vK5fARju9tjx9X/8X881KraZOoYwuhyWaW2kliYvx9/C6YEGgCmW/4+YahdB0BLoSWdaMHC4v8C4MArcmexrzaA9GmAv/gx4BhM90Nvv50wCoDQYGiup6yEAY1XH0oMBfAzQOwx8ROCtTNhGzNuZ0EFSbGOBTiEhGNiPgWEk+AAwDgEwGsAhAMrg5emWMnwoCIcCOEsC3XNSowOmFeoEsFcSIDwk5mD3eaOk7su5TQDfa2qofjCRi4tnXz/U17XzbxjYnqaDwDgo2RcRCKw8MZ+0rVLQzES3VOypo1BMgbfO7O3oys+/T3UQuYwhvLD6FPXJQdtHzbjWg5OexG3fSTLRfi1m0B4Nkp452z0J29BdgeXFB/5BMUdeDuCq
+gd7IQWy8in8aBroI8FwZOwDAof472XdXTaioJtrgsFMLkOee44n73//fY0LGA4mHUksAGIXGHfBGo+Nk7ACwE92Vrp57/yXCNahcfHdCi2N7YBI/o+ypwmAAn/b8/2Fwp0q9Q7bHlvf2B55740iFvyI0UzLuRfcXVIU2AK8AtIaZ1wiD18iuwncSPX6sL2WVCws7P2s9ggyME1J8gwWf0pMg0HqX3/PLa15zpHNGZIW9LpGLR1p2mYx1LmOQir2Y2eh1Rzqnb2xI7Ov7RXRCesMZGAYaNz181XbVceQyBk9RHQMAf6eMbVEdxEDl5+EZACfFvdC2BV4w/gL24iovAGATgGeZ6TmA3zJYrM8v7Hr/wwftT3dfYdtixAsoyZO+MSzkMRL0VWKcAcUl2Ay6uHj29eEBv28wqTqNwaMrePR+dGVVv9vJAi8aYxlwvWoCwCiARikYNy4J2e/+/9Lp4YMkOOBWPH1hEkknAPzB0EUAzs5AOOnQRYwXmfAcM71sAJ90idi6jfXzontuYxl9qr1/505xCDPGMfBlEFUCyS8Wpdlhge1rv90M9Lpa3Rv/9BuGAB3fy2BMqYgQ4QlIvCgF3hPEzSTkR01L7U29XTxqxrXDO52dw8gQBzrMB5A0ionkgQwcBtDRPU3sU25QTcwrNq6yW3v7syxPADAFrPAcZtTC3f3+EsDLBH6EmR45cKjz7N7HK6RDz56NV3t+3QcAJVboMAIqAMwk4OvIXId6LT3u8hUN+Wmkl/03vRlZUTc+xnIZsZIjhbIQL43lDTpvgA++XmpgCNFHuZaWTupPAMgdnNBDtLnauALA1zIcTLJ2ENN9TPLeSNGRT8ddfbJtuRGIoPvX0wBuHz7tuksH+TrPA9GvARzsQsxfQMD+RmfnWUihhHavO43XPxf/RcT9r/4DkA6Np3gtAvYtHXlDh/ZbicfCE+X/O6JtXe8k84IRM0OHk4PfZiqgVBHoEQnc6eTl1ff+LGR/7r96
+kpqv9Py6F7b9q8ALxnQAv2DGtMxH3DsmuhhJJADIaD8DoP0zGFKidoDobuHQnU0r5iZ18tbHy6/ZCmArgA/7usa0FoyA6DqGpDiRGSeB8FUkWo0mxBe6/++StQmA7iZO4b8wcKZLQ7YxeCWAZXDksj277kZcCgAAWhqq/wPgdwB+N2rGtcO7ZFclg85D94OV58p69mHtDL402lDzp0RfYAZDFQ7L+8mbZaZe08bANdGG6tviN2iKS3k3+D3s7Oj0Paw6iFxmWgtGAI4+KzhdEiijLbFChwHw0jnZmxm00NcpFm14bM7mgdyoZ/vD70tn2XezI65lpkuhoAExEb6HAScAWFUFgCfJBPb/E+RE/ej1Oc/21nDscwRPAiv+mhFeTrbpnOHgjwCKMhRRshwm/B87fGPLiupXB3Qn25bNQCOARjMYrgTxbRjAqnPqeNpIyy7b0GCvT+hq0HTlP3mMxTJfXJ5oU+9URBrmbATwRM8voHKxUbLj3SlCynKAytF9lG5vnzmdg/JjfZ6ukJUJAP90uyTW2vYwgEyXcXYRcz1AfxnU4dQnc6yYG3oyR38A8AfTWnA0IC8D+Hx45w1qH0XrDKLKDfVz1yT6Cn8wfDmIFyJ79jKpIplwn4+da7o/JPo+mikRZeX2ATHAO2WUxI8mup9aS5Hkyfp8mPSRguImAAT4dwB5oVM5A3SX0Sl+PdCJ/956jqr9mb88tJQE/gn3P4e/WjYzPDLVZoD+6aFDAIxIc0zZjB3HiFsBACJPVZCpRoi//5/ZAz1YGC8kc7nfCp8N8NczFU6SXoOk/xddUZXU3yERkcaqJWUzw8/GHH4I7vdpMBz4zgFwYyIXk+KKMiL6RXPD3JvTsAiVnCVnOS3As+j+NW+kZZd1f934OwC+vPs6xuOf28K2l6x7DArMCB1FPuN5ZHDyz8AaBi4XPqe0ubHm1ObG6ge8NvnfW6RhzluRhqpL8oVvFIAadO9n1NxGeGBnl29iwpP/
+qbbPtEK/J+JboCf/8dQL8MRoffUFiWaI43EMn4ojr/rGYpXqEHKecLxU8ZHttm1cVtVv741AMHwaQANpZpou6wH+RqSh6qJ0T/73FF1R/SgRKgGk4QjWpFAsJr+d8ouFnsh+Hr8d98hh2xbY84FbgwT1u/8fYGKw8gaAjPiJy13KKhcWEviGTMaTIMlAXaSlZGIkA5P/XdYvq9ogfE4Q4HczNUbf+JxErvJPt0ugcPGGCHc211ctdH3y34sNDfb6SEPVjZGG6uOZ+DgG/xbAJhbcZ/k/kGUVAGYwNJUlHkBmjorpALBYMt+e7DFiXtJTFRDyT79hIRkdl6K7M7BXmy7lkp0A/zJSX3Nboi8Yfaq9/86dvsUM/lYmA8tyDggPwKEbM/GBx8zj0n3PgeDufcVaJjFN1hW76UGEF/t7ABpXaedvbsVv3IypNwyscWLOjE2P2E1ujNdcX90YCIbnM7G72x4IMwH8PrXXZnUpe08jZrxPjA1M2KuKigcTaJgEiompFMRHATD7v6WIu5JtPieOgsjaLXsSwFqA3yLQekmIEkPu+kMCfEwYBkYxiEvANBrAkeh/oeKzaHvspf4GLQ2Gj5DdnejVErGEEwBOa9uVUN8kbxsRzonUVze6MVjTUntTSbCuUpB8Hu42OT2+dJZd3FfTvN0EqTh5Yxenq8vx5FG20fqa1wFcMca69eqOIbF+F/mzJgEQqAhfwMx3IP1d3psB+q3RKe7M5KqA23pOILi+rNz+Y8wwrgbjcuiGgRlBwHskxTnJNP8osUKHdezEUoCz7SgZl9CHDP6rIPpjc33VRxkc52jlpYj/1VXYHkt424iWCiZQ2AsNqHKD7H///6Y24xICj3ErnN7RCicvr3JTg7snazQPPeJas3XtbHTvz3QJTS2rXFgYdw9276/NssoY+hDgpWA8ENlY8gxe/lFXMq8unR4+SPp4GphPA+gUAIM/d3eO3wAQ5Oa/bVq0E/NKCPEPZtHYs7c4
+YSOm2kWigKYIQbOZ6VR8cQX2yXj76hk8yQOJpi3R5fM+2Ls5Xm/80+0STsMRmwPUwsTTIt2TO/cGbZz7mmmFfoFUk4qpIafLOBFA/72QBB2i8NHtKbeSyala13D5znjXZEUCwB8MX83MC5DGdw0C3gNwwxAM+0siX6hstX6FvQXAr0us0CICbiTgVNUx5RIC7uvKy/9xMl3oA+W1X+PuTqfFGQwtC9GHBH7IYf5bS2PV866UVpE8RHkzoh4MvOn1rUbZbsTM8Bg4OFB1HLmj7zLaEVPtImLMcTOaXqwSvtjpmx6u2uH6yEvOcuSM8M+F5GdcHLUwtr1tCoBVSb2qcrGB1rXKy7IT9BoT5kbrq5YN5CZNK6s+AXAXgLsOsOz98mH8DMDV6E4ESIOdVXFvQlmTNNkBxm8KCpxb+tsTHE/PcWKPdf/in5vBsAXCjQCOAgCKW/4PQGCS+pw79Vu59DmGuAZqGzN/RoIrIsvdnfzvEpniLDJXG5eh59/YDUSImwAgJnXHSBK9pWzsNPJ2AsC2hbnadwvAl6bxrm+Aqbb5hNg/YNsy/uW5oef0gNPM8roZLOQigj5mboA+I+afNjfW3JvMi8xg+EImXgRdjbEDhDfAWE3ML8R8tHrjsqr3/vvHLlVXMSk5tqs31F3CqmWQz6HJrP7pM2cYvr4baYnBxmVgFZ2kd6F1nYh9e0t3cz4lWpZXPRuoCD3q6tFa3U3pViXzEvOzd46EIK+Xsm8G8y8jQ4+8J+5xjUna0mB/BiBU/C37zjyfcQMDR/YsnsTj9QQAM3BHnkHzU20O2TfiSCPqMdVeaQ42fgRGncOUQANAUl41wSwTKv/vbq5GP850PP3ohJCnNi+f97KyCGxbwgr/Ce72QPhqvAsIXMCqKkk4+/rn9cazCYDRU+2CjtXiXoDPSMf9CHhPEtvRyfJ+2LaEK7tovCeyYu7y4dOuG1eQ33UTMy5SHU82IsazUuL8yMqaDxJ+kW2LwPNG
+mImvyWBo3kb4gJivc0CPtUxxPvBIAs4zJwAQQ0mGf59CcrJXKj5yQKTPScWERXnELZe7HM+eOolw7pZ6+zOFMQAAJHALwb0EAIPHJ/0igyZ7PC+2ymfQ+euXVad5Evt5PWW95/WciNCv0VPtgg5A5T7keDYz4wfRxurMHiu7yo5FgP8xg/bylsaqj4C5fV871fYBSP77M+0SawAYg/gFAQWZjqZvNDeyfF78rSgZli+MOztlbD722iaTQRNQudjoN9HHROp2krDyJFY6eDKLMWrGtcM7Co0VAKVj8v8xM37Y3O4cHa2vuc8jkw6ltj569bbm+uofMmg2gIydXZmDugioau5wvh5dWZ3w5L90lj3YfMFYwoR9d/IPAIxDGLRIAM+bq8UyvxWeU2rVfrXnocB1xbOvHwpgPxVj90rgbdUh5DrmrCnZzQZ9rv6bIzaeirhN1jKHmeY111f124zMLcVDnJUAWt0aj1Ip1fX0zwXdFikaOy39K9h9S+Tzvb3QNx7p70mVJvwWO5iU8cn/HiKN9ofxyupHDs47Bu42lOuV4zhx3xvKyu0DCPRDN+Lpw6pIw9ybFI6/28fLr9kKcnXZtHDEZ2/1m4RjopS3sqTBhEAwdLrC8dPCcwmAspnhkZ0y9iSAkwd4q1YmzClod8ZGG6vvjNeYZF8UbahaChjHEvNDqmPJAm8KKU5obqiuS+Z7qfhbdqmMGU+CkfVvFmlUDJBF4DoJetosNCKmFbrbXxGaiQmL8twKYlBX+zC3xkqEw3gv/lVayrq/t76kOoxcQdz3KhoJvtjNWD43NuPZ6NAjvHBkFwDgzSV2J8BPuTjkWCRd5sJeTQD8MtJQdVm6S/7Tgj1a/k94amdX/onJLFK4RbJUvnLKwIZEGrjFyLgIQJELIfWmCzB+6oUj5nZhiXo3xxOGcWR/f84kE9mikzFM+FPJjPCJKmMYKE8lAEqDobExh58BMJCzuSWAu2JSHBGtr75WN9XqX6Rh
+zsbmxppTmfFDuLhKkUViRHxdQbszMZku/wBQWl53vOEzXgCQLc2VVDkQwIXEWGqWtHwSsGrrRlTYGV89lMLw0p5X2dLuZPC0A80cER0PD6w+5Q6n1wRAoCJ8MDO+6XY0PSQRX+q9CaN43sXBhhR/a37CDbJGT7UL4MlSdpoXaaj2xApor8iTSZN/7+zMm7X10au3xb/UfdLVEzH6wokdJ0z4foYD6c/tkYY5nmo0Jww86+Z4BPTbn8lg6v+YwMwbJiQ/FrBqL04+4eoNnukBYAZrJ0lCPQbWGf1pEvzz5uU16hpmTFiUV1LSMgokDzVYjGbCSGaUEhAA4Md/ky5F6D67thVAKwGfMng9QB+C8RFLvO1mBjfaWH1naTD0tCQsBnCcW+N6GQNrDCkuSnbiDwBmRe1ZkuVd5N6eqVzhZ9Acg40rTSv0R8AIJXtUUaI4RkMhPJNg36SrlDJMeH6fczZh0ZXXaxktMy6EosUFBv6vqaHGc800mfCqm2t5+YbvUAAJHVO1o0B8WQCuVV4lgpjuaG6sqlUdR3/IG8fZ7Wm9zBMVWxu8OfkHAEGYzKrfgyn+/n+/FT5B4RHNbew4YUVj96l5krPWXG20ARjixngk+29ULiU1eeD5rYBBi0wrfAHJ2jnNK2rcrPQaME8kAEqt0HQJ/AOpl9usZ6ZfRxvn3u9qycxU2xcY7BvPLE9g0AkCmMxoOQSADyy6nzU5sY+I7qB7riSADMC0Qi0AXiCm1cRUn8pENBlNjdVryyoXnuC0tf1uH28QuJOAUKSl5DfJni0M2xb+1UYtuo+/8tTTQZYpAHAZ4JwfsEJXNTdU3ZH2n22fMwTSM0VQm1UHkPO8WrKbleiDDY/N6eV7lgmou8D9eLoHhxDXKRq7X4ZDn0gXH1alkKWJXkseS4wxsKaI9kvnyU9pN2rGtcM7Zexw1XHsISYFnd3y8FzP9nQqq1xYGGttO1p1HHCQQANAebaqxzcC7oistFuUDN4f
+25ZUEVrH7NI2OtH/CTIxGVvvE4YroSTgJBb0ZKAi9KgD+ZuW+ppHvbR9oy/KEwD+YPhcCb4bqTVT6SDwQukULoiu/FUbUJXm6L6obGZ4ZFeMg0RsATSNmYcB3c0oM/CvXQJgJhPPZOKQaYU+IuKHHBJ/a1lelZFynPVLrmwH8EO/FXqVgIXwwPeIy1YDxg+aUyi/OsCy98tfLe4FMCsDce2rhjPwB9MKnxOTdedvWjG3OW13dkShh1I0yo4q24dMUR1A7uBeH6L9Vt0UgMe4HU2PJ6LL576haOx+dRldTQa797DKMvEj/QRjsoeeVHeC+Lvr6i/fqTqQ/nQ5nZNBwjufHoS6TD0Tpkvnjh1eqDThPDhxFtKYCOEz3Qnni4NLB7coGjsuZm4CyJUEAEv0+x626RG7ybRC6wGUuRFPIpgxTUBMMytC7wCh2zrZuafniFFPUjq5M63QJQDfhtTKBZexcH4WWW6/n+649lZihQ4TwJkAzog5PLH78Akl7/0HM9Plgvly0wq9yUx/GGQY93y8/Jqt6R4o2lD9O39w/ltE4n4MbFtGtthIjOrmoWPvSGX/6Ihye4wB8RBA6jPcuembPiH/7S8PXRBdUf1oOm5IQIFXHnyJ4ekH3mw3fNp1w4AuL63YZbveV9GIz1K1mkzgv6kZOb6Nk9FirkYMLj1zCUo8AcCgyRlZvkgBga6O1Fd7/jhUJuGlaqJ/R6IldaqDiIdY/dFpBKxbv8Lut3lcdxJT2aTyX15s3rgLg7a4NvOhhCrCnwZwTqZDSRrTkQBuy4dxo1kRWspM90TbYw1e2+aprP7VXxG6BsDvU4hhKxF9N9JQPSuawcl/2czwSDMY+pXfCr0igHUArkN3AxOvZH3HEfEtnTK2PmDV1nU/4KZXtHHeY8Kh4wGsTve9PaQTwE07u/IOb26sXpTK5N+05luGMFbryX/GmSTQELDC56XlbkSeaQjHRNtVx5DL8vJ3TobHmt5mM+pjHy0B
+p7odSw/p5BnePc3GtiW72GSXE0w0lJXbBwB8WKbjSdBrzVNit6oOIkETVQfQg0nwxUlvVVSBvdAAMH75PxGrO7GJeYmysRNCbS6ONSjuFcDjbkQyAAVgVBL4YbPQ+I/fCoVHViw4QnVQuyioAGAyK8LXg/GrFF5c7zPo4kydBzt6ql2ws0CcCRLfjTn8TRAMr8z2+zGYQXMG5XX9yLRC1xZh2G3rGtJXPte0suqTcZX2yZtbfTcB7Ol9ecli8D+llL/euMJel9INbFuYLxg1YFRDTy7c4mPwXSUV81ta6uc9MpAbMcs8kEd+wok9WyaWCwwWXipzznayy5f3hUZ7/oraY8Ho9+zmDGoSnXyyGfRc76zd2COr7HtyiLyyqMEMXAHblqoDSZBXKgDuUdr0OgneaJoYvwEgGDNdCKRXJESBGQxXqho/PnmQe/+GHD8B4HNWcMwzfQDiGUXAXIeduYFg6Fkp+C65Q96/cZWt7PQ1dxMAlYsNf2vd78FI9ozgbQy+MtpQ86dMhOWfHjqEDP5xB+gHAIq9Ug6XpAMB3NiKTy/2B+f/JNo477F03bj7HGNc5g/WPkNEfwD635vjdQysIcYV0caaVaneY+QpCw50nnfuBSGYxtC0xOQJFg+UWrUne7Hjt+Y97J0H9lzw9qaHr/pCxQqxKFf42VkG4sWqBk+E6qlP74xJ3nje4WXRhhqvr+YBAEpn2aNkDBk/pjYBO2NSXK06iET0bMFS1RtkN4LsNwFQMrvOjy7Z7/nzmcTMN3n0jaKHq8HFnZ82LbU/NitCL2Rbg18mnEhMJxqFxkJ/Reg+QfxHFYk891YtKxcbZuvavxI4qck/ER4VPue4TEz+S2aETzSt2ofJwDqAfo2c2OtORxCJRwMVofvSfZZ6tLHmftFdxvVaOu/roggzfhid4kyINFavSvUmgYrwRCdfvqQn/0oVSdBD/ul2v51iswUx7a86hhznhfLT3ND3MVrTXI1DGzAm6Y0H
+Z6aFqkNIlOzyeaWZ6H1pbYqbQfm+nROhvkrScZzCNf1dILrk1+DVXN2+hqk9kcsE49pMh5JBQ4nxI5b0UqAitCZQEb7SzWda1yoASlvfOU6Czk7iJTsAvqq5vvp/0n2cgj84/xSCMReSv5GrP+vMONeAcUogOP+7zY3zVqTrvk2N1WvHWLdObsW2+QB+gew4JeAjBm4yfM6dTUvtHWhM/UamFbqEmW8GELc8yVWMRmbclMilRMgHqOcsVzmECPkMMgA2AToYoDICj2LgYKR2OodbDoJhLAJwWiovJiDmhbUvAGBwqkeganEEKsIHM3NAdRw5Q/a2isYEhHWSxTNkR2LXkfIEABFebW5IPSHvOpITvfDcaJDIln4J8EilyZvdp4X1gzHVA/+0GgAQJ9QXqamh6iHTCr8C4MsZjiijuo9X5JvIMBb4K0JLQOL6TJ9q49rkjZkmJ/GD9Zxj4MKNy2reA2rSFoNpzbcAUQPgBA+8GbmhhEk0mFboN5F2pypdHSh7egxcbZbX3kMG/ZbZsys/b4Pp+sjGEfcNtEnOiKl2kW+w8QdmnJuu4NKJBRqj9enpjr/LuEo7f0ub7zgAJ0PKk5moHEBBOscYKAJODVSET26ur3oy2dcy8WYvPMj18FZCKYewRDKfPVp8X0gA+KeHRwM4wP1QtN4QRNyTgXpK2f1uxNMfCdylOobkqE+aMLBmQ/3cflezvYQET1L9yE1ML8S/CFMzH4mWoE8Tu4yYef6viERan38VGkSM88HyO6YVulcCtS0N1f/JxEDuleSIhEowO5npmkjR2K9tXFb9XrqGNoOhCtMKPQ+IegAnpOu+WYIAXOUvNFYVf8suTeeNIytq3myur/4Wg85hICONGVPggNEogNMiU5xjIo1Vfx7o5N8srx1nFBoveHXyDwAG80vpvuebS+zO5vqql5rrrVVstwAAIABJREFUqxY2N9ac6pBzCMC/4YTfmN3BzDfBtpN+LyMyNmYinhSl
+/RQPrYdXypxzQ2cR7f+FLWDCR8erCEbrnZQcjXtNzPDCz8WOwnznz6qDSFj358wE1WEIxl9Ux5AUL+zRpv73/5fOsgcDOMqlaLQ4iDjh58xo47zHwPB0D5gUCADfFcA7ZkX4rnTP3wBXKwDivQHQOiKcG2moSttEpjQYPkkS34B9b9L/BQR81eczXg6U157VvKLmqXTeO9pQ9bfSWfZSGTMuA3AFoGJVgT4kxp2CYndvaLTXAwAaBnpPJtMK/xjATQA8c2RcL2LwyYw3w9tYb0cAXDXylAW/cfJjdwE0K9NjJmiiuZrKI8n/i3spAZD2N3etB9EU1atP3WHwdc31NdeojiMTpJTjySsnamgw2Fgf9yLCZOU/F4TlHz5oeyqh3B//i3lHA1J1E2QmSX9XHEPCRlTYJhhlquOgeEcAduYdCSFV9ynQejDTtmSuF3nOT2XMOBnwRIPOdPKB+Xs+n3GGaYXmR4rG/jaV48p748o3u3/6DUMA9HlGOhH+rxOxCc316Zn8j5gZOtysCP1DEj8FPfnfk8mCHvMHw5en+8ZNS+0dkYbq64sw7GBivgDA6nSP0YtWMO6RJKdHpsQOa26sCm9osOM/+CSgdJZdbFrhBwH8Ht6e/IMIbzYttXe4Nd6Gx+ZsjjRUfxvA79waMz66LNlXNEdHNAFIyxtpGhSmu2mnBqBysQGGN1anpYhfgpqlBHCs6hi03dhB3ifxr/LAqqzketUhJINYqu9zQXixaWVV/H9fjxDsU/81AzqaWvz97qd2iMe6FYwWH4G2JHN901J7kxR0BoCEmgdmoaEAbjRb1z5nlteOS8cNXUkACN/OCQB6O6xxB4Mvaq6v/s6WBnvA52CPPtXe32/V3mw4eBOM0wd6vxyVR8S3+CtC9/SUPKXVuobLdzY31twbaag+QUoeT4xrAX4rTbfvAuEFADdBipnC5/gjjdXfbamf90g6zw8OBOeXy5jxKoDZ6bpnRskEzrZNO+JI0dgr
+GFjp/ti9ofLS6eGDknpJ99aQpszEkzwhKS1v6tp/lXz2zjEAhqiOAwAMH3I2AcAC+uHZOyJxm51VLjbghVJ2KdJ2XLEr2AP7/5keUh1DMgjshQTAmrhbQQWPdicULRESSHrfe8vyqmeJ6TwAA9r263GTIOilQDB0RXfz3dS5sgWAudc3gNcB45xow5yBTw5tW/hXi+917KRrCciJY8EyjRjny5hxXIkVOj1TDSZaVtS8CuBVAHNKZ9mjHEecBNBEYnwJwDh0H7vYW2KoC8AmAGsBegfg16SgV/MHD35l/ZIrM5bdGz7tumEFvtiNTHwRPNQdLq44e9syZslZjiy3f2oI4w2ob2InpCG/DeC2JF/3EYDkEgcZQmR8GUB2PRB7nCFosuoq5x5N65dVeaVPSpoxgcOHqI5C2y3u57m/7Z2jAVJ88gi/1bSy+v+3d+5hcpRV/v+cqp7JlQBDMtMziZF7kDuEJCii4ZZMTwDdlSCo6Hpb1pVFRZFLpofK9CSArHFl1f1xEZVdwSWropDpSQSNCsolAYEghgQIkMx0T0JCzOQ201Xn98cMl0CS6Ut1v1WT+jzPPI+Pqar3S3V31fue93vOCc1Odj/mF7Oqcr9pDQWhTAnAbGrQOZJoMOYBEf1Ylq4u5ryujuZf1jemLlLhboLdxaoUhquwoL6pbYo9asHni10XVaYGgL6rCvOPYqNHfdmPxVx9U9sp+ph+HwJgZwsfxwssq2tKXZJtT5b1pdJ5n/MKcNfA35vUJJwxw2McQJ89otd1t1QP5/VK2tnfoL4p1ajad6sGZDFYCIPmtpWR9Yud1XWJtp8I+s+mNLyJyukUGgAQWY3qB8sjqFA0KP2lhw4qU33uIlscwiOmJZSL8WddX+OaDwBGvIHyUh7HmF/IBsY9lh8HT3eG74DjDctY391x7TMwx7CMAhDzThORvFySoZv7DWHcUd7+LxZ7cldH8hcNidYzPeQXDOFNYVUuzm3dOqEm4Zxb
+jIu+MgEAizdagGxX9LJsuuWOUi9ZN+OmUcR2pFT1cna/ixyRBwIHoPw6nki1Zaa5jp9W+nwY+NKWnP5RLDUJZ8wwsReo8jnCtOv/FtsHy20rN6L6KwTzAQChYAu9os8H6EP/UL+lKwgr1qGBSjCCKmokTacyaJU71rSGiLchrBn8GDFeAFDU+pNZBYWxbVTsZMvTKqMiRB8L0/uhbkbqEGCcaR2Ss/J5/o4vu5CIfFkz0G68aDrTLQ/HG51piH0X8H6fdAUP5fQq7PbDEzefVeg9K3sNgHhi/jiUQ0BWe56+34/FfzwxNyH2zhWifI1o8e8HAiTrHrXTDec5+8xkriGRmlGN/Ywq4bL878rguW1lxqpylwIVDRztgaMKrWtheawsl5giqK1rSh1rWsRQYaD4bCDaOontVqIoqhHUVsNW8ohdUB1050wCUADQE33CtIZCkN2nslYU9Sh7tx8/kZj5ewZs6fxA7/N5HLfPzH1DgC/zskyHsyaz3f0QigP0+nHNICJwWg+bby30vPIXAVR3CsIvdvbFThnICS+auhlObX0i9VOw2iEq2OE3AjO8nP1EQ2NbQCzR5WH8WfMPqm9su82DDmCiaT2lIKLGdxY773O2IZrPC7bc2PTZBdn4XKGkZ5L/yJmmFQwVxN5+ChVsdbsXvF5Pl5sWUS5crMj+HyBUrL/t7d8nzF4wAjAaaFR4vTvdXLTF1wgBSJuwRcL1HAnAPUNlWZ7O1v3LriUiL1R83JhZ6uQyHcm5almTgd/6dt3g8em6xraLCzmh7AGAnOv+JdPefMGmB64uqKfjrqjEG9s+I7b9V4VP+KcuYje8xxNdGk+0zmW6E4TJs39Md2J1jW2Xu9XuKhX9AuHd9X8Lz1z+/y6oFYgCZzm0ppDju9PNLyoEpg+1KP9gWsPQwQqE/R94zo8uN0HFdl3TfdEj3kKHWfZeJ89eT8/JgFkrO4TKyg4giPHnSW/ODVknETEfABDN954N1YJx
+ocNS3WsQsxiyi+asyKSTZ+FZ5w50ExtyiOj3CnFxlz0AsOE3TmcpD/p4o3NwPDHvN4j+GDjIP2URe8EGaYmPtB9umDH/KNNi/CCemJuIj7CeEtHvAgea1uMXQkByi8XbYVoCgIUUuBspKhAkK+qH62bNi9IAfMEzbnMeYEhONt5ALYl2zoLDi68sumbT3g7QALSyQ/NelAWCCTOdGtDDDMt4tX8+HRIcxwJONi0jzwKAEQHCK6MzM7N4zqJMe3KaepwjwgPlGscQNV4ulsr34PKnAJRAPNH6acR+CvQs01r2SZSpnu0+EU+0fZPJt5jeMSiKukTbqfFEaml/2ogcbVqPz2zu7GgOgvU+MIglhdciUP5QBilFI573r6Y1DA0CsNABJP8dqHDiWaHayR3KCAxea8IKgC3bklDVxHBteyrmHYOhumfxP1vvA4y7g8TORQGAcOF527xnyz1IdnHyga725DlqWcep8B0gW+4xK4N+oeE8J6/U5kAGACbMdGriTal7QH4CjDGtZx9nBOiN8druZbWz2j5gWky+1DW1TqtvbL1X0D8BHzatpzzIsuDYKCUQv1NPCy/0IqpBywu7ZPxZ8yO3UwmMa3LiBKStk7j2kA4ACO6QTW8IHcqyQQ8JQAFAjeVVlT0wBMM1ETInkQQg0ATrB1pQR4SHleuXOj2VGiy7aM6KbHvyisx2dwJ4TQo/BSreitxHYl7O+nI+BwYuAFCXSJ3ZZ9lPo8w2rSViF463PH2ovil1ezwx33hbl92jUt84d2a8se23ovKIinwE81H7siHiBWcSpVpnWgKA7UnBAYCaMd6jwNYyyCmW0d6w3DdMiwgzFjHj+boD7OjcMPYZ0yLKiSd2CfV9IvxksJSwfis7h1ZIzh6QNd2/nhOy3Tbz1ewlZK4JLMv4PSsg/x/AaDeliAHyCGKWhaVOLpO+Lp1NJz/lbnfrFP28KKFqVfoW8pF8jgpMkbdjZjvVr/VYKeAbBDAwEQGA
+9LfMcy+MN6UW9Kq7IAjFrSbMXjDC7dn6KaXtK4p1DGVtcKzPg7wHGFHGQfLEMvOgfAf97dZ2HG5aBwDiFbyQf3ah01uXSP1G4KPlkFQMqvKVeKNzS6bDWWNaSxix1JuqAYj9KSw33aaz3FiWblZzTUCfFEu/aGz0gHHgSPeZvSWJu7Y9FeM/DA3XQrYf04tZN7ctF6RaNYMTgLaJeAXl/2/GUMqCpXK62t52E2MHjb5er8u0hgEHwh3AHfWzUu9D9dOq1oWghoOneTNpfMKZsC7trN3bQYEIADQ0pia91sNdBKBgSERe7IdyXTX2V+OJ1tusmPefJmxW8Zmtx6jFF3I9Wy+hMgUiV9hiX+KqF4hevJILiCXQ3jGNgATtetUqMiCl94EEJgAAjFCxvwNRV4BiUKxp5Q0E5skQrTb8dnLqbrKxjQ3ftaglXK3RyshgM+d+K7vZ34WIhOo3Ud/U9l417HATYUUlbdGl0r+hx/GmdUBBXZI2AhPKJWRvWDFeWnt/SyA6KUXsStei5HPANcA1DYnW0zzki8AFwCizyvZOTmKTgb0GAIxP2usSrZ/zhOUEa/G/GXgV5MW3/tgImNvnCCb7g3zDy9kvxJtSP6+bmTp7oPJr2Rg30zk8nkh9PZ5I/RlLVgjyVSqz+F9u99rTXc3VV2CsfMh2Lml+1bQIAEE+aVrDAO4B1n4bizlRiN0HhdcPKCcCH61LtH3ctI7woaLoZNMqAPCGeAFAYP1UuoGdhoavNTRuSDG/KyvqhcoBoJ75mgleyPL/N26NHQ8U2JHHf9RzC3BJ6qryKdk7rnpxU2NH5E9nuuXhTDr5T7mq6npBLwXKXqywWER10ACcMQdATcIZMwz7vxQ+YWD41xSWW6JPKPK8h7fWFmttFbHMYC10xp5/435Vbu8E8ZjkKUeocIIFUxWOqJT4ABJD+Uex+Me6R+11kkj9TDz9VdeYo/7EwgvdUi7ccJ4zUl37Qx7MENWZJir5Kzzc
+21c1a9ODV2+uT6RODsC+IhQW2S4bE2Y6NTn0YtM6Bli9On15UQuRTPra9fFE6tf0R3YDg6C3xRPzn8mkr/2raS1hoX5W21HqcYBpHQDYXqgm7kXhOJ4kUq8YegdOrEk4Y4KQihYSTAcAcsSC4aDLG0unGDcThayTiAbB/g8vZ5c43fkeLLDS1MesymFA5GQKCRt+fdUW4FbQ2+oS884V9CZgkmld72DQWm1GAgD1TW2nqHK3ohXJGxZYhfAHkN97OX0ouyT5UrHXGvjgnxv4e5MJM50a146dAZpQJQE0lCg7lAiMB76ulny9rmfl61ZTapnCk6KsUry1ePLK8BHeujX3Oq+//byG85yRlsYOzOX0CBGOUOUEhFO9HMcDVfLG1SvPr6tGj7oou/CK7QAqnGx8MgAwSLGnSpGzYpeBBqAeAiClRWMtuM0LWAAA2A9yvzzw7Bumbnrg6qjYWh6oq9MQ8/n/wGvZRde9BI5pHWVHRZ9HxUQAQKrEeh8ha5FmgnijczBguljrM533OeGqsB2ArgmE7/ttPgBQYPqVqvW8qaZK4smJwD1GBo8oAdFsmvsmzF7wQK5n27dALzOt6G3sP9gBFQ8AxJtSX1bVb1Nee5ALPKzCL2zb/WUl8tPXLnY2Aj/v/1NpSKQ+4GFdBHoh+6hNUeAAVc4Gzu5/rFpgwY6dNvFEaitvWa7HeDlsDwUZyFAMwPxdVG7v2u/If3mHi+EkY4J2wTUeAIjPmnsGns4xreMNRCmpSFLnNPeB+KOxF4NX6EWOrK7qWzT2/BsTAwHIiL0hAWjZ1c+jwWnTWWY8ViLMMjG0hXUa4VsgVR7Lmmo+eB2ySvaOY/Go8fTUrdlt3nODHxYozD+DvcJckmp5fxM1M/FU4UwjA0f4wtr+DcJ/iydaHwe5HagyrUl08I5YFasBMPb8G/eLJ1J3o3yP8iz+VZQ/ofpldd2GTDr54Wx78rtmeoCK9ueKNP9bprt2AioXgjyI6eo7
+wWIUcODAn7EKUnsh1dXR/MW3L/4nzrr+QJSDDWp6EyumRgMAY89xGvCsO4Fqkzp2QUq00DmOp8ptPqnxFYHTYn29i2sSzhjTWkKA+cknhK9vdylYssLU0IoXTZ7zQYOwKxsuK3vdY9YxGKoM/zYeZ6mTM6whb/q7AnGUaR0UmCZZNWr004Cp+zyl9vx5pt05ESWSSbfcCSRN6wBQ0UEdoxUJAMRnth4Ty+18DLioDJd/GeQ6D47o6kielulo+UEheT9lZ/mlfZmO5oWZdPPZYnEM8CMCVmwsYhdyAv+cSSdb3vkPO73cSQTBmyC81Hmfs8HU8OPPmn9QLGYvxlDF3D3Q1xerfrjkq3i5OzBX0Gww3l+F/fu6WU7AHArB4eDpznDgONM6AJB9IP9/ABF92tjgKueMnTkvKMVZA0wAnDFqh8sB4AXgnhGuoIkV2zkZ85s6Xq+4BTkC1y68YruCqUCmZfd6QepCFFEkme3ut4GVpnXQX8x+r5Q9AFDX2HYxljyKit8RwT+IyAWZ0ZMOy6SbW7vTyRd8vr7vdC1KPpdJJz8Xs+VQ4L8wF22M2D09KB/pSid3uwssiGkrYD8FWtv8JN7YOsWt9pYBx5rSsAf+5Ic9PrvE6Ubkh34IKgcCJ4pnPx5PzE2Y1uI/KvHE3EQ8kbqj2CtsG26dRDBcKWrapVNJukYe9RdgvaHhq2OW93VDY4eD2ffYmO+0tCUzrfdvhjUUhmXeNSEarrSJgBQAXFlMYVCBP5ZDTF5YfAkM5SBE+MdSJycit5qWofD6YMeULwAw+Zaq+qbW74roXfjXL7EXuNNCT86kkx/uam/+ealV5k2w9v7mdZl08l/Vsk4S5Dem9UQA0CUiZ2Q6ku17OkDQYOT/i4ECgNOdWF1j29WIPAR6cMXHH5z7/LqQrbnrCa4LAKAGrPvrm1q/O2C3DDV1M24aFU+kvhRPtD0LVjtK0bu5tljT/NRWPPKCSZdOxVl4oQvi22+wCL7U
+MKPtPQbHDzS1W1YdA4w2q0Iew3FC1UpZAlAA0BI3VA4AglAAsMguSaIs9VlH3qhyQl0i9VlT40f4iRrv2mSJdA56TDkGHjtzXn28tvu3qnK5T5fcKMr1uZx7SCad/ExnuiVcbWT2QHbRnBVd6eYZonwMCERP932UZTFbpnS1N++1Z6yKmt5BGcCrWADg8MTNw+JNqc/GR9hPiuj1BGN39Z0o6v7cr4utSztrAeMR3EGwVOVy7B0r441tn8FxKlbPxS9qG+cdH0+k/l3sHa8APwDeB4AlLxZ9UVHjE3YACZlt1w9EdZHB4Ud6lt4a7aDtHrFc478L0XD9JibMXjAC8063roH3UYiQAAQAinNf5Xa4SwBjXSoEuSGqBRB+PM/rM61BXW9Qt5Xvk8Z4Y+sU2/IeBz7ow+U2iHKFusMndnUkr93wG2fQiEYY6epI/kLd4e8D/XeitICKIsLdsdGjPrT2/uZ1eztu3HRnNCpHVkrXXvByVcNKqnafD3Wz5h0bT7Te2MPmV1HuwPxEaI8o/CnT4azx9Zqu2wYEvuK+wHhEf1z/mP1EXWPrRUy+xXj12b3RcJ4zMZ5IfT2eSD1lifcU8HWgZpeDlKLbtGoAduwAvAJbUA0FduSqHgTMTXyExrqmNr82HQKAim8BDbWML8okZL8Jr6fnZAxX81b0EZPjF8qEmU4N6CGmdagU5wBYv9TpQbnfbz0FMM7q1buD/h4viBBuTpSKZdknGJaw86Ax3qrBDvK1DWBdY9vFiP5QoNS+4FtV9Tt94t20saPwPJ4wkl1y5VbgyoaZ8+72LO92AtNubsjiqkpzJj3nxnxadVWNsE7wKtg1Yy88V45WcBPObRvf5+lJAh9COR/PmxSEeof5IILvOfvZJU53PJG6CWj1+9rlQJUTROTueG13F4nWn6pwZ7a95RnTuibMdGpciX1YRc9A9BwvN3gtGFEtygEw/qz5B7m4gSiQqF64djv9YNMDV2+uS6QWCRgr
+ZiXKgnhja1+mo+UHpjSUyrjpzujYSOtTqm2fz4yedCoL8SHN0bwzpjcXLiu7qkw1/gpUK1T3zBWZgvmJQ99ARf9i+QlwoV9iCkb0jHht9u7M5FsuZvmlxneSi6W+qe1Din5FH+NHWYwGVSqOoqYLOj777EJn0GLz/gQAHMeqf8RuU9GrKe3Hn0PkVpdcan3ayfiiLWR0Lp7zBNOdqfGRdjNKM+arqQ5FNonwiUy6uQOa8zrBRU42/VYDisz/V5k464YDtuvOYeJV1YrlTRRPJyJyFMjRoMfmXK0LxH9f4bw6fJt7dzkuPHy7e9POEfYlCkeU4/ploh7kG6J8I55IrQBtF9Xf7sgNe2TTA1cPWhW2FMaef+N+Vu/OY22LEzzkRFHen4NjQfsDZ3luZlqWVVQAwK1yp2F+8gnQV73f6L+YFmEE4YeouQAAYCHyvXgidVBmmjsvTDnn8ZltU8XST3jwGVUOQHjMjxpHE2YvGJHr2XqMHxpL4NXQOTgtpphu3Cy2G6oCgGBPCUC362cG+rIXRWa/SYvjPSvXYrTLkXwsXtt9786zb/hEud/bfjLh3LbxrstsRT+vqscCiLolFWitT6TmKByncGs23fy7fDbsTFLfmPpHVU43KkIkL+dQyQGAmoQzpvpR+6cqnFvKdUT1V4Jc1ZluDkL7BLMsdXIZcOpntj6olvwUiIob+ccKDz7a3V5Y1wgJiiND9aJ4IvWRvA4FETgA2uj1wMYG8frfzyJvHRVmhOvWLHV2lOPSa5Y6O+Kz5l6KZz1IMBaWhXIsyLEq8s1hVX1ePJF6VpE/W8JKD14Qz+vMud66DQccnc1noTFuujN62OjY/urJONfzGlQ4TESOEuUIhSPo630vIqJa2s3arn3F1QCwmBqQr/NTpUxAw0x21KR0vOf51aCHG5QhQGv8Mfscu2ne5eva5wQ2GDNupnN4TGIXqfAZ0MOVt3474okvrRX7rexi2lIcsoVsINKJvF5PlxvW
+UBAqQegAIKW5JhZe6Gpj2/cHah6ZpGlYVd9zdY1tX892zPlZUBe+E2ddf2Cf2zdLxfqnnKtnsKtTdnOm47qXwSn6+gr/AEwW+Hh9om2Vkvpv13PvXr/YWV2idN+pndX2AfX0R6Z1qOfl1c2ipADA+Kb5R7rq3ssbxZuK43HQK7s6Wn5fipahSNfilj9OmOmcmLPsn0BpAZYIAO5Ud/i/dvenWxSECCdrMB6/wwf+BiWMK9YCeSYzatKd5Rwgs+i638UTbbeA/ks5x6kAFnCcoMe9uUAXIRazifesdEmkXgPpeddZooJyALA/YOVcpT+0NHANVb/X3BuKad9Ev5apgfjWS4kT0DCz8EKXxtbvIPJ901JQTnfxlscTqZ+o5bZlFznFF5f0i8m3VNWN7f6wWPIx0ATw3j39grS/RkbJBMPKHq78/wkznZocmE4neq7oZ6E5jAcA1IciycNs+5ZeLzcH450zqBfRu+KJtivx5iUzi69tD0IgYGDt93HgI71e7iRErN1uJglPl6J37Mx59eC9WXx7wI3Zalt2azyRWqHwK8vSX3YtSj5h8r5MmL1gRG7r1qvwdA4+p9YXQS7WF8uru1zRQuOJuYmcunf17zAWRRaVqzIdc+4Mwhc6qKxd7GwEPb+ucd5VIprC/JcrjGxX5d+yHcmicsUPT9w8rEc3H+23qIjSEPWurEQb0OHbc1/bMcL+AHB8uccyhA3Ugta+618q/2QuyJnzFirQZnzyCYAXrsWO3wzf4d2xfYR9rcB401roD3x9Vjz70/FEapGK/m9vb/WiStlqx581/yC3yp0mlp6uyGlo9ynAiHx+WOLhSwAgEFZ2K1y97F3bnoqaDpuE656NTzgTXIpv4eobRRYAfDuvLLpmU11T6jZRvuaHJB84Ccu7P96U+puSutNz3YWV2gGfMHvBiN4tPSfayKkqfEDh/a66+T3bVUp6htniNbHnqP6xAseqJ3PiibZukdSDnuoDtsrDnae6
+qyqR/jX2HKehyo59Ltez9XJgXLnHy5OH1j147Wv5HFjUYrKuse1y0AVSXH66C/xg+DC3Zc29zuv55mDv24hmO7gh3ph6BOEegvNFCz6if/M8++PdHXOKtlNulb8fh5qtBhyxKwo/zXRct7gSY61Z6uyoa2r9lKg8AoysxJj7MEV1AKhNtB0KjPVZS1GIve8VAHw7a5Y6O+KNrfMD4QJ4Cxs4X1TOH1bV1xdPpJ4GHhORP7uePDVyR9/zRacSTXdidaOYqCqH2Z51qIoe3l9bhWNd3IkAWngxfx02wvOliGcArOxubluu7J1r/ERVpppOjwtb20RPY1MCsJe3LbvNe86PC8XUXeBif4k8HZcVQeUogfm2Zc+PN6VewuNxEfmzKMtitv3sK4uu2VTspeOJ+eNUcofiWYdacBiWHq3KMbmerUdbIrE3PtlCnmSClpbGJDorzxFrVblYkIs9gfijdg+J1DKEx1F9BfQFD+v5caPdV/Mpjrd7VMYn5o7PSWyyqPdBkDOAkzVgrWcV+X/5HltYAGD2PXa85/n/AL2sYFWAKH+yLOvLQc7JCzKZjuTShvOcU7yc/Qtgsmk9gUfkx5obflkxlv9dUO/kQFiLIwBQWFfluRVt95Vtb3mmvjF1iQr/R/RlKBtapANARKcF5D28pWuKu5JFpmWYJbO+7rZ4bfdllJYeWC6q6H9/TlbVL1mi7BhhE0+kMsDLiG4A2QayVZV3TRZF9QCQcVhePSoHAQfiERPeqHPpx/dQXu7fICmNgFjZn12/1Hl3elGgMZ/LbllWqBwAQbhnwBMsdXxppb0u7aytT7QuUORaP67nO8ohCIcoeqEK9Ho54onUZuBlkC5E/97//JJ3z39FR4pygMI4x7eXAAAS7klEQVQE6Q+c14A7UlRABpKSfIjlqFe8A+DwxM3Deth8dpGnjwamo0zvfx4LFvBaz5vP+bWg6xHpwWOHiryrZo+ojsBiOMo4gfFK20QXe5jo2yu1
+BI6Xs9tzP8/34LwDAGPPv3G/2Na/3Q0yqwhRW1C9uqsj+V+R3b80Ou9zXpkwe8Hpbs/W2xU+YVpPQPm7qH65K538Hz8uplgnmd4NiHgTV9BP9qfGVJaujuQv4onWb4N8o9Jj7zNocQ4AS2VqMH6h8liYKs+XjeWX9unM1OVisYQAz5beQRyIvxVI2oMHvL/4Rd5dLYqjxJ2zAXKWGO+MoSEsAIj5XPZt67b1rTCsoTACkGqiPtj/305uu3e9NcL+TEDSmfJhf+B40ON5sxjvbj6Ugf+rzA8G16rOFf0d3sbmDwP7+ajnDfqf88hAQWyQ3dcvePM+BWNuMTiifLeQAFhefc3HJ5wJVbneP6LFLP5lsYgc19+XN1r8+8HahVds70o3f0qFa4Fosvl2VH4nIsd3dbT4svgHQPTkwQ+KqAjKNZm0uYKhmXTym/T3CY4oA2J7RRVqU4zbnAEQvDAudspCdnHyAaCsRTqHLuqPS1It878LCZeVPd7oHAzUGZbh2052ZVBRDYAr1SumTfKeWb/U6RHRK/y85j6D6KrO+5xtxZ7u9hdJjcifbF919e2FnDBoAKAh0XqSi/2oKicUKGYTwucy6ebGrvbmlws8N2JQRLPtyest+BhQ9I9sCLFdkK9lTs2d7ev3bboTQznOt+tFFI2o3J7pSN5kWsVBo91/BqlI/YF9DVG78ADA5FuqgBP9V1M4gr8T0LBTbcW+Bqw1rSN8iC/5/1iBsGWHKyhmBSBoErJ7Nu7ctsOBA03r8DTn+/M3095yD2jetuqIAUpsY2oV5zbfZxFIbvj1VVsKOWevAYC6RNt5HvIHoKEwKZrO5dxjM+1J4/0Qhzqd6eS9eHIG0G1ai0F+63ru8V3p5v/w235bN9J6HzDCz2tGFIGwsGu/IwPRiu/ZhU7vaMZ8BNF9PNPbd/q6Rh1Z8GKxvm79CQTkN9qbc0O121luXll0zSaFzxA51QrCtX3qAKBiOgCw1a+ibBVDjdv/
+Q+easLxABJo2rV98XZFdZPbO8GHeF5Di0tP2VUQoOgDQ0JiaNNDyLyIPFB7umuYW3OVsjwGAeFPqy4L+ksL6YPYIemkmnZy14TdOZ6FiIoojs7j5MQ8+APq8aS0VZpMqX8ikm88uV0sUUU4qx3Uj8kfgrky29pOVaPmXL6vTl++MjRo9W2GJaS1DBYE1xXzG6nlB2LEDeDV6772bbDr5W4SUaR0hYuv6U9ySFzJ1M1KHAO9u7VlZloXLyg4gxp8nQsgKAAYgaCLIsnKlGa+513ndc/UfgHcVi4vYPepZRacxqRXt/hfAVoXPFLP5uZsAgEp9U+v1KN+jkDZ/wh/Vck/oSrfcGuX6V57udPKFaqvqVBEeMK2lAijIHWBPynYkf1jO75sgUf6/QUS5vivd/CmWX9pnWss7Wbvwiu1jR7vnAT8zrWUooEhR+f+I+Ql7P+HataskmaluK+h9pnWEhGd8cbLZQfhdaLgWsrPvsQHT7/zu8KXNGnea4JX5+du9uOUphC8TnppwRrGq+4pOY1KlyU8tQxu9ujudLCpgvEsA4JjZTnW8se0nqnJ1AdfYifLNzFR3enaRU9wELsIXXll0zaaubW5CRG82raWMLPNUT8ukmz+fSV+7vtyDqRifDOyr5ET5l66O5LVBDig+u9DpzUxzPwn8p2ktQ4BiLZYBWOgAWFEAYE84jnfQaO8ClA7TUoKP+FIAUALQlk0kXL+J2i2rjqEw12s5eMTw+IUx+x5bglCDRcpffyXTnvyRqny13OMMATZ23ue8UsyJNQlnDOjpfgsaovxfJp38frEn7xIAeK3Hvg3hkrzPFv2bhb4/05G8KWp9FBCWOrmu9paviMgFCiX3EQ4OskZFP5lJN0/t7mj5c0WGdByLwotfRpROJ5Y3o6sjeYtpIXnhOF4mnbxc0EuBwDkVQoNqwQHkA8++YX9gUhnUFI5GDoC98exCp1e94RcAS01rCTTq+VMAUMwHxizNhcoBIJZr
+/J4JhOo5Uvv3vx0LjDKtw+3zvwDg7sh2NN+syJxKjBViis7/r8aeAVT7qGVIovBwbPSoT5eyQfa2AIAK5G+7EJXbNTfilM50y5PFDh5RPrram3+Oy8nAH0xrKZFOFb46mjFHZdtb7qrkbvD4x6oPB8ZUarwIAP4P7BMzi677nWkhhdKVbrkVZQbQZVpLGBGr8BSAartvCnm2sy0zXq+4T5gWEXSyS67cqu7wc0EeNK0lqFjiQwHA2ffYqHH3Wte6tBOuDhBqGXdNuOKFKgAgtvn8f6CrkvVXsunm+QhzKzVe2BDRUjoARPb/QRDhqWFW7Ly1C68oqSbFmxOnullzDwHG5nHOJhG5oKuj+YvZJVduLWXwiPKSXZJ8KTPNPUOFrxKyVoEK61TlK8O3u4dl25PfXZ2+fGelNeTUiwoAVo5OUT6WSSdnVyK1o1xkOpJLhw9zjyaqC1AwFlJ4HpsVhDxnAP66Me383bSIMJBdcuXWg0bnmlDuMa0lgOgOSncADFjZje7Kasha2fWjpp8nOlyqlxnWUBgBCJqIAfdVpj3pgP4bUYeTd6HFpjE5jgUk/FUz5HjUdt0zX1l0zaZSL/TWzok7eO9ThYctV07oam+OemKGBcfxsu3J71quHKXC/xD4AiayWkW/OHa0e2i2o/nmNUudHcaU4JneQdkX6BX4bi/u+7o6kr8wLcYP1tzrvJ5JJy9G9bNDKw2nvGzrtQuuAWBpMDoAiIRxsWOOZxc6vZmO5ouAq4km0G/nRT8CSUGwsqMSqt/EhNkLRggcY1SE6Eo/JvaVJAi1JiqR/787MumW76l6M4CMifGDSrEOgPifY6cAcZ/lDB2Ue6yYe+baxc5GPy73ZgBA2KuNR4FvZ7trz+hc0vyqHwNHVJbOJc2vZtuTl4jIVJDFpvW8AwV+K8rHMqOPPCrb3nL7swudXtOiBCtyAJSPXhF+iLqTutLJrw7F3dNMR8uP3Zx7jMK9prWEgNc2PXD15kJP
+UjFffRoADyMT0HAjmkknbxSVC4CCP/uhiFKSdfZtFzK/Kxu2XvZeT8/JQJVRESELmhw83RkOHGtah2Du+ZvtuO7BmC2nKDxsSkPAyNkjR/+1qDNtjez/uycHcmWmo/mizvsc39zcsTf/lyVTdrc3rPC6DZ/tTCejSewQoKu9eRnQ2JBoPU2VK1XkXApp9+gnwkuC/i8id3YtSj5nRMNeUDRyAPjPZhXusHPynX0hmDiQl/gPtY2t77ew5iF6hmlNgUQo2P7fcJ4z0cvRUA45hWJZIevbHSC6Opp/WTfLeUo8+6fAqab1mERE/AkAmLeye324obKyq8pUxLiIUAVNto+InSio2aAJqPTay00KWHt/8zom33JGfFz2BkS+SjDq0phiVdG56cosn7UMBdZaKhd3djQ/BM2+Xrg/ADDdie2hYMwTWO7szqi935CjM93yMPBwfVPbe1X188CFlL+atgJ/UdVFAr/OpFsCu2s2cF8OMq1jCLEMuMPd7v73+qVOj2kxlWagc8WZ9Y1zZ6pYc4FppjUFCi28BaCXs00vct5g+7rs2GdNiwgz2UXOi8y+54P1W5//iqq2EoCq4iYQT0ouANhwnjPSyxnflX0udK4ui91uglUSscOWShQA+z+8uO7Ba18zLYLll/Zl4Ot1ibaFgt4CHG9akiGKeoaNa3LiKJP9FhNiFOV/rCr3is77nA3lGCAGUDu86mjwdnnhKnLriO25r5jMwY4oP13tzS8DLUBLbeO84y3RRlTPQPggpffDdUFXKtZDiPd717V/t2HxnFBUSBfVkwJeLCEMvKDwM8G+K5O+tjhL2BCjq+O6xcDiuqbUuaLMYR/f8XwDUQoPMgtTTU/YB1jO8kuj9o+lsvBCtwsWjD3H+Zkdsx2Bz2HKnWYIt7Tq2f30xU5GNDb4geUkXFZ2AFXjbRN31Iz0ngnFBGkAUaaYdk2IBKttYjbd/Aiz7zm5fsvKL6jQCtSa1lRJVIsLYlpqNYHp
+b1NAEB4T5MqudHNZu7jFYKBgjL5533cg/Gu2vflH5Rw4Inh0d8x5mv7+nd/CcazaR+1DbOUET+QoQY9UOFxED0Klhjdz5WQz6BZgI0K3eKxWi1V4uiK23+gVpbapMIWH8RZKYWQDwu9Q/YMKv8+2t/jTz3oIkm1P3g/c39DY9kHF+4bRVJwA4FlaeADA/IS9n5DZdoPOQNrMPzc0pr7tWaRQLmDfmBhu6U43vwjJki6ilvnAmImq7KUwYaZTk4NDDct4Mgi1jwpCAvAMDmL9lf5g5i11M276H7F3XAZcA+xvWlYlEHGLCgBI1P4Phb/YMLezvflXlWh53h8lVmtKvztb1liefKxz8Zyon/G+juN43fACFJ6bO0SICgDuHRfRVYosA5ZZog91TfGexHGiit4F0J/XxUPjmpy45cUuFNGL6HcF7AsLHhTWWUKH5grsCz/7HpuelYGwC6pYoVrshIXOjuRK4ML4zNZjsKzLQC9h6KUGbFBYLCq/sSX3oB+TPlXztmwJWQHAnCXTMPzMVTRUrokDz75hf+g7wrQOwUwHgHwYaJV+48RZ19/a67lfBL0MeI9pXT7TB/IHYIlY3oNdU/RJ0sVcxnpM0bjAVEwX46wsHtAh6t2c6WhZ0v8OKC0InC/9DgB0Cshiu9f6ZCByaSIizBM5AKAHyCpkRFknoqsVVopYf7VHjXz2Xe6ORWZEDgXWtzsZ4Gbg5tpE6jAL+SR4nwQ50rQ2n3lN4Y+W8gcX68EB11HB1G5ZdQxScoqSP7jhWuyEjczilmeBL9UknKuGYX8c5Z9UeD/hDJJtUvi9IA8rPJQdfeTjLLzQ9XcImWq42+/2zu66FSYFFIxaASgAGK5AYnVV32TMF7tzXW/Yk4Y1DMpAa8dvMfueb9dvXXkO8GlVPgqMMCytGHLAMoQ/qsdDfeIu3aXeR5HzwEy6+VvAtxrOc0Z6nkzDtT4kFh9UZRqwnx/CA0Yn8N9qubdm36yzd11FBcjB
+053hO4bbV2VOdVPR7l1EBNSeP6/O6vMK7eu6HXhnvYwdIO9IgdCdwDvbePSJsEthPPXIYbFl11PxFNm1XZaoir6717yqvC6iu8wCRXQzumvPbRVex7NU0Z2W6iaFjTnsjQdY+21cnb58557+YyMqw/im+Ud65M5UlbOADxGufMJ+l4jKcuDRmFh/XDe172k/3jN1Ta1fEJXbfNBYKusz6WSYPpMhQd2M1CHYcrGgHwWCsBDZHR6iz6vKcgtZ5on35+yoo5b5v+B/i/FnzT/IrXbXYzY48lAmnTzd4PgFE29qvR8VoxXI1XIPy4ao4HY8kboKuMGwjGcy6WQoi+3VJJwx1Wr9I8KFINMJbjCgm/4F/+Oo92iuavhDG3591ZZBz/ILx7EaHrGPcNGTRDhJkRMFTgDqKqbBJwRWIZr2XLkvO2bS78r5LshTT0RExNs5PHHzsC3WxvEA9NEzrGrYLgW+9hu5c2vocvUihgQNjalJruhpIKdKf5XhozEfHd9Bf8HHVYKuRuSvgjyzW5eIT0ycdf2BO9l5YDmuXQhVEtu59v7mdaZ17MvUzXBqLcuaoSJngpwBerABGT3ACkWeFtGnBXlmp+b+UulK+Lu8u0zRR092idNtVEOBjE84E3IW1SY1ZBdd91Il8n79ouE8Z6zrMcakBk/ZNuCeCzUTZi8YkevZMh2ss4AzgBOpfFAzh+hqkGfEk6dFdIWKPDlQKDxwjGty4oIcZ6lMQuUoETlS0SOBiQRjbbsDWIHyqKCPWOItXZd21poW9XaCcJMiIiIiIopCJd44970q9qGgB6McIiITQcaDNgATKC1A0KOw2RI2qEoGNKOqr2Lxsniy2hZ39br0devCNHGNGNqMP2v+QW6Vexzo0SocIcIRqLwXGEe/g6bQec82YCOwDrRbkf6UKEtedIUXVHMvDoVFSERERDBoOM8ZqW7saPW8Y0U4QpHDEA5BaaD/GVZosCpH/zOsW5AuVc0g2iXCS6Ly
+Yg5e6O6ufWUodLM5eLozvG9k9cSc604USxsEq0bRGoW4oHGQWmAsUAOUuomwA1gPrEV5VURXq/CUlYs93bn/4atM7/APRhQAiIiIiBjCHJ64edjr3paaGG6NQI2HDHvnMRqTbTbeTte1+8Tztgyrir3+ysjD/h70F1hEREFMd2J11dTYVNfkrNyBorL7ooKW9MTIrR1BzfooFSoiIiJIHPxR54DtfdRYWAd6OdntItaypVc8zfZWV3dW1LIfKlTGn3V9TW+s98BYzNofwMUaJjkdueczdCsi3brdza5f6vTs6biIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiMrw/wHDNIciPdLinwAAAABJRU5ErkJggg==</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <Language>en-US</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>78ab1b0e-dc68-454f-a8f0-b1a0e1cbcb60</rd:ReportID>
+</Report>

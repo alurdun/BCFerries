@@ -20,7 +20,7 @@ Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "BC Ferries - HR", "BC Ferri
 EndProject
 Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "tesintg", "tesintg\tesintg.smproj", "{AE1E1127-EC69-48A5-BE97-5003814F2E6F}"
 EndProject
-Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Report Project1", "Report Project1\Report Project1.rptproj", "{E114E62F-CAE1-4DAE-8F33-9DF731FB9A37}"
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Operational", "Report Project1\Operational.rptproj", "{E114E62F-CAE1-4DAE-8F33-9DF731FB9A37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
