@@ -6,7 +6,7 @@
     "dataSources": [
       {
         "name": "CRM",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corps;User ID=joanders;Persist Security Info=false",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corpt;User ID=joanders;Persist Security Info=false",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -43,7 +43,7 @@
         "name": "dimSubscription",
         "columns": [
           {
-            "name": "SUBSCRIPTIONID",
+            "name": "SubscriptionID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -51,49 +51,49 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "TYPE",
+            "name": "Type",
             "dataType": "string",
             "sourceColumn": "TYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DESCRIPTION",
+            "name": "Description",
             "dataType": "string",
             "sourceColumn": "DESCRIPTION",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SERVICENOTICEGROUP",
+            "name": "ServiceNoticeGroup",
             "dataType": "string",
             "sourceColumn": "SERVICENOTICEGROUP",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SERVICENOTICEROUTEID",
+            "name": "ServiceNoticeRouteID",
             "dataType": "string",
             "sourceColumn": "SERVICENOTICEROUTEID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SERVICENOTICEROUTE",
+            "name": "ServiceNoticeRoute",
             "dataType": "string",
             "sourceColumn": "SERVICENOTICEROUTE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CONTACTMETHOD",
+            "name": "ContactMethod",
             "dataType": "string",
             "sourceColumn": "CONTACTMETHOD",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SOURCE",
+            "name": "Source",
             "dataType": "string",
             "sourceColumn": "SOURCE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "COMMENTS",
+            "name": "Comments",
             "dataType": "string",
             "sourceColumn": "COMMENTS",
             "sourceProviderType": "VarChar"
@@ -231,86 +231,86 @@
         "isHidden": true,
         "columns": [
           {
-            "name": "SUBSCRIPTIONDATE",
+            "name": "SubscriptionDate",
             "dataType": "dateTime",
             "sourceColumn": "SUBSCRIPTIONDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "SUBSCRIPTIONTIME",
+            "name": "SubscriptionTime",
             "dataType": "dateTime",
             "sourceColumn": "SUBSCRIPTIONTIME",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "USERID",
+            "name": "UserID",
             "dataType": "string",
             "sourceColumn": "USERID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "OPTOUTFULFILLEDDATE",
+            "name": "OptOutFulfilledDate",
             "dataType": "dateTime",
             "sourceColumn": "OPTOUTFULFILLEDDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "OPTOUTFULFILLEDTIME",
+            "name": "OptOutFulfilledTime",
             "dataType": "dateTime",
             "sourceColumn": "OPTOUTFULFILLEDTIME",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "OPTOUTDATE",
+            "name": "OptOutDate",
             "dataType": "dateTime",
             "sourceColumn": "OPTOUTDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "OPTOUTTIME",
+            "name": "OptOutTime",
             "dataType": "dateTime",
             "sourceColumn": "OPTOUTTIME",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "SUBSCRIPTIONFLAG",
+            "name": "SubscriptionFlag",
             "dataType": "string",
             "sourceColumn": "SUBSCRIPTIONFLAG",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "AGREEMENTID",
+            "name": "AgreementID",
             "dataType": "string",
             "sourceColumn": "AGREEMENTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CONTACTID",
+            "name": "ContactID",
             "dataType": "string",
             "sourceColumn": "CONTACTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTID",
+            "name": "AccountID",
             "dataType": "string",
             "sourceColumn": "ACCOUNTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "FSUBSCRIPTIONID",
+            "name": "FSubscriptionID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
             "sourceColumn": "FSUBSCRIPTIONID"
           },
           {
-            "name": "SUBSCRIPTIONID",
+            "name": "SubscriptionID",
             "dataType": "string",
             "sourceColumn": "SUBSCRIPTIONID"
           }
@@ -427,38 +427,38 @@
         "isHidden": true,
         "columns": [
           {
-            "name": "AGREEMENTSTARTDATE",
+            "name": "AgreementStartDate",
             "dataType": "dateTime",
             "sourceColumn": "AGREEMENTSTARTDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "AGREEMENTENDDATE",
+            "name": "AgreementEndDate",
             "dataType": "dateTime",
             "sourceColumn": "AGREEMENTENDDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "CONTACTID",
+            "name": "ContactID",
             "dataType": "string",
             "sourceColumn": "CONTACTID"
           },
           {
-            "name": "FAGREEMENTID",
+            "name": "FAgreementID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
             "sourceColumn": "FAGREEMENTID"
           },
           {
-            "name": "AGREEMENTID",
+            "name": "AgreementID",
             "dataType": "string",
             "sourceColumn": "AGREEMENTID"
           },
           {
-            "name": "ACCOUNTID",
+            "name": "AccountID",
             "dataType": "string",
             "sourceColumn": "ACCOUNTID"
           }
@@ -551,7 +551,7 @@
         "isHidden": true,
         "columns": [
           {
-            "name": "AGREEMENTID",
+            "name": "AgreementID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -559,49 +559,49 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "AGREEMENTNUMBER",
+            "name": "AgreementNumber",
             "dataType": "string",
             "sourceColumn": "AGREEMENTNUMBER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "NAME",
+            "name": "Name",
             "dataType": "string",
             "sourceColumn": "NAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "AMENDMENT",
+            "name": "Amendment",
             "dataType": "string",
             "sourceColumn": "AMENDMENT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "AGREEMENTTYPE",
+            "name": "AgreementType",
             "dataType": "string",
             "sourceColumn": "AGREEMENTTYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "AGREEMENTSUBTYPE",
+            "name": "AgreementSubType",
             "dataType": "string",
             "sourceColumn": "AGREEMENTSUBTYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "AGREEMENTSTATUS",
+            "name": "AgreementStatus",
             "dataType": "string",
             "sourceColumn": "AGREEMENTSTATUS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "REVISIONNUMBER",
+            "name": "RevisionNumber",
             "dataType": "double",
             "sourceColumn": "REVISIONNUMBER",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "NOTES",
+            "name": "Notes",
             "dataType": "string",
             "sourceColumn": "NOTES",
             "sourceProviderType": "VarChar"
@@ -739,7 +739,7 @@
         "isHidden": true,
         "columns": [
           {
-            "name": "FADDRESSID",
+            "name": "FAddressID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -747,19 +747,19 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CONTACTID",
+            "name": "ContactID",
             "dataType": "string",
             "sourceColumn": "CONTACTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTID",
+            "name": "AccountID",
             "dataType": "string",
             "sourceColumn": "ACCOUNTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ADDRESSID",
+            "name": "AddressID",
             "dataType": "string",
             "sourceColumn": "ADDRESSID",
             "sourceProviderType": "VarChar"
@@ -767,6 +767,7 @@
           {
             "name": "CREATEDDATE",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "CREATEDDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
@@ -774,12 +775,14 @@
           {
             "name": "CREATEDBYUSERID",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "CREATEDBYUSERID",
             "sourceProviderType": "VarChar"
           },
           {
             "name": "LASTUPDATEDDATE",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "LASTUPDATEDDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
@@ -787,6 +790,7 @@
           {
             "name": "LASTUPDATEDUSERID",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "LASTUPDATEDUSERID",
             "sourceProviderType": "VarChar"
           }
@@ -844,7 +848,7 @@
         "measures": [
           {
             "name": "AddressCount",
-            "expression": "COUNTA([FADDRESSID])"
+            "expression": "COUNTA([FAddressID])"
           }
         ],
         "annotations": [
@@ -901,7 +905,7 @@
         "isHidden": true,
         "columns": [
           {
-            "name": "ADDRESSID",
+            "name": "AddressID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -909,43 +913,43 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "NAME",
+            "name": "Name",
             "dataType": "string",
             "sourceColumn": "NAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ADDRESS",
+            "name": "Address",
             "dataType": "string",
             "sourceColumn": "ADDRESS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ADDRESSLINE2",
+            "name": "AddressLine2",
             "dataType": "string",
             "sourceColumn": "ADDRESSLINE2",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CITY",
+            "name": "City",
             "dataType": "string",
             "sourceColumn": "CITY",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "COUNTRY",
+            "name": "Country",
             "dataType": "string",
             "sourceColumn": "COUNTRY",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PROVINCESTATE",
+            "name": "ProvinceState",
             "dataType": "string",
             "sourceColumn": "PROVINCESTATE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "POSTALZIP",
+            "name": "PostalZip",
             "dataType": "string",
             "sourceColumn": "POSTALZIP",
             "sourceProviderType": "VarChar"
@@ -1070,7 +1074,7 @@
         "name": "dimAccount",
         "columns": [
           {
-            "name": "ACCOUNTID",
+            "name": "AccountID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -1078,83 +1082,83 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "NAME",
+            "name": "Name",
             "dataType": "string",
             "sourceColumn": "NAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "LOCATION",
+            "name": "Location",
             "dataType": "string",
             "sourceColumn": "LOCATION",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTSTATUS",
+            "name": "AccountStatus",
             "dataType": "string",
             "sourceColumn": "ACCOUNTSTATUS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "FINSACCOUNTNUMBER",
+            "name": "FinsAccountNumber",
             "dataType": "string",
             "sourceColumn": "FINSACCOUNTNUMBER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTSINCE",
+            "name": "AccountSince",
             "dataType": "dateTime",
             "sourceColumn": "ACCOUNTSINCE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "REASONREF",
+            "name": "ReasonRef",
             "dataType": "string",
             "sourceColumn": "REASONREF",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "RESTRICTEDFLAG",
+            "name": "RestrictedFlag",
             "dataType": "string",
             "sourceColumn": "RESTRICTEDFLAG",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTSTATUSDATE",
+            "name": "AccountStatusDate",
             "dataType": "dateTime",
             "sourceColumn": "ACCOUNTSTATUSDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "STATUSEXPIRYDATE",
+            "name": "StatusExpiryDate",
             "dataType": "dateTime",
             "sourceColumn": "STATUSEXPIRYDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "CSDACCOUNTFLAG",
+            "name": "CSDAccountFlag",
             "dataType": "string",
             "sourceColumn": "CSDACCOUNTFLAG",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTWEBTYPE",
+            "name": "AccountWebType",
             "dataType": "string",
             "sourceColumn": "ACCOUNTWEBTYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "NOTIFY",
+            "name": "Notify",
             "dataType": "dateTime",
             "sourceColumn": "NOTIFY",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "PARENTACCOUNTID",
+            "name": "ParentAccountID",
             "dataType": "string",
             "sourceColumn": "PARENTACCOUNTID"
           },
@@ -1170,10 +1174,10 @@
             "name": "ParentAccountName",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": " LOOKUPVALUE ([Name], [AccountId], PATHITEM ([HierarchyPath], 1))"
+            "expression": " LOOKUPVALUE ([Name], [AccountID], PATHITEM ([HierarchyPath], 1))"
           },
           {
-            "name": "ACCOUNTNUMBER",
+            "name": "AccountNumber",
             "dataType": "string",
             "sourceColumn": "ACCOUNTNUMBER"
           },
@@ -1182,35 +1186,35 @@
             "name": "AcccountName",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": " LOOKUPVALUE ([Name], [AccountId], PATHITEM ([HierarchyPath], 2))"
+            "expression": " LOOKUPVALUE ([Name], [AccountID], PATHITEM ([HierarchyPath], 2))"
           },
           {
-            "name": "PRIMARYADDRESS",
+            "name": "PrimaryAddress",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESS"
           },
           {
-            "name": "PRIMARYADDRESSLINE2",
+            "name": "PrimaryAddressLine2",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSLINE2"
           },
           {
-            "name": "PRIMARYADDRESSCITY",
+            "name": "PrimaryAddressCity",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSCITY"
           },
           {
-            "name": "PRIMARYADDRESSPROVINCESTATE",
+            "name": "PrimaryAddressProvinceState",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSPROVINCESTATE"
           },
           {
-            "name": "PRIMARYADDRESSCOUNTRY",
+            "name": "PrimaryAddressCountry",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSCOUNTRY"
           },
           {
-            "name": "PRIMARYPOSTALZIP",
+            "name": "PrimaryPostalZip",
             "dataType": "string",
             "sourceColumn": "PRIMARYPOSTALZIP"
           }
@@ -1476,7 +1480,7 @@
         "isHidden": true,
         "columns": [
           {
-            "name": "ACTIVITYID",
+            "name": "ActivityID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -1484,37 +1488,37 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "TYPE",
+            "name": "Type",
             "dataType": "string",
             "sourceColumn": "TYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DESCRIPTION",
+            "name": "Description",
             "dataType": "string",
             "sourceColumn": "DESCRIPTION",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "STATUS",
+            "name": "Status",
             "dataType": "string",
             "sourceColumn": "STATUS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PRIORITY",
+            "name": "Priority",
             "dataType": "string",
             "sourceColumn": "PRIORITY",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "OWNER",
+            "name": "Owner",
             "dataType": "string",
             "sourceColumn": "OWNER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DONEFLAG",
+            "name": "DoneFlag",
             "dataType": "string",
             "sourceColumn": "DONEFLAG",
             "sourceProviderType": "VarChar"
@@ -1522,17 +1526,18 @@
           {
             "name": "CREATEDBY",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "CREATEDBY",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SOURCENAME",
+            "name": "SourceName",
             "dataType": "string",
             "sourceColumn": "SOURCENAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CONTACTMETHOD",
+            "name": "ContactMethod",
             "dataType": "string",
             "sourceColumn": "CONTACTMETHOD",
             "sourceProviderType": "VarChar"
@@ -1686,7 +1691,7 @@
         "isHidden": true,
         "columns": [
           {
-            "name": "FACTIVITYID",
+            "name": "FActivityID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -1916,6 +1921,7 @@
           {
             "name": "TotalAmount",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "TOTAL_AMOUNT",
             "sourceProviderType": "Decimal",
             "summarizeBy": "sum"
@@ -1923,12 +1929,14 @@
           {
             "name": "AmountPaid",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "AMOUNT_PAID",
             "sourceProviderType": "Decimal"
           },
           {
             "name": "AmountOwing",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "AMOUNT_OWING",
             "sourceProviderType": "Decimal"
           },
@@ -2027,19 +2035,19 @@
               "        1",
               "        ,FILTER(",
               "            factAddress",
-              "            ,factAddress[CONTACTID] = factBooking[ContactID]",
+              "            ,factAddress[ContactID] = factBooking[ContactID]",
               "            && factAddress[CreatedDate] <= factBooking[DepartureDate] ",
               "        )",
               "        ,factAddress[CREATEDDATE]",
               "        ,DESC",
               "    ), 0",
-              "))), related(dimContact[PRIMARYADDRESSCITY]), CALCULATE(",
+              "))), related(dimContact[PrimaryAddressCity]), CALCULATE(",
               "    VALUES( dimAddress[City] )",
               "    ,FIRSTNONBLANK(TOPN(",
               "        1",
               "        ,FILTER(",
               "            factAddress",
-              "            ,factAddress[CONTACTID] = factBooking[ContactID]",
+              "            ,factAddress[ContactID] = factBooking[ContactID]",
               "            && factAddress[CreatedDate] <= factBooking[DepartureDate] ",
               "        )",
               "        ,factAddress[CREATEDDATE]",
@@ -2187,6 +2195,24 @@
                 ]
               }
             ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "TotalAmt",
+            "expression": "sum(factBooking[TotalAmount])"
+          },
+          {
+            "name": "AmtPaid",
+            "expression": "sum(factBooking[AmountPaid])"
+          },
+          {
+            "name": "AmtOwing",
+            "expression": "sum(factBooking[AmountOwing])"
+          },
+          {
+            "name": "BookingCount",
+            "expression": "COUNTA(factBooking[BookingReference])"
           }
         ],
         "annotations": [
@@ -2671,58 +2697,58 @@
           },
           {
             "type": "calculatedTableColumn",
-            "name": "CUSTOMERNUMBER",
+            "name": "CustomerNumber",
             "dataType": "string",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "dimContact[CUSTOMERNUMBER]"
+            "sourceColumn": "dimContact[CustomerNumber]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "FIRSTNAME",
+            "name": "FirstName",
             "dataType": "string",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "dimContact[FIRSTNAME]"
+            "sourceColumn": "dimContact[FirstName]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "LASTNAME",
+            "name": "LastName",
             "dataType": "string",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "dimContact[LASTNAME]"
+            "sourceColumn": "dimContact[LastName]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "CONTACTID",
+            "name": "ContactID",
             "dataType": "string",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "dimContact[CONTACTID]"
+            "sourceColumn": "dimContact[ContactID]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "ACCOUNTID",
+            "name": "AccountID",
             "dataType": "string",
             "isNameInferred": true,
             "isDataTypeInferred": true,
-            "sourceColumn": "dimAccount[ACCOUNTID]"
+            "sourceColumn": "dimAccount[AccountID]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "ACCOUNTNUMBER",
+            "name": "AccountNumber",
             "dataType": "string",
             "isNameInferred": true,
             "isDataTypeInferred": true,
-            "sourceColumn": "dimAccount[ACCOUNTNUMBER]"
+            "sourceColumn": "dimAccount[AccountNumber]"
           },
           {
             "type": "calculated",
             "name": "BookingAccountID",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "dimBookingAccount[CUSTOMERNUMBER] & dimBookingAccount[ACCOUNTNUMBER]"
+            "expression": "dimBookingAccount[CustomerNumber] & dimBookingAccount[AccountNumber]"
           }
         ],
         "partitions": [
@@ -2749,19 +2775,19 @@
                 "column": "AcccountName"
               },
               {
-                "name": "FIRSTNAME",
+                "name": "FirstName",
                 "ordinal": 2,
-                "column": "FIRSTNAME"
+                "column": "FirstName"
               },
               {
-                "name": "LASTNAME",
+                "name": "LastName",
                 "ordinal": 3,
-                "column": "LASTNAME"
+                "column": "LastName"
               },
               {
-                "name": "CUSTOMERNUMBER",
+                "name": "CustomerNumber",
                 "ordinal": 4,
-                "column": "CUSTOMERNUMBER"
+                "column": "CustomerNumber"
               }
             ]
           }
@@ -2771,7 +2797,7 @@
         "name": "dimContact",
         "columns": [
           {
-            "name": "CONTACTID",
+            "name": "ContactID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -2779,159 +2805,162 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CUSTOMERNUMBER",
+            "name": "CustomerNumber",
             "dataType": "string",
             "sourceColumn": "CUSTOMERNUMBER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "MR_MS",
+            "name": "Title",
             "dataType": "string",
             "sourceColumn": "MR_MS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "LASTNAME",
+            "name": "LastName",
             "dataType": "string",
             "sourceColumn": "LASTNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "FIRSTNAME",
+            "name": "FirstName",
             "dataType": "string",
             "sourceColumn": "FIRSTNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "MIDDLENAME",
+            "name": "MiddleName",
             "dataType": "string",
             "sourceColumn": "MIDDLENAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PRIMARYPHONE",
+            "name": "PrimaryPhone",
             "dataType": "string",
             "sourceColumn": "PRIMARYPHONE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PRIMARYEMAIL",
+            "name": "PrimaryEmail",
             "dataType": "string",
             "sourceColumn": "PRIMARYEMAIL",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PRIMARYADDRESS",
+            "name": "PrimaryAddress",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PRIMARYADDRESSLINE2",
+            "name": "PrimaryAddressLine2",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSLINE2",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PRIMARYADDRESSCITY",
+            "name": "PrimaryAddressCity",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSCITY",
             "sourceProviderType": "VarChar",
             "dataCategory": "City"
           },
           {
-            "name": "PRIMARYADDRESSPROVINCESTATE",
+            "name": "PrimaryAddressProvinceState",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSPROVINCESTATE",
             "sourceProviderType": "VarChar",
             "dataCategory": "StateOrProvince"
           },
           {
-            "name": "PRIMARYADDRESSCOUNTRY",
+            "name": "PrimaryAddressCountry",
             "dataType": "string",
             "sourceColumn": "PRIMARYADDRESSCOUNTRY",
             "sourceProviderType": "VarChar",
             "dataCategory": "Country"
           },
           {
-            "name": "PRIMARYPOSTALZIP",
+            "name": "PrimaryPostalZip",
             "dataType": "string",
             "sourceColumn": "PRIMARYPOSTALZIP",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "STATUS",
+            "name": "Status",
             "dataType": "string",
             "sourceColumn": "STATUS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "STATUSDATE",
+            "name": "StatusDate",
             "dataType": "dateTime",
             "sourceColumn": "STATUSDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "STATUSEXPIRYDATE",
+            "name": "StatusExpiryDate",
             "dataType": "dateTime",
             "sourceColumn": "STATUSEXPIRYDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "REASON",
+            "name": "Reason",
             "dataType": "string",
             "sourceColumn": "REASON",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CUSTOMERSINCE",
+            "name": "CustomerSince",
             "dataType": "dateTime",
             "sourceColumn": "CUSTOMERSINCE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "CONSUMERFLAG",
+            "name": "ConsumerFlag",
             "dataType": "string",
             "sourceColumn": "CONSUMERFLAG",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "UNVERIFIEDFLAG",
+            "name": "UnverifiedFlag",
             "dataType": "string",
             "sourceColumn": "UNVERIFIEDFLAG",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "COMMENTS",
+            "name": "Comments",
             "dataType": "string",
             "sourceColumn": "COMMENTS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PREFERREDCOMMUNICATIONS",
+            "name": "PreferredCommunications",
             "dataType": "string",
             "sourceColumn": "PREFERREDCOMMUNICATIONS",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CREATED",
+            "name": "Created",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "CREATED",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "CREATEDBY",
+            "name": "CreatedBy",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "CREATEDBY",
             "sourceProviderType": "VarChar"
           },
           {
             "name": "LASTUPDATEDTHISDATABASE",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "LASTUPDATEDTHISDATABASE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
@@ -2939,6 +2968,7 @@
           {
             "name": "LASTUPDATED",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "LASTUPDATED",
             "formatString": "General Date",
             "sourceProviderType": "Date"
@@ -2946,6 +2976,7 @@
           {
             "name": "LASTUPDATEDBY",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "LASTUPDATEDBY",
             "sourceProviderType": "VarChar"
           }
@@ -3285,49 +3316,49 @@
         "name": "factAllocation",
         "columns": [
           {
-            "name": "SAILINGCODE",
+            "name": "SailingCode",
             "dataType": "string",
             "sourceColumn": "SAILINGCODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DEPARTUREPORT",
+            "name": "DeparturePort",
             "dataType": "string",
             "sourceColumn": "DEPARTUREPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ARRIVALPORT",
+            "name": "ArrivalPort",
             "dataType": "string",
             "sourceColumn": "ARRIVALPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "LEGCODE",
+            "name": "LegCode",
             "dataType": "string",
             "sourceColumn": "LEGCODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PHYSICALRESOURCECODE",
+            "name": "PhysicalResourceCode",
             "dataType": "string",
             "sourceColumn": "PHYSICALRESOURCECODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SELLABLECAPACITY",
+            "name": "SellableCapacity",
             "dataType": "double",
             "sourceColumn": "SELLABLECAPACITY",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "SOLDCAPACITY",
+            "name": "SoldCapacity",
             "dataType": "double",
             "sourceColumn": "SOLDCAPACITY",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "AVAILABLECAPACITY",
+            "name": "AvailableCapacity",
             "dataType": "double",
             "sourceColumn": "AVAILABLECAPACITY",
             "sourceProviderType": "Decimal"
@@ -3436,25 +3467,25 @@
         "name": "dimPhysicalResources",
         "columns": [
           {
-            "name": "PHYSICALRESOURCECODE",
+            "name": "PhysicalResourceCode",
             "dataType": "string",
             "sourceColumn": "PHYSICALRESOURCECODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "RESOURCETYPE",
+            "name": "ResourceType",
             "dataType": "string",
             "sourceColumn": "RESOURCETYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "RESOURCETYPESORT",
+            "name": "ResourceTypeSort",
             "dataType": "double",
             "sourceColumn": "RESOURCETYPESORT",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "RESOURCECODE",
+            "name": "ResourceCode",
             "dataType": "string",
             "sourceColumn": "RESOURCECODE",
             "sourceProviderType": "VarChar"
@@ -3602,29 +3633,29 @@
         "fromTable": "factActivity",
         "fromColumn": "ACTIVITYID",
         "toTable": "dimActivity",
-        "toColumn": "ACTIVITYID",
+        "toColumn": "ActivityID",
         "crossFilteringBehavior": "bothDirections"
       },
       {
         "name": "6bff43f1-0c88-4df5-a747-1178f7bc4999",
         "fromTable": "factAgreement",
-        "fromColumn": "AGREEMENTID",
+        "fromColumn": "AgreementID",
         "toTable": "dimAgreement",
-        "toColumn": "AGREEMENTID"
+        "toColumn": "AgreementID"
       },
       {
         "name": "e47d6946-0f2e-446f-a142-a0d93009429b",
         "fromTable": "factSubscription",
-        "fromColumn": "AGREEMENTID",
+        "fromColumn": "AgreementID",
         "toTable": "dimAgreement",
-        "toColumn": "AGREEMENTID"
+        "toColumn": "AgreementID"
       },
       {
         "name": "0380177f-b007-46c4-be22-7e2d65b7cd31",
         "fromTable": "factAddress",
-        "fromColumn": "ADDRESSID",
+        "fromColumn": "AddressID",
         "toTable": "dimAddress",
-        "toColumn": "ADDRESSID",
+        "toColumn": "AddressID",
         "crossFilteringBehavior": "bothDirections"
       },
       {
@@ -3669,7 +3700,7 @@
         "fromTable": "factContactAcctRelationship",
         "fromColumn": "ACCOUNTID",
         "toTable": "dimAccount",
-        "toColumn": "ACCOUNTID",
+        "toColumn": "AccountID",
         "crossFilteringBehavior": "bothDirections"
       },
       {
@@ -3677,7 +3708,7 @@
         "fromTable": "factContactAcctRelationship",
         "fromColumn": "CONTACTID",
         "toTable": "dimContact",
-        "toColumn": "CONTACTID",
+        "toColumn": "ContactID",
         "crossFilteringBehavior": "bothDirections"
       },
       {
@@ -3685,28 +3716,28 @@
         "fromTable": "factActivity",
         "fromColumn": "CONTACTID",
         "toTable": "dimContact",
-        "toColumn": "CONTACTID"
+        "toColumn": "ContactID"
       },
       {
         "name": "d571bd49-571b-4d85-a13d-5e2ab17b0c40",
         "fromTable": "factAgreement",
-        "fromColumn": "CONTACTID",
+        "fromColumn": "ContactID",
         "toTable": "dimContact",
-        "toColumn": "CONTACTID"
+        "toColumn": "ContactID"
       },
       {
         "name": "01d97794-7edd-4430-adc6-c42bf0aa816d",
         "fromTable": "factAddress",
-        "fromColumn": "CONTACTID",
+        "fromColumn": "ContactID",
         "toTable": "dimContact",
-        "toColumn": "CONTACTID"
+        "toColumn": "ContactID"
       },
       {
         "name": "96684956-1bb7-4ed2-a0a8-3c08056fda5c",
         "fromTable": "factBooking",
         "fromColumn": "CrmCustomerNumber",
         "toTable": "dimContact",
-        "toColumn": "CUSTOMERNUMBER",
+        "toColumn": "CustomerNumber",
         "crossFilteringBehavior": "bothDirections"
       },
       {
@@ -3719,31 +3750,31 @@
       {
         "name": "f454d49c-2573-49df-88f9-9b5585c3fef1",
         "fromTable": "factAllocation",
-        "fromColumn": "SAILINGCODE",
+        "fromColumn": "SailingCode",
         "toTable": "dimSailing",
         "toColumn": "SailingCode"
       },
       {
         "name": "68cf20f2-2a5a-40a4-a05e-a9bba412ca55",
         "fromTable": "factAllocation",
-        "fromColumn": "PHYSICALRESOURCECODE",
+        "fromColumn": "PhysicalResourceCode",
         "toTable": "dimPhysicalResources",
-        "toColumn": "PHYSICALRESOURCECODE"
+        "toColumn": "PhysicalResourceCode"
       },
       {
         "name": "2f9e9127-8460-4a02-befe-3ece683436e6",
         "fromTable": "factSubscription",
-        "fromColumn": "CONTACTID",
+        "fromColumn": "ContactID",
         "toTable": "dimContact",
-        "toColumn": "CONTACTID",
+        "toColumn": "ContactID",
         "crossFilteringBehavior": "bothDirections"
       },
       {
         "name": "aa8f2354-0b5a-4836-b004-1b919f7a2645",
         "fromTable": "factSubscription",
-        "fromColumn": "SUBSCRIPTIONID",
+        "fromColumn": "SubscriptionID",
         "toTable": "dimSubscription",
-        "toColumn": "SUBSCRIPTIONID"
+        "toColumn": "SubscriptionID"
       }
     ],
     "roles": [
