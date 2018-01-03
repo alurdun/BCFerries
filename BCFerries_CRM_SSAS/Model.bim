@@ -6,7 +6,7 @@
     "dataSources": [
       {
         "name": "CRM",
-        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corpt;User ID=joanders;Persist Security Info=false",
+        "connectionString": "Provider=OraOLEDB.Oracle;Data Source=scan.dev01.rac.bcferries.corps;User ID=joanders;Persist Security Info=false",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -115,7 +115,7 @@
                 "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
                 "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
                 "    , SUBSCRIPTION.NAME as Comments",
-                "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+                "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
                 "union",
                 "select ",
                 "    'NOREL' as SubscriptionID",
@@ -145,7 +145,7 @@
                   "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
                   "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
                   "    , SUBSCRIPTION.NAME as Comments",
-                  "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+                  "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
                   "union",
                   "select ",
                   "    'NOREL' as SubscriptionID",
@@ -177,7 +177,7 @@
               "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
               "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
               "    , SUBSCRIPTION.NAME as Comments",
-              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+              "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
               "union",
               "select ",
               "    'NOREL' as SubscriptionID",
@@ -209,7 +209,7 @@
               "    , SUBSCRIPTION.MATCH_TYPE_CD as ContactMethod",
               "    , SUBSCRIPTION.FILE_SRC_TYPE as Source",
               "    , SUBSCRIPTION.NAME as Comments",
-              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
+              "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
               "union",
               "select ",
               "    'NOREL' as SubscriptionID",
@@ -335,10 +335,10 @@
                 "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
                 "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
                 "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-                "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
-                "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-                "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-                "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
+                "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
+                "    left join BCFSBLSIT.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+                "    left join BCFSBLSIT.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+                "    left join BCFSBLSIT.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
               ],
               "dataSource": "CRM"
             },
@@ -360,10 +360,10 @@
                   "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
                   "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
                   "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-                  "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
-                  "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-                  "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-                  "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
+                  "    left join BCFSBLSIT.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+                  "    left join BCFSBLSIT.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+                  "    left join BCFSBLSIT.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -387,10 +387,10 @@
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
               "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
-              "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-              "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-              "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
+              "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
+              "    left join BCFSBLSIT.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+              "    left join BCFSBLSIT.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+              "    left join BCFSBLSIT.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID"
             ]
           },
           {
@@ -414,10 +414,10 @@
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactId",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountId",
               "    , COALESCE(AGREEMENT.ROW_ID, 'NOREL') as SubscriptionID",
-              "    from BCFSBLTST.S_CALL_LST SUBSCRIPTION",
-              "    left join BCFSBLTST.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
-              "    left join BCFSBLTST.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
-              "    left join BCFSBLTST.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    from BCFSBLSIT.S_CALL_LST SUBSCRIPTION",
+              "    left join BCFSBLSIT.S_CONTACT CONTACT on SUBSCRIPTION.X_CONTACT_ID = CONTACT.ROW_ID",
+              "    left join BCFSBLSIT.S_ORG_EXT ACCNT on SUBSCRIPTION.X_ACCNT_ID = ACCNT.ROW_ID",
+              "    left join BCFSBLSIT.S_DOC_AGREE AGREEMENT on SUBSCRIPTION.X_AGREE_ID = AGREEMENT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -476,10 +476,10 @@
                 "    , AGREEMENT.ROW_ID as AgreementId",
                 "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
                 "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-                "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
-                "left join BCFSBLTST.S_CONTACT CONTACT",
+                "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
+                "left join BCFSBLSIT.S_CONTACT CONTACT",
                 "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-                "left join BCFSBLTST.S_ORG_EXT ACCNT",
+                "left join BCFSBLSIT.S_ORG_EXT ACCNT",
                 "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID"
               ],
               "dataSource": "CRM"
@@ -495,10 +495,10 @@
                   "    , AGREEMENT.ROW_ID as AgreementId",
                   "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
                   "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-                  "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
-                  "left join BCFSBLTST.S_CONTACT CONTACT",
+                  "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
+                  "left join BCFSBLSIT.S_CONTACT CONTACT",
                   "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-                  "left join BCFSBLTST.S_ORG_EXT ACCNT",
+                  "left join BCFSBLSIT.S_ORG_EXT ACCNT",
                   "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -516,10 +516,10 @@
               "    , AGREEMENT.ROW_ID as AgreementId",
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
-              "left join BCFSBLTST.S_CONTACT CONTACT",
+              "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
+              "left join BCFSBLSIT.S_CONTACT CONTACT",
               "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-              "left join BCFSBLTST.S_ORG_EXT ACCNT",
+              "left join BCFSBLSIT.S_ORG_EXT ACCNT",
               "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID"
             ]
           },
@@ -537,10 +537,10 @@
               "    , AGREEMENT.ROW_ID as AgreementId",
               "    , COALESCE(CONTACT.ROW_ID, 'NOREL') as ContactID",
               "    , COALESCE(ACCNT.ROW_ID, 'NOREL') as AccountID",
-              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
-              "left join BCFSBLTST.S_CONTACT CONTACT",
+              "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
+              "left join BCFSBLSIT.S_CONTACT CONTACT",
               "        on AGREEMENT.ROW_ID = CONTACT.X_AGREE_ID",
-              "left join BCFSBLTST.S_ORG_EXT ACCNT",
+              "left join BCFSBLSIT.S_ORG_EXT ACCNT",
               "\ton AGREEMENT.TARGET_OU_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
@@ -623,7 +623,7 @@
                 "    , AGREEMENT.STAT_CD as AgreementStatus",
                 "    , AGREEMENT.REV_NUM as RevisionNumber",
                 "    , AGREEMENT.DESC_TEXT as Notes",
-                "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+                "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
                 "union",
                 "select ",
                 "    'NOREL' as AgreementId",
@@ -653,7 +653,7 @@
                   "    , AGREEMENT.STAT_CD as AgreementStatus",
                   "    , AGREEMENT.REV_NUM as RevisionNumber",
                   "    , AGREEMENT.DESC_TEXT as Notes",
-                  "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+                  "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
                   "union",
                   "select ",
                   "    'NOREL' as AgreementId",
@@ -685,7 +685,7 @@
               "    , AGREEMENT.STAT_CD as AgreementStatus",
               "    , AGREEMENT.REV_NUM as RevisionNumber",
               "    , AGREEMENT.DESC_TEXT as Notes",
-              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+              "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
               "union",
               "select ",
               "    'NOREL' as AgreementId",
@@ -717,7 +717,7 @@
               "    , AGREEMENT.STAT_CD as AgreementStatus",
               "    , AGREEMENT.REV_NUM as RevisionNumber",
               "    , AGREEMENT.DESC_TEXT as Notes",
-              "from BCFSBLTST.S_DOC_AGREE AGREEMENT",
+              "from BCFSBLSIT.S_DOC_AGREE AGREEMENT",
               "union",
               "select ",
               "    'NOREL' as AgreementId",
@@ -810,12 +810,12 @@
                 "    , ADDRESS.CREATED_BY as CreatedByUserID",
                 "    , ADDRESS.LAST_UPD as LastUpdatedDate",
                 "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-                "    from BCFSBLTST.S_CON_ADDR ADDRESS",
-                "    left join BCFSBLTST.S_CONTACT CONTACT",
+                "    from BCFSBLSIT.S_CON_ADDR ADDRESS",
+                "    left join BCFSBLSIT.S_CONTACT CONTACT",
                 "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-                "    left join BCFSBLTST.S_ORG_EXT ACCNT",
+                "    left join BCFSBLSIT.S_ORG_EXT ACCNT",
                 "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-                "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
+                "    left join BCFSBLSIT.S_ADDR_PER ADDRESSES",
                 "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID"
               ],
               "dataSource": "CRM"
@@ -833,12 +833,12 @@
                   "    , ADDRESS.CREATED_BY as CreatedByUserID",
                   "    , ADDRESS.LAST_UPD as LastUpdatedDate",
                   "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-                  "    from BCFSBLTST.S_CON_ADDR ADDRESS",
-                  "    left join BCFSBLTST.S_CONTACT CONTACT",
+                  "    from BCFSBLSIT.S_CON_ADDR ADDRESS",
+                  "    left join BCFSBLSIT.S_CONTACT CONTACT",
                   "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-                  "    left join BCFSBLTST.S_ORG_EXT ACCNT",
+                  "    left join BCFSBLSIT.S_ORG_EXT ACCNT",
                   "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-                  "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
+                  "    left join BCFSBLSIT.S_ADDR_PER ADDRESSES",
                   "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -864,12 +864,12 @@
               "    , ADDRESS.CREATED_BY as CreatedByUserID",
               "    , ADDRESS.LAST_UPD as LastUpdatedDate",
               "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-              "    from BCFSBLTST.S_CON_ADDR ADDRESS",
-              "    left join BCFSBLTST.S_CONTACT CONTACT",
+              "    from BCFSBLSIT.S_CON_ADDR ADDRESS",
+              "    left join BCFSBLSIT.S_CONTACT CONTACT",
               "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-              "    left join BCFSBLTST.S_ORG_EXT ACCNT",
+              "    left join BCFSBLSIT.S_ORG_EXT ACCNT",
               "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-              "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
+              "    left join BCFSBLSIT.S_ADDR_PER ADDRESSES",
               "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID"
             ]
           },
@@ -889,12 +889,12 @@
               "    , ADDRESS.CREATED_BY as CreatedByUserID",
               "    , ADDRESS.LAST_UPD as LastUpdatedDate",
               "    , ADDRESS.LAST_UPD_BY as LastUpdatedUSerId",
-              "    from BCFSBLTST.S_CON_ADDR ADDRESS",
-              "    left join BCFSBLTST.S_CONTACT CONTACT",
+              "    from BCFSBLSIT.S_CON_ADDR ADDRESS",
+              "    left join BCFSBLSIT.S_CONTACT CONTACT",
               "        on ADDRESS.CONTACT_ID = CONTACT.ROW_ID",
-              "    left join BCFSBLTST.S_ORG_EXT ACCNT",
+              "    left join BCFSBLSIT.S_ORG_EXT ACCNT",
               "        on ADDRESS.ACCNT_ID = ACCNT.ROW_ID",
-              "    left join BCFSBLTST.S_ADDR_PER ADDRESSES",
+              "    left join BCFSBLSIT.S_ADDR_PER ADDRESSES",
               "        on ADDRESS.ADDR_PER_ID = ADDRESSES.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
@@ -970,7 +970,7 @@
                 "    , COUNTRY as Country",
                 "    , STATE as ProvinceState",
                 "    , ZIPCODE as PostalZip",
-                "     from BCFSBLTST.S_ADDR_PER",
+                "     from BCFSBLSIT.S_ADDR_PER",
                 "union",
                 "select 'NOREL' as AddressID",
                 "    , 'NOREL' as Name",
@@ -997,7 +997,7 @@
                   "    , COUNTRY as Country",
                   "    , STATE as ProvinceState",
                   "    , ZIPCODE as PostalZip",
-                  "     from BCFSBLTST.S_ADDR_PER",
+                  "     from BCFSBLSIT.S_ADDR_PER",
                   "union",
                   "select 'NOREL' as AddressID",
                   "    , 'NOREL' as Name",
@@ -1026,7 +1026,7 @@
               "    , COUNTRY as Country",
               "    , STATE as ProvinceState",
               "    , ZIPCODE as PostalZip",
-              "     from BCFSBLTST.S_ADDR_PER",
+              "     from BCFSBLSIT.S_ADDR_PER",
               "union",
               "select 'NOREL' as AddressID",
               "    , 'NOREL' as Name",
@@ -1055,7 +1055,7 @@
               "    , COUNTRY as Country",
               "    , STATE as ProvinceState",
               "    , ZIPCODE as PostalZip",
-              "     from BCFSBLTST.S_ADDR_PER",
+              "     from BCFSBLSIT.S_ADDR_PER",
               "union",
               "select 'NOREL' as AddressID",
               "    , 'NOREL' as Name",
@@ -1247,10 +1247,10 @@
                 "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
                 "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
                 "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-                "from BCFSBLTST.S_ORG_EXT ACCOUNT",
-                "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
+                "from BCFSBLSIT.S_ORG_EXT ACCOUNT",
+                "left join BCFSBLSIT.S_ORG_EXT_X ACCOUNTX",
                 "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
-                "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+                "left join BCFSBLSIT.S_ADDR_PER ADDRESS",
                 "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
                 "union",
                 "select",
@@ -1305,10 +1305,10 @@
                   "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
                   "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
                   "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-                  "from BCFSBLTST.S_ORG_EXT ACCOUNT",
-                  "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
+                  "from BCFSBLSIT.S_ORG_EXT ACCOUNT",
+                  "left join BCFSBLSIT.S_ORG_EXT_X ACCOUNTX",
                   "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
-                  "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+                  "left join BCFSBLSIT.S_ADDR_PER ADDRESS",
                   "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
                   "union",
                   "select",
@@ -1382,10 +1382,10 @@
               "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
               "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
               "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-              "from BCFSBLTST.S_ORG_EXT ACCOUNT",
-              "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
+              "from BCFSBLSIT.S_ORG_EXT ACCOUNT",
+              "left join BCFSBLSIT.S_ORG_EXT_X ACCOUNTX",
               "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
-              "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+              "left join BCFSBLSIT.S_ADDR_PER ADDRESS",
               "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
               "union",
               "select",
@@ -1442,10 +1442,10 @@
               "        , ACCOUNT.X_BCF_CSD_ACCOUNT_FLAG as CSDAccountFlag",
               "        , ACCOUNT.X_BCF_ACC_WEB_TYPE as AccountWebType",
               "        , ACCOUNT.X_BCF_NOTIFY as Notify",
-              "from BCFSBLTST.S_ORG_EXT ACCOUNT",
-              "left join BCFSBLTST.S_ORG_EXT_X ACCOUNTX",
+              "from BCFSBLSIT.S_ORG_EXT ACCOUNT",
+              "left join BCFSBLSIT.S_ORG_EXT_X ACCOUNTX",
               "    on ACCOUNT.ROW_ID = ACCOUNTX.PAR_ROW_ID ",
-              "left join BCFSBLTST.S_ADDR_PER ADDRESS",
+              "left join BCFSBLSIT.S_ADDR_PER ADDRESS",
               "    on ACCOUNT.PR_ADDR_ID = ADDRESS.ROW_ID",
               "union",
               "select",
@@ -1560,8 +1560,8 @@
                 "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
                 "    , ACTIVITYX.ATTRIB_07 as SourceName",
                 "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-                "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
-                "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+                "    from BCFSBLSIT.S_EVT_ACT ACTIVITY",
+                "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
                 "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
                 "union",
                 "select ",
@@ -1594,8 +1594,8 @@
                   "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
                   "    , ACTIVITYX.ATTRIB_07 as SourceName",
                   "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-                  "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
-                  "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+                  "    from BCFSBLSIT.S_EVT_ACT ACTIVITY",
+                  "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
                   "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
                   "union",
                   "select ",
@@ -1630,8 +1630,8 @@
               "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
               "    , ACTIVITYX.ATTRIB_07 as SourceName",
               "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-              "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
-              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+              "    from BCFSBLSIT.S_EVT_ACT ACTIVITY",
+              "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
               "union",
               "select ",
@@ -1666,8 +1666,8 @@
               "    , ACTIVITY.CREATOR_LOGIN as CreatedBy",
               "    , ACTIVITYX.ATTRIB_07 as SourceName",
               "    , ACTIVITYX.ATTRIB_06 as ContactMethod",
-              "    from BCFSBLTST.S_EVT_ACT ACTIVITY",
-              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+              "    from BCFSBLSIT.S_EVT_ACT ACTIVITY",
+              "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
               "union",
               "select ",
@@ -1699,52 +1699,52 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACTIVITYID",
+            "name": "ActivityID",
             "dataType": "string",
             "sourceColumn": "ACTIVITYID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CONTACTID",
+            "name": "ContactID",
             "dataType": "string",
             "sourceColumn": "CONTACTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PLANNEDSTARTDATE",
+            "name": "PlannedStartDate",
             "dataType": "dateTime",
             "sourceColumn": "PLANNEDSTARTDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "SENTDATE",
+            "name": "SentDate",
             "dataType": "dateTime",
             "sourceColumn": "SENTDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "CREATEDBYUSERID",
+            "name": "CreatedByUserID",
             "dataType": "string",
             "sourceColumn": "CREATEDBYUSERID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CREATEDATE",
+            "name": "CreatedDate",
             "dataType": "dateTime",
             "sourceColumn": "CREATEDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "NOTIFICATIONDATE",
+            "name": "NotificationDate",
             "dataType": "string",
             "sourceColumn": "NOTIFICATIONDATE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "NOTIFICATIONTIME",
+            "name": "NotificationTime",
             "dataType": "string",
             "sourceColumn": "NOTIFICATIONTIME",
             "sourceProviderType": "VarChar"
@@ -1766,12 +1766,12 @@
                 "    , ACTCON.CREATED as CreateDate",
                 "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
                 "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-                "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
-                "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
+                "    from BCFSBLSIT.S_ACT_CONTACT ACTCON",
+                "    left join BCFSBLSIT.S_EVT_ACT ACTIVITY",
                 "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-                "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+                "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
                 "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-                "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
+                "    left join BCFSBLSIT.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
               ],
               "dataSource": "CRM"
             },
@@ -1789,12 +1789,12 @@
                   "    , ACTCON.CREATED as CreateDate",
                   "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
                   "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-                  "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
-                  "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
+                  "    from BCFSBLSIT.S_ACT_CONTACT ACTCON",
+                  "    left join BCFSBLSIT.S_EVT_ACT ACTIVITY",
                   "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-                  "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+                  "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
                   "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-                  "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    left join BCFSBLSIT.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -1814,12 +1814,12 @@
               "    , ACTCON.CREATED as CreateDate",
               "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
               "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-              "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
-              "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
+              "    from BCFSBLSIT.S_ACT_CONTACT ACTCON",
+              "    left join BCFSBLSIT.S_EVT_ACT ACTIVITY",
               "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+              "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-              "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
+              "    left join BCFSBLSIT.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID"
             ]
           },
           {
@@ -1839,12 +1839,12 @@
               "    , ACTCON.CREATED as CreateDate",
               "    , ACTIVITYX.ATTRIB_01 as NotificationDate",
               "    , ACTIVITYX.ATTRIB_02 as NotificationTime",
-              "    from BCFSBLTST.S_ACT_CONTACT ACTCON",
-              "    left join BCFSBLTST.S_EVT_ACT ACTIVITY",
+              "    from BCFSBLSIT.S_ACT_CONTACT ACTCON",
+              "    left join BCFSBLSIT.S_EVT_ACT ACTIVITY",
               "        on ACTCON.ACTIVITY_ID = ACTIVITY.ROW_ID",
-              "    left join BCFSBLTST.S_EVT_ACT_X ACTIVITYX",
+              "    left join BCFSBLSIT.S_EVT_ACT_X ACTIVITYX",
               "        on ACTIVITY.ROW_ID = ACTIVITYX.PAR_ROW_ID",
-              "    left join BCFSBLTST.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    left join BCFSBLSIT.S_CONTACT CONTACT on ACTCON.CON_ID = CONTACT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -2342,9 +2342,10 @@
       },
       {
         "name": "factContactAcctRelationship",
+        "isHidden": true,
         "columns": [
           {
-            "name": "FCONACCTRELID",
+            "name": "FConAccRelID",
             "dataType": "string",
             "isUnique": true,
             "isKey": true,
@@ -2352,26 +2353,26 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CREATEDDATE",
+            "name": "CreatedDate",
             "dataType": "dateTime",
             "sourceColumn": "CREATEDDATE",
             "formatString": "General Date",
             "sourceProviderType": "Date"
           },
           {
-            "name": "CREATEDBYUSERID",
+            "name": "CreatedByUserID",
             "dataType": "string",
             "sourceColumn": "CREATEDBYUSERID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CONTACTID",
+            "name": "ContactID",
             "dataType": "string",
             "sourceColumn": "CONTACTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTID",
+            "name": "AccountID",
             "dataType": "string",
             "sourceColumn": "ACCOUNTID",
             "sourceProviderType": "VarChar"
@@ -2384,10 +2385,10 @@
             "source": {
               "query": [
                 "select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-                "    from BCFSBLTST.S_PARTY_PER PARTY",
-                "    inner join BCFSBLTST.S_CONTACT CONTACT",
+                "    from BCFSBLSIT.S_PARTY_PER PARTY",
+                "    inner join BCFSBLSIT.S_CONTACT CONTACT",
                 "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-                "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
+                "    inner join BCFSBLSIT.S_ORG_EXT ACCNT",
                 "        on PARTY.PARTY_ID = ACCNT.ROW_ID"
               ],
               "dataSource": "CRM"
@@ -2397,10 +2398,10 @@
                 "name": "QueryEditorSerialization",
                 "value": [
                   "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-                  "    from BCFSBLTST.S_PARTY_PER PARTY",
-                  "    inner join BCFSBLTST.S_CONTACT CONTACT",
+                  "    from BCFSBLSIT.S_PARTY_PER PARTY",
+                  "    inner join BCFSBLSIT.S_CONTACT CONTACT",
                   "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-                  "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
+                  "    inner join BCFSBLSIT.S_ORG_EXT ACCNT",
                   "        on PARTY.PARTY_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -2412,10 +2413,10 @@
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
               "select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-              "    from BCFSBLTST.S_PARTY_PER PARTY",
-              "    inner join BCFSBLTST.S_CONTACT CONTACT",
+              "    from BCFSBLSIT.S_PARTY_PER PARTY",
+              "    inner join BCFSBLSIT.S_CONTACT CONTACT",
               "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-              "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
+              "    inner join BCFSBLSIT.S_ORG_EXT ACCNT",
               "        on PARTY.PARTY_ID = ACCNT.ROW_ID"
             ]
           },
@@ -2427,10 +2428,10 @@
             "name": "QueryEditorSerialization",
             "value": [
               "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select PARTY.ROW_ID as FConAcctRelID, PARTY.CREATED as CreatedDate, PARTy.Created_By as CreatedByUserId, CONTACT.ROW_ID as ContactID, ACCNT.ROW_ID as AccountID",
-              "    from BCFSBLTST.S_PARTY_PER PARTY",
-              "    inner join BCFSBLTST.S_CONTACT CONTACT",
+              "    from BCFSBLSIT.S_PARTY_PER PARTY",
+              "    inner join BCFSBLSIT.S_CONTACT CONTACT",
               "        on PARTY.PERSON_ID = CONTACT.ROW_ID",
-              "    inner join BCFSBLTST.S_ORG_EXT ACCNT",
+              "    inner join BCFSBLSIT.S_ORG_EXT ACCNT",
               "        on PARTY.PARTY_ID = ACCNT.ROW_ID</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
@@ -2987,7 +2988,9 @@
             "dataView": "full",
             "source": {
               "query": [
-                "select * from (",
+                "select * from ",
+                "",
+                "(",
                 "select ",
                 "    CONTACT.ROW_ID as ContactID",
                 "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
@@ -3017,14 +3020,14 @@
                 "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
                 "    , CONTACT.LAST_UPD as LastUpdated",
                 "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-                "from BCFSBLTST.S_CONTACT CONTACT",
-                "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
+                "from BCFSBLSIT.S_CONTACT CONTACT",
+                "left outer join BCFSBLSIT.S_PER_COMM_ADDR PHONE",
                 "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-                "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+                "left outer join BCFSBLSIT.S_PER_COMM_ADDR EMAIL ",
                 "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
-                "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
+                "left outer join BCFSBLSIT.S_ADDR_PER PERSONALADDRESS",
                 "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-                "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
+                "left outer join BCFSBLSIT.S_CONTACT_X CONTACTX ",
                 "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
                 "union",
                 "select 'NOREL' as ContactID",
@@ -3054,13 +3057,9 @@
                 "    , 'NOREL' as CreatedBy",
                 "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
                 "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-                "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
-                "    '10000163',",
-                "'10000585',",
-                "'21',",
-                "'10000581',",
-                "'10001602',",
-                "'10001322')"
+                "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer ",
+                "    where CustomerNumber not in (",
+                "    '1610539')"
               ],
               "dataSource": "CRM"
             },
@@ -3068,7 +3067,9 @@
               {
                 "name": "QueryEditorSerialization",
                 "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from (",
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from ",
+                  "",
+                  "(",
                   "select ",
                   "    CONTACT.ROW_ID as ContactID",
                   "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
@@ -3098,14 +3099,14 @@
                   "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
                   "    , CONTACT.LAST_UPD as LastUpdated",
                   "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-                  "from BCFSBLTST.S_CONTACT CONTACT",
-                  "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
+                  "from BCFSBLSIT.S_CONTACT CONTACT",
+                  "left outer join BCFSBLSIT.S_PER_COMM_ADDR PHONE",
                   "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-                  "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+                  "left outer join BCFSBLSIT.S_PER_COMM_ADDR EMAIL ",
                   "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
-                  "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
+                  "left outer join BCFSBLSIT.S_ADDR_PER PERSONALADDRESS",
                   "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-                  "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
+                  "left outer join BCFSBLSIT.S_CONTACT_X CONTACTX ",
                   "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
                   "union",
                   "select 'NOREL' as ContactID",
@@ -3135,13 +3136,9 @@
                   "    , 'NOREL' as CreatedBy",
                   "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
                   "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-                  "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
-                  "    '10000163',",
-                  "'10000585',",
-                  "'21',",
-                  "'10000581',",
-                  "'10001602',",
-                  "'10001322')</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                  "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer ",
+                  "    where CustomerNumber not in (",
+                  "    '1610539')</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
             ]
@@ -3151,7 +3148,9 @@
           {
             "name": "_TM_ExtProp_QueryDefinition",
             "value": [
-              "select * from (",
+              "select * from ",
+              "",
+              "(",
               "select ",
               "    CONTACT.ROW_ID as ContactID",
               "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
@@ -3181,14 +3180,14 @@
               "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
               "    , CONTACT.LAST_UPD as LastUpdated",
               "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-              "from BCFSBLTST.S_CONTACT CONTACT",
-              "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
+              "from BCFSBLSIT.S_CONTACT CONTACT",
+              "left outer join BCFSBLSIT.S_PER_COMM_ADDR PHONE",
               "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-              "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+              "left outer join BCFSBLSIT.S_PER_COMM_ADDR EMAIL ",
               "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
-              "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
+              "left outer join BCFSBLSIT.S_ADDR_PER PERSONALADDRESS",
               "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-              "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
+              "left outer join BCFSBLSIT.S_CONTACT_X CONTACTX ",
               "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
               "union",
               "select 'NOREL' as ContactID",
@@ -3218,13 +3217,9 @@
               "    , 'NOREL' as CreatedBy",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-              "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
-              "    '10000163',",
-              "'10000585',",
-              "'21',",
-              "'10000581',",
-              "'10001602',",
-              "'10001322')"
+              "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer ",
+              "    where CustomerNumber not in (",
+              "    '1610539')"
             ]
           },
           {
@@ -3234,7 +3229,9 @@
           {
             "name": "QueryEditorSerialization",
             "value": [
-              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from (",
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select * from ",
+              "",
+              "(",
               "select ",
               "    CONTACT.ROW_ID as ContactID",
               "    , COALESCE(TRIM(TO_CHAR(CONTACTX.ATTRIB_14)), CONTACT.ROW_ID) as CustomerNumber",
@@ -3264,14 +3261,14 @@
               "    , CONTACT.DB_LAST_UPD as LastUpdatedThisDatabase",
               "    , CONTACT.LAST_UPD as LastUpdated",
               "    , CONTACT.LAST_UPD_BY as LastUpdatedBy",
-              "from BCFSBLTST.S_CONTACT CONTACT",
-              "left outer join BCFSBLTST.S_PER_COMM_ADDR PHONE",
+              "from BCFSBLSIT.S_CONTACT CONTACT",
+              "left outer join BCFSBLSIT.S_PER_COMM_ADDR PHONE",
               "    on CONTACT.PR_ALT_PH_NUM_ID = PHONE.ROW_ID",
-              "left outer join BCFSBLTST.S_PER_COMM_ADDR EMAIL ",
+              "left outer join BCFSBLSIT.S_PER_COMM_ADDR EMAIL ",
               "    on CONTACT.PR_EMAIL_ADDR_ID = EMAIL.ROW_ID",
-              "left outer join BCFSBLTST.S_ADDR_PER PERSONALADDRESS",
+              "left outer join BCFSBLSIT.S_ADDR_PER PERSONALADDRESS",
               "    on CONTACT.PR_PER_ADDR_ID = PERSONALADDRESS.ROW_ID",
-              "left outer join BCFSBLTST.S_CONTACT_X CONTACTX ",
+              "left outer join BCFSBLSIT.S_CONTACT_X CONTACTX ",
               "    on CONTACT.ROW_ID = CONTACTX.ROW_ID",
               "union",
               "select 'NOREL' as ContactID",
@@ -3301,13 +3298,9 @@
               "    , 'NOREL' as CreatedBy",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdatedThisDatabase",
               "    , TO_DATE('2900-01-01', 'YYYY-MM-DD') as LastUpdated",
-              "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer where CustomerNumber not in (",
-              "    '10000163',",
-              "'10000585',",
-              "'21',",
-              "'10000581',",
-              "'10001602',",
-              "'10001322')</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+              "    , 'NOREL' as LastUpdatedBy from dual) dimCustomer ",
+              "    where CustomerNumber not in (",
+              "    '1610539')</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
             ]
           }
         ]
@@ -3631,7 +3624,7 @@
       {
         "name": "a5bbfc34-1d09-4ea9-9804-dbd2cea0e0ca",
         "fromTable": "factActivity",
-        "fromColumn": "ACTIVITYID",
+        "fromColumn": "ActivityID",
         "toTable": "dimActivity",
         "toColumn": "ActivityID",
         "crossFilteringBehavior": "bothDirections"
@@ -3698,7 +3691,7 @@
       {
         "name": "99e03c81-b0d6-40e5-b6c9-4590277f81f5",
         "fromTable": "factContactAcctRelationship",
-        "fromColumn": "ACCOUNTID",
+        "fromColumn": "AccountID",
         "toTable": "dimAccount",
         "toColumn": "AccountID",
         "crossFilteringBehavior": "bothDirections"
@@ -3706,7 +3699,7 @@
       {
         "name": "fe015a3d-a1d1-4181-be21-1f53d0e0ff23",
         "fromTable": "factContactAcctRelationship",
-        "fromColumn": "CONTACTID",
+        "fromColumn": "ContactID",
         "toTable": "dimContact",
         "toColumn": "ContactID",
         "crossFilteringBehavior": "bothDirections"
@@ -3714,7 +3707,7 @@
       {
         "name": "b10b6319-260d-4e4f-9421-8db83e78b108",
         "fromTable": "factActivity",
-        "fromColumn": "CONTACTID",
+        "fromColumn": "ContactID",
         "toTable": "dimContact",
         "toColumn": "ContactID"
       },

@@ -25,14 +25,86 @@
             <Value>=CStr(FORMAT(Parameters!parToDepartureDate.Value, "yy-MM-dd"))</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>DEFINE VAR FromSailingsDepartureDate1 = IF(PATHLENGTH(@FromSailingsDepartureDate) = 1, IF(@FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK()), IF(PATHITEM(@FromSailingsDepartureDate, 2) &lt;&gt; "", PATHITEM(@FromSailingsDepartureDate, 2), BLANK()))
-VAR FromSailingsDepartureDate1ALL = PATHLENGTH(@FromSailingsDepartureDate) &gt; 1 &amp;&amp; PATHITEM(@FromSailingsDepartureDate, 1, 1) &lt; 1
-VAR ToSailingsDepartureDate1 = IF(PATHLENGTH(@ToSailingsDepartureDate) = 1, IF(@ToSailingsDepartureDate &lt;&gt; "", @ToSailingsDepartureDate, BLANK()), IF(PATHITEM(@ToSailingsDepartureDate, 2) &lt;&gt; "", PATHITEM(@ToSailingsDepartureDate, 2), BLANK()))
-VAR ToSailingsDepartureDate1ALL = PATHLENGTH(@ToSailingsDepartureDate) &gt; 1 &amp;&amp; PATHITEM(@ToSailingsDepartureDate, 1, 1) &lt; 1
-EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sailings'[SailingDetail], 'Sailings'[DepartureDate], 'Sailings'[ArrivalPortName], 'Bookings'[VEHICLEHEIGHT], 'Bookings'[VEHICLELENGTH], 'Bookings'[VEHICLEWEIGHT], 'Bookings'[VEHICLEWIDTH], 'Sailings'[DeparturePortName], 'Bookings'[BookingCustomerDetail], 'Bookings'[STANDBYPRODUCT], 'Bookings'[CUSTOMERNAME], 'Bookings'[SALESCHANNEL], 'Bookings'[VESSELTRANSFER], 'Bookings'[REBATEAMOUNT], 'Bookings'[GROSSAMOUNT], 'Bookings'[PAID], 'Bookings'[DEFERREDPAYMENT], 'Bookings'[SURCHARGEAMOUNT], 'Bookings'[TOTALPRICE], 'Bookings'[UNITGROSSAMOUNT], 'Sailings'[ArrivalPortCode], 'Sailings'[DeparturePortCode], 'Bookings'[BookingReference], 'Sailings'[ShipPhysicalDescription], 'Bookings'[BusinessUnitName], 'Bookings'[SpecialInstructionsFlag], 'Bookings'[RouteArrivalPort], 'Bookings'[PrdCode], 'Bookings'[Qty], FILTER(VALUES('Sailings'[DepartureDate]), (FromSailingsDepartureDate1ALL || 'Sailings'[DepartureDate] &gt;= DATEVALUE(FromSailingsDepartureDate1) + TIMEVALUE(FromSailingsDepartureDate1)) &amp;&amp; (ToSailingsDepartureDate1ALL || 'Sailings'[DepartureDate] &lt;= DATEVALUE(ToSailingsDepartureDate1) + TIMEVALUE(ToSailingsDepartureDate1))), "TotalAmount", [TotalAmount])</CommandText>
+        <CommandText>DEFINE
+    VAR FromSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @FromSailingsDepartureDate ) = 1,
+            IF ( @FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @FromSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @FromSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR FromSailingsDepartureDate1ALL =
+        PATHLENGTH ( @FromSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @FromSailingsDepartureDate, 1, 1 ) &lt; 1
+    VAR ToSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @ToSailingsDepartureDate ) = 1,
+            IF ( @ToSailingsDepartureDate &lt;&gt; "", @ToSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @ToSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @ToSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR ToSailingsDepartureDate1ALL =
+        PATHLENGTH ( @ToSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @ToSailingsDepartureDate, 1, 1 ) &lt; 1
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Sailings'[LineCode],
+    'Sailings'[DepartureTime],
+    'Sailings'[SailingDetail],
+    'Sailings'[DepartureDate],
+    'Sailings'[ArrivalPortName],
+    'Bookings'[VehicleHeight],
+    'Bookings'[VehicleLength],
+    'Bookings'[VehicleWeight],
+    'Bookings'[VehicleWidth],
+    'Sailings'[DeparturePortName],
+    'Bookings'[BookingCustomerDetail],
+    'Bookings'[StanbyProduct],
+    'Bookings'[CustomerName],
+    'Bookings'[SalesChannel],
+    'Bookings'[VesselTransfer],
+    'Bookings'[RebateAmount],
+    'Bookings'[GrossAmount],
+    'Bookings'[Paid],
+    'Bookings'[DeferredPayment],
+    'Bookings'[SurChargeAmount],
+    'Bookings'[TotalPrice],
+    'Bookings'[UnitGrossAmount],
+    'Sailings'[ArrivalPortCode],
+    'Sailings'[DeparturePortCode],
+    'Bookings'[BookingReference],
+    'Sailings'[ShipPhysicalDescription],
+    'Bookings'[BusinessUnitName],
+    'Bookings'[SpecialInstructionsFlag],
+    'Bookings'[RouteArrivalPort],
+    'Bookings'[PrdCode],
+    'Bookings'[Qty],
+    FILTER (
+        VALUES ( 'Sailings'[DepartureDate] ),
+        (
+            FromSailingsDepartureDate1ALL
+                || 'Sailings'[DepartureDate]
+                    &gt;= DATEVALUE ( FromSailingsDepartureDate1 )
+                        + TIMEVALUE ( FromSailingsDepartureDate1 )
+        )
+            &amp;&amp; (
+                ToSailingsDepartureDate1ALL
+                    || 'Sailings'[DepartureDate]
+                        &lt;= DATEVALUE ( ToSailingsDepartureDate1 ) + TIMEVALUE ( ToSailingsDepartureDate1 )
+            )
+    ),
+    "TotalAmount", [TotalAmount]
+)</CommandText>
         <rd:DesignerState>
           <QueryDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
             <CommandType>DAX</CommandType>
+            <Type>Query</Type>
             <QuerySpecification xsi:type="MDXQuerySpecification">
               <Select>
                 <Items>
@@ -45,7 +117,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[LineCode].[LineCode]</UniqueName>
                     </ID>
                     <ItemCaption>LineCode</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -56,7 +127,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[DepartureTime].[DepartureTime]</UniqueName>
                     </ID>
                     <ItemCaption>DepartureTime</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -67,7 +137,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[SailingDetail].[SailingDetail]</UniqueName>
                     </ID>
                     <ItemCaption>SailingDetail</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -78,7 +147,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[DepartureDate].[DepartureDate]</UniqueName>
                     </ID>
                     <ItemCaption>DepartureDate</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -89,51 +157,46 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[ArrivalPortName].[ArrivalPortName]</UniqueName>
                     </ID>
                     <ItemCaption>ArrivalPortName</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>VEHICLEHEIGHT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[VEHICLEHEIGHT]</HierarchyUniqueName>
-                      <LevelName>VEHICLEHEIGHT</LevelName>
-                      <UniqueName>[Bookings].[VEHICLEHEIGHT].[VEHICLEHEIGHT]</UniqueName>
+                      <HierarchyName>VehicleHeight</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[VehicleHeight]</HierarchyUniqueName>
+                      <LevelName>VehicleHeight</LevelName>
+                      <UniqueName>[Bookings].[VehicleHeight].[VehicleHeight]</UniqueName>
                     </ID>
-                    <ItemCaption>VEHICLEHEIGHT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>VehicleHeight</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>VEHICLELENGTH</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[VEHICLELENGTH]</HierarchyUniqueName>
-                      <LevelName>VEHICLELENGTH</LevelName>
-                      <UniqueName>[Bookings].[VEHICLELENGTH].[VEHICLELENGTH]</UniqueName>
+                      <HierarchyName>VehicleLength</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[VehicleLength]</HierarchyUniqueName>
+                      <LevelName>VehicleLength</LevelName>
+                      <UniqueName>[Bookings].[VehicleLength].[VehicleLength]</UniqueName>
                     </ID>
-                    <ItemCaption>VEHICLELENGTH</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>VehicleLength</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>VEHICLEWEIGHT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[VEHICLEWEIGHT]</HierarchyUniqueName>
-                      <LevelName>VEHICLEWEIGHT</LevelName>
-                      <UniqueName>[Bookings].[VEHICLEWEIGHT].[VEHICLEWEIGHT]</UniqueName>
+                      <HierarchyName>VehicleWeight</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[VehicleWeight]</HierarchyUniqueName>
+                      <LevelName>VehicleWeight</LevelName>
+                      <UniqueName>[Bookings].[VehicleWeight].[VehicleWeight]</UniqueName>
                     </ID>
-                    <ItemCaption>VEHICLEWEIGHT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>VehicleWeight</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>VEHICLEWIDTH</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[VEHICLEWIDTH]</HierarchyUniqueName>
-                      <LevelName>VEHICLEWIDTH</LevelName>
-                      <UniqueName>[Bookings].[VEHICLEWIDTH].[VEHICLEWIDTH]</UniqueName>
+                      <HierarchyName>VehicleWidth</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[VehicleWidth]</HierarchyUniqueName>
+                      <LevelName>VehicleWidth</LevelName>
+                      <UniqueName>[Bookings].[VehicleWidth].[VehicleWidth]</UniqueName>
                     </ID>
-                    <ItemCaption>VEHICLEWIDTH</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>VehicleWidth</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -144,7 +207,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[DeparturePortName].[DeparturePortName]</UniqueName>
                     </ID>
                     <ItemCaption>DeparturePortName</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -155,128 +217,116 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Bookings].[BookingCustomerDetail].[BookingCustomerDetail]</UniqueName>
                     </ID>
                     <ItemCaption>BookingCustomerDetail</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>STANDBYPRODUCT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[STANDBYPRODUCT]</HierarchyUniqueName>
-                      <LevelName>STANDBYPRODUCT</LevelName>
-                      <UniqueName>[Bookings].[STANDBYPRODUCT].[STANDBYPRODUCT]</UniqueName>
+                      <HierarchyName>StanbyProduct</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[StanbyProduct]</HierarchyUniqueName>
+                      <LevelName>StanbyProduct</LevelName>
+                      <UniqueName>[Bookings].[StanbyProduct].[StanbyProduct]</UniqueName>
                     </ID>
-                    <ItemCaption>STANDBYPRODUCT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>StanbyProduct</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>CUSTOMERNAME</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[CUSTOMERNAME]</HierarchyUniqueName>
-                      <LevelName>CUSTOMERNAME</LevelName>
-                      <UniqueName>[Bookings].[CUSTOMERNAME].[CUSTOMERNAME]</UniqueName>
+                      <HierarchyName>CustomerName</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[CustomerName]</HierarchyUniqueName>
+                      <LevelName>CustomerName</LevelName>
+                      <UniqueName>[Bookings].[CustomerName].[CustomerName]</UniqueName>
                     </ID>
-                    <ItemCaption>CUSTOMERNAME</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>CustomerName</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>SALESCHANNEL</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[SALESCHANNEL]</HierarchyUniqueName>
-                      <LevelName>SALESCHANNEL</LevelName>
-                      <UniqueName>[Bookings].[SALESCHANNEL].[SALESCHANNEL]</UniqueName>
+                      <HierarchyName>SalesChannel</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[SalesChannel]</HierarchyUniqueName>
+                      <LevelName>SalesChannel</LevelName>
+                      <UniqueName>[Bookings].[SalesChannel].[SalesChannel]</UniqueName>
                     </ID>
-                    <ItemCaption>SALESCHANNEL</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>SalesChannel</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>VESSELTRANSFER</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[VESSELTRANSFER]</HierarchyUniqueName>
-                      <LevelName>VESSELTRANSFER</LevelName>
-                      <UniqueName>[Bookings].[VESSELTRANSFER].[VESSELTRANSFER]</UniqueName>
+                      <HierarchyName>VesselTransfer</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[VesselTransfer]</HierarchyUniqueName>
+                      <LevelName>VesselTransfer</LevelName>
+                      <UniqueName>[Bookings].[VesselTransfer].[VesselTransfer]</UniqueName>
                     </ID>
-                    <ItemCaption>VESSELTRANSFER</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>VesselTransfer</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>REBATEAMOUNT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[REBATEAMOUNT]</HierarchyUniqueName>
-                      <LevelName>REBATEAMOUNT</LevelName>
-                      <UniqueName>[Bookings].[REBATEAMOUNT].[REBATEAMOUNT]</UniqueName>
+                      <HierarchyName>RebateAmount</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[RebateAmount]</HierarchyUniqueName>
+                      <LevelName>RebateAmount</LevelName>
+                      <UniqueName>[Bookings].[RebateAmount].[RebateAmount]</UniqueName>
                     </ID>
-                    <ItemCaption>REBATEAMOUNT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>RebateAmount</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>GROSSAMOUNT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[GROSSAMOUNT]</HierarchyUniqueName>
-                      <LevelName>GROSSAMOUNT</LevelName>
-                      <UniqueName>[Bookings].[GROSSAMOUNT].[GROSSAMOUNT]</UniqueName>
+                      <HierarchyName>GrossAmount</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[GrossAmount]</HierarchyUniqueName>
+                      <LevelName>GrossAmount</LevelName>
+                      <UniqueName>[Bookings].[GrossAmount].[GrossAmount]</UniqueName>
                     </ID>
-                    <ItemCaption>GROSSAMOUNT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>GrossAmount</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>PAID</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[PAID]</HierarchyUniqueName>
-                      <LevelName>PAID</LevelName>
-                      <UniqueName>[Bookings].[PAID].[PAID]</UniqueName>
+                      <HierarchyName>Paid</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[Paid]</HierarchyUniqueName>
+                      <LevelName>Paid</LevelName>
+                      <UniqueName>[Bookings].[Paid].[Paid]</UniqueName>
                     </ID>
-                    <ItemCaption>PAID</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>Paid</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>DEFERREDPAYMENT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[DEFERREDPAYMENT]</HierarchyUniqueName>
-                      <LevelName>DEFERREDPAYMENT</LevelName>
-                      <UniqueName>[Bookings].[DEFERREDPAYMENT].[DEFERREDPAYMENT]</UniqueName>
+                      <HierarchyName>DeferredPayment</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[DeferredPayment]</HierarchyUniqueName>
+                      <LevelName>DeferredPayment</LevelName>
+                      <UniqueName>[Bookings].[DeferredPayment].[DeferredPayment]</UniqueName>
                     </ID>
-                    <ItemCaption>DEFERREDPAYMENT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>DeferredPayment</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>SURCHARGEAMOUNT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[SURCHARGEAMOUNT]</HierarchyUniqueName>
-                      <LevelName>SURCHARGEAMOUNT</LevelName>
-                      <UniqueName>[Bookings].[SURCHARGEAMOUNT].[SURCHARGEAMOUNT]</UniqueName>
+                      <HierarchyName>SurChargeAmount</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[SurChargeAmount]</HierarchyUniqueName>
+                      <LevelName>SurChargeAmount</LevelName>
+                      <UniqueName>[Bookings].[SurChargeAmount].[SurChargeAmount]</UniqueName>
                     </ID>
-                    <ItemCaption>SURCHARGEAMOUNT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>SurChargeAmount</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>TOTALPRICE</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[TOTALPRICE]</HierarchyUniqueName>
-                      <LevelName>TOTALPRICE</LevelName>
-                      <UniqueName>[Bookings].[TOTALPRICE].[TOTALPRICE]</UniqueName>
+                      <HierarchyName>TotalPrice</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[TotalPrice]</HierarchyUniqueName>
+                      <LevelName>TotalPrice</LevelName>
+                      <UniqueName>[Bookings].[TotalPrice].[TotalPrice]</UniqueName>
                     </ID>
-                    <ItemCaption>TOTALPRICE</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>TotalPrice</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>UNITGROSSAMOUNT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[UNITGROSSAMOUNT]</HierarchyUniqueName>
-                      <LevelName>UNITGROSSAMOUNT</LevelName>
-                      <UniqueName>[Bookings].[UNITGROSSAMOUNT].[UNITGROSSAMOUNT]</UniqueName>
+                      <HierarchyName>UnitGrossAmount</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[UnitGrossAmount]</HierarchyUniqueName>
+                      <LevelName>UnitGrossAmount</LevelName>
+                      <UniqueName>[Bookings].[UnitGrossAmount].[UnitGrossAmount]</UniqueName>
                     </ID>
-                    <ItemCaption>UNITGROSSAMOUNT</ItemCaption>
-                    <UniqueName>true</UniqueName>
+                    <ItemCaption>UnitGrossAmount</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -287,7 +337,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[ArrivalPortCode].[ArrivalPortCode]</UniqueName>
                     </ID>
                     <ItemCaption>ArrivalPortCode</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -298,7 +347,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[DeparturePortCode].[DeparturePortCode]</UniqueName>
                     </ID>
                     <ItemCaption>DeparturePortCode</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -309,7 +357,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Bookings].[BookingReference].[BookingReference]</UniqueName>
                     </ID>
                     <ItemCaption>BookingReference</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -320,7 +367,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Sailings].[ShipPhysicalDescription].[ShipPhysicalDescription]</UniqueName>
                     </ID>
                     <ItemCaption>ShipPhysicalDescription</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -331,7 +377,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Bookings].[BusinessUnitName].[BusinessUnitName]</UniqueName>
                     </ID>
                     <ItemCaption>BusinessUnitName</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -342,7 +387,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Bookings].[SpecialInstructionsFlag].[SpecialInstructionsFlag]</UniqueName>
                     </ID>
                     <ItemCaption>SpecialInstructionsFlag</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -353,7 +397,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Bookings].[RouteArrivalPort].[RouteArrivalPort]</UniqueName>
                     </ID>
                     <ItemCaption>RouteArrivalPort</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -364,7 +407,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Bookings].[PrdCode].[PrdCode]</UniqueName>
                     </ID>
                     <ItemCaption>PrdCode</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -375,7 +417,6 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Bookings].[Qty].[Qty]</UniqueName>
                     </ID>
                     <ItemCaption>Qty</ItemCaption>
-                    <UniqueName>true</UniqueName>
                   </Item>
                   <Item>
                     <ID xsi:type="Measure">
@@ -383,46 +424,95 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                       <UniqueName>[Measures].[TotalAmount]</UniqueName>
                     </ID>
                     <ItemCaption>TotalAmount</ItemCaption>
-                    <BackColor>true</BackColor>
-                    <ForeColor>true</ForeColor>
-                    <FontFamily>true</FontFamily>
-                    <FontSize>true</FontSize>
-                    <FontWeight>true</FontWeight>
-                    <FontStyle>true</FontStyle>
-                    <FontDecoration>true</FontDecoration>
-                    <FormattedValue>true</FormattedValue>
-                    <FormatString>true</FormatString>
                   </Item>
                 </Items>
               </Select>
               <AutoExecute>false</AutoExecute>
               <From>Model</From>
               <Filter>
-                <FilterItems>
-                  <FilterItem>
-                    <HierarchyUniqueName>[Sailings].[DepartureDate]</HierarchyUniqueName>
-                    <Condition xsi:type="Range">
-                      <Basis>Member</Basis>
-                      <From />
-                      <FromParametrized>true</FromParametrized>
-                      <To />
-                      <ToParametrized>true</ToParametrized>
-                    </Condition>
-                  </FilterItem>
-                </FilterItems>
+                <FilterItems />
               </Filter>
               <Calculations />
               <Aggregates />
-              <QueryProperties>
-                <IncludeMemberValue>true</IncludeMemberValue>
-              </QueryProperties>
+              <QueryProperties />
             </QuerySpecification>
             <Query>
-              <Statement>DEFINE VAR FromSailingsDepartureDate1 = IF(PATHLENGTH(@FromSailingsDepartureDate) = 1, IF(@FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK()), IF(PATHITEM(@FromSailingsDepartureDate, 2) &lt;&gt; "", PATHITEM(@FromSailingsDepartureDate, 2), BLANK()))
-VAR FromSailingsDepartureDate1ALL = PATHLENGTH(@FromSailingsDepartureDate) &gt; 1 &amp;&amp; PATHITEM(@FromSailingsDepartureDate, 1, 1) &lt; 1
-VAR ToSailingsDepartureDate1 = IF(PATHLENGTH(@ToSailingsDepartureDate) = 1, IF(@ToSailingsDepartureDate &lt;&gt; "", @ToSailingsDepartureDate, BLANK()), IF(PATHITEM(@ToSailingsDepartureDate, 2) &lt;&gt; "", PATHITEM(@ToSailingsDepartureDate, 2), BLANK()))
-VAR ToSailingsDepartureDate1ALL = PATHLENGTH(@ToSailingsDepartureDate) &gt; 1 &amp;&amp; PATHITEM(@ToSailingsDepartureDate, 1, 1) &lt; 1
-EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sailings'[SailingDetail], 'Sailings'[DepartureDate], 'Sailings'[ArrivalPortName], 'Bookings'[VEHICLEHEIGHT], 'Bookings'[VEHICLELENGTH], 'Bookings'[VEHICLEWEIGHT], 'Bookings'[VEHICLEWIDTH], 'Sailings'[DeparturePortName], 'Bookings'[BookingCustomerDetail], 'Bookings'[STANDBYPRODUCT], 'Bookings'[CUSTOMERNAME], 'Bookings'[SALESCHANNEL], 'Bookings'[VESSELTRANSFER], 'Bookings'[REBATEAMOUNT], 'Bookings'[GROSSAMOUNT], 'Bookings'[PAID], 'Bookings'[DEFERREDPAYMENT], 'Bookings'[SURCHARGEAMOUNT], 'Bookings'[TOTALPRICE], 'Bookings'[UNITGROSSAMOUNT], 'Sailings'[ArrivalPortCode], 'Sailings'[DeparturePortCode], 'Bookings'[BookingReference], 'Sailings'[ShipPhysicalDescription], 'Bookings'[BusinessUnitName], 'Bookings'[SpecialInstructionsFlag], 'Bookings'[RouteArrivalPort], 'Bookings'[PrdCode], 'Bookings'[Qty], FILTER(VALUES('Sailings'[DepartureDate]), (FromSailingsDepartureDate1ALL || 'Sailings'[DepartureDate] &gt;= DATEVALUE(FromSailingsDepartureDate1) + TIMEVALUE(FromSailingsDepartureDate1)) &amp;&amp; (ToSailingsDepartureDate1ALL || 'Sailings'[DepartureDate] &lt;= DATEVALUE(ToSailingsDepartureDate1) + TIMEVALUE(ToSailingsDepartureDate1))), "TotalAmount", [TotalAmount])</Statement>
+              <Statement>DEFINE
+    VAR FromSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @FromSailingsDepartureDate ) = 1,
+            IF ( @FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @FromSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @FromSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR FromSailingsDepartureDate1ALL =
+        PATHLENGTH ( @FromSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @FromSailingsDepartureDate, 1, 1 ) &lt; 1
+    VAR ToSailingsDepartureDate1 =
+        IF (
+            PATHLENGTH ( @ToSailingsDepartureDate ) = 1,
+            IF ( @ToSailingsDepartureDate &lt;&gt; "", @ToSailingsDepartureDate, BLANK () ),
+            IF (
+                PATHITEM ( @ToSailingsDepartureDate, 2 ) &lt;&gt; "",
+                PATHITEM ( @ToSailingsDepartureDate, 2 ),
+                BLANK ()
+            )
+        )
+    VAR ToSailingsDepartureDate1ALL =
+        PATHLENGTH ( @ToSailingsDepartureDate ) &gt; 1
+            &amp;&amp; PATHITEM ( @ToSailingsDepartureDate, 1, 1 ) &lt; 1
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Sailings'[LineCode],
+    'Sailings'[DepartureTime],
+    'Sailings'[SailingDetail],
+    'Sailings'[DepartureDate],
+    'Sailings'[ArrivalPortName],
+    'Bookings'[VehicleHeight],
+    'Bookings'[VehicleLength],
+    'Bookings'[VehicleWeight],
+    'Bookings'[VehicleWidth],
+    'Sailings'[DeparturePortName],
+    'Bookings'[BookingCustomerDetail],
+    'Bookings'[StanbyProduct],
+    'Bookings'[CustomerName],
+    'Bookings'[SalesChannel],
+    'Bookings'[VesselTransfer],
+    'Bookings'[RebateAmount],
+    'Bookings'[GrossAmount],
+    'Bookings'[Paid],
+    'Bookings'[DeferredPayment],
+    'Bookings'[SurChargeAmount],
+    'Bookings'[TotalPrice],
+    'Bookings'[UnitGrossAmount],
+    'Sailings'[ArrivalPortCode],
+    'Sailings'[DeparturePortCode],
+    'Bookings'[BookingReference],
+    'Sailings'[ShipPhysicalDescription],
+    'Bookings'[BusinessUnitName],
+    'Bookings'[SpecialInstructionsFlag],
+    'Bookings'[RouteArrivalPort],
+    'Bookings'[PrdCode],
+    'Bookings'[Qty],
+    FILTER (
+        VALUES ( 'Sailings'[DepartureDate] ),
+        (
+            FromSailingsDepartureDate1ALL
+                || 'Sailings'[DepartureDate]
+                    &gt;= DATEVALUE ( FromSailingsDepartureDate1 )
+                        + TIMEVALUE ( FromSailingsDepartureDate1 )
+        )
+            &amp;&amp; (
+                ToSailingsDepartureDate1ALL
+                    || 'Sailings'[DepartureDate]
+                        &lt;= DATEVALUE ( ToSailingsDepartureDate1 ) + TIMEVALUE ( ToSailingsDepartureDate1 )
+            )
+    ),
+    "TotalAmount", [TotalAmount]
+)</Statement>
               <ParameterDefinitions>
                 <ParameterDefinition>
                   <Name>FromSailingsDepartureDate</Name>
@@ -433,7 +523,7 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                   <Caption>From DepartureDate</Caption>
                   <HierarchyUniqueName>[Sailings].[DepartureDate]</HierarchyUniqueName>
                   <ParameterValuesQuery>
-                    <Statement>EVALUATE SELECTCOLUMNS (ADDCOLUMNS (SUMMARIZECOLUMNS (ROLLUPADDISSUBTOTAL ('Sailings'[DepartureDate], "h0")), "ParameterLevel", if ([h0], 0, 1)), "ParameterCaption", SWITCH([ParameterLevel], 1, "" &amp; 'Sailings'[DepartureDate], "All"), "ParameterValue", [ParameterLevel] &amp; "|" &amp; 'Sailings'[DepartureDate], "ParameterLevel", [ParameterLevel], "'Sailings'[DepartureDate]", 'Sailings'[DepartureDate]) order by 'Sailings'[DepartureDate], [ParameterLevel]</Statement>
+                    <Statement>WITH MEMBER [Measures].[ParameterCaption] AS [Sailings].[DepartureDate].CURRENTMEMBER.MEMBER_CAPTION MEMBER [Measures].[ParameterValue] AS [Sailings].[DepartureDate].CURRENTMEMBER.UNIQUENAME MEMBER [Measures].[ParameterLevel] AS [Sailings].[DepartureDate].CURRENTMEMBER.LEVEL.ORDINAL SELECT {[Measures].[ParameterCaption], [Measures].[ParameterValue], [Measures].[ParameterLevel]} ON COLUMNS , [Sailings].[DepartureDate].ALLMEMBERS ON ROWS FROM [Model]</Statement>
                     <ParameterizedStatement>
                       <ReferencedParameters />
                     </ParameterizedStatement>
@@ -449,18 +539,9 @@ EVALUATE SUMMARIZECOLUMNS('Sailings'[LineCode], 'Sailings'[DepartureTime], 'Sail
                   <Caption>To DepartureDate</Caption>
                   <HierarchyUniqueName>[Sailings].[DepartureDate]</HierarchyUniqueName>
                   <ParameterValuesQuery>
-                    <Statement>DEFINE VAR FromSailingsDepartureDate1 = IF(PATHLENGTH(@FromSailingsDepartureDate) = 1, IF(@FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK()), IF(PATHITEM(@FromSailingsDepartureDate, 2) &lt;&gt; "", PATHITEM(@FromSailingsDepartureDate, 2), BLANK()))
-VAR FromSailingsDepartureDate1ALL = PATHLENGTH(@FromSailingsDepartureDate) &gt; 1 &amp;&amp; PATHITEM(@FromSailingsDepartureDate, 1, 1) &lt; 1
-EVALUATE SELECTCOLUMNS (ADDCOLUMNS (SUMMARIZECOLUMNS (ROLLUPADDISSUBTOTAL ('Sailings'[DepartureDate], "h0"), FILTER(VALUES('Sailings'[DepartureDate]), (FromSailingsDepartureDate1ALL || 'Sailings'[DepartureDate] &gt;= DATEVALUE(FromSailingsDepartureDate1) + TIMEVALUE(FromSailingsDepartureDate1)))), "ParameterLevel", if ([h0], 0, 1)), "ParameterCaption", SWITCH([ParameterLevel], 1, "" &amp; 'Sailings'[DepartureDate], "All"), "ParameterValue", [ParameterLevel] &amp; "|" &amp; 'Sailings'[DepartureDate], "ParameterLevel", [ParameterLevel], "'Sailings'[DepartureDate]", 'Sailings'[DepartureDate]) order by 'Sailings'[DepartureDate], [ParameterLevel]</Statement>
+                    <Statement>WITH MEMBER [Measures].[ParameterCaption] AS [Sailings].[DepartureDate].CURRENTMEMBER.MEMBER_CAPTION MEMBER [Measures].[ParameterValue] AS [Sailings].[DepartureDate].CURRENTMEMBER.UNIQUENAME MEMBER [Measures].[ParameterLevel] AS [Sailings].[DepartureDate].CURRENTMEMBER.LEVEL.ORDINAL SELECT {[Measures].[ParameterCaption], [Measures].[ParameterValue], [Measures].[ParameterLevel]} ON COLUMNS , [Sailings].[DepartureDate].ALLMEMBERS ON ROWS FROM [Model]</Statement>
                     <ParameterizedStatement>
-                      <Statement>DEFINE VAR FromSailingsDepartureDate1 = IF(PATHLENGTH(@FromSailingsDepartureDate) = 1, IF(@FromSailingsDepartureDate &lt;&gt; "", @FromSailingsDepartureDate, BLANK()), IF(PATHITEM(@FromSailingsDepartureDate, 2) &lt;&gt; "", PATHITEM(@FromSailingsDepartureDate, 2), BLANK()))
-VAR FromSailingsDepartureDate1ALL = PATHLENGTH(@FromSailingsDepartureDate) &gt; 1 &amp;&amp; PATHITEM(@FromSailingsDepartureDate, 1, 1) &lt; 1
-EVALUATE SELECTCOLUMNS (ADDCOLUMNS (SUMMARIZECOLUMNS (ROLLUPADDISSUBTOTAL ('Sailings'[DepartureDate], "h0"), FILTER(VALUES('Sailings'[DepartureDate]), (FromSailingsDepartureDate1ALL || 'Sailings'[DepartureDate] &gt;= DATEVALUE(FromSailingsDepartureDate1) + TIMEVALUE(FromSailingsDepartureDate1)))), "ParameterLevel", if ([h0], 0, 1)), "ParameterCaption", SWITCH([ParameterLevel], 1, "" &amp; 'Sailings'[DepartureDate], "All"), "ParameterValue", [ParameterLevel] &amp; "|" &amp; 'Sailings'[DepartureDate], "ParameterLevel", [ParameterLevel], "'Sailings'[DepartureDate]", 'Sailings'[DepartureDate]) order by 'Sailings'[DepartureDate], [ParameterLevel]</Statement>
-                      <ReferencedParameters>
-                        <ReferencedParameter>
-                          <Name>FromSailingsDepartureDate</Name>
-                        </ReferencedParameter>
-                      </ReferencedParameters>
+                      <ReferencedParameters />
                     </ParameterizedStatement>
                   </ParameterValuesQuery>
                   <AllowBlank>true</AllowBlank>
@@ -496,19 +577,19 @@ EVALUATE SELECTCOLUMNS (ADDCOLUMNS (SUMMARIZECOLUMNS (ROLLUPADDISSUBTOTAL ('Sail
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VEHICLEHEIGHT">
-          <DataField>Bookings[VEHICLEHEIGHT]</DataField>
+          <DataField>Bookings[VehicleHeight]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VEHICLELENGTH">
-          <DataField>Bookings[VEHICLELENGTH]</DataField>
+          <DataField>Bookings[VehicleLength]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VEHICLEWEIGHT">
-          <DataField>Bookings[VEHICLEWEIGHT]</DataField>
+          <DataField>Bookings[VehicleWeight]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VEHICLEWIDTH">
-          <DataField>Bookings[VEHICLEWIDTH]</DataField>
+          <DataField>Bookings[VehicleWidth]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DeparturePortName">
@@ -519,48 +600,48 @@ EVALUATE SELECTCOLUMNS (ADDCOLUMNS (SUMMARIZECOLUMNS (ROLLUPADDISSUBTOTAL ('Sail
           <DataField>Bookings[BookingCustomerDetail]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="STANDBYPRODUCT">
-          <DataField>Bookings[STANDBYPRODUCT]</DataField>
+        <Field Name="StanbyProduct">
+          <DataField>Bookings[StanbyProduct]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CUSTOMERNAME">
-          <DataField>Bookings[CUSTOMERNAME]</DataField>
+          <DataField>Bookings[CustomerName]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SALESCHANNEL">
-          <DataField>Bookings[SALESCHANNEL]</DataField>
+          <DataField>Bookings[SalesChannel]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VESSELTRANSFER">
-          <DataField>Bookings[VESSELTRANSFER]</DataField>
+          <DataField>Bookings[VesselTransfer]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="REBATEAMOUNT">
-          <DataField>Bookings[REBATEAMOUNT]</DataField>
+          <DataField>Bookings[RebateAmount]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="GROSSAMOUNT">
-          <DataField>Bookings[GROSSAMOUNT]</DataField>
+          <DataField>Bookings[GrossAmount]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PAID">
-          <DataField>Bookings[PAID]</DataField>
+          <DataField>Bookings[Paid]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DEFERREDPAYMENT">
-          <DataField>Bookings[DEFERREDPAYMENT]</DataField>
+          <DataField>Bookings[DeferredPayment]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SURCHARGEAMOUNT">
-          <DataField>Bookings[SURCHARGEAMOUNT]</DataField>
+          <DataField>Bookings[SurChargeAmount]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TOTALPRICE">
-          <DataField>Bookings[TOTALPRICE]</DataField>
+          <DataField>Bookings[TotalPrice]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="UNITGROSSAMOUNT">
-          <DataField>Bookings[UNITGROSSAMOUNT]</DataField>
+          <DataField>Bookings[UnitGrossAmount]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ArrivalPortCode">
@@ -1904,14 +1985,14 @@ EVALUATE SELECTCOLUMNS (ADDCOLUMNS (SUMMARIZECOLUMNS (ROLLUPADDISSUBTOTAL ('Sail
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="STANDBYPRODUCT">
+                        <Textbox Name="StanbyProduct">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!STANDBYPRODUCT.Value</Value>
+                                  <Value>=Fields!StanbyProduct.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -1920,7 +2001,7 @@ EVALUATE SELECTCOLUMNS (ADDCOLUMNS (SUMMARIZECOLUMNS (ROLLUPADDISSUBTOTAL ('Sail
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>STANDBYPRODUCT</rd:DefaultName>
+                          <rd:DefaultName>StanbyProduct</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>

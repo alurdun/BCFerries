@@ -63,24 +63,24 @@ SUMMARIZECOLUMNS (
     'Bookings'[BookingCustomerDetail],
     'Bookings'[PrdCode],
     'Bookings'[PrdType],
-    'Bookings'[STANDBYPRODUCT],
-    'Bookings'[VESSELTRANSFER],
-    'Bookings'[PAID],
-    'Bookings'[DEFERREDPAYMENT],
-    'Bookings'[SURCHARGEAMOUNT],
-    'Bookings'[TOTALPRICE],
-    'Bookings'[UNITGROSSAMOUNT],
+    'Bookings'[StanbyProduct],
+    'Bookings'[VesselTransfer],
+    'Bookings'[Paid],
+    'Bookings'[DeferredPayment],
+    'Bookings'[SurChargeAmount],
+    'Bookings'[TotalPrice],
+    'Bookings'[UnitGrossAmount],
     'Sailings'[ArrivalPortCode],
     'Sailings'[DeparturePortCode],
     'Bookings'[BookingReference],
     'Sailings'[ShipPhysicalDescription],
     'Bookings'[SpecialInstructionsFlag],
-    'Bookings'[GROSSAMOUNT],
-    'Bookings'[BHSURNAME],
-    'Bookings'[BHFIRSTNAME],
-    'Bookings'[PASSENGERFULLNAME],
-    'Bookings'[ALLOCATEDLEG],
-    'Bookings'[CABINNUMBER],
+    'Bookings'[GrossAmount],
+    'Bookings'[BHSurName],
+    'Bookings'[BHFirstName],
+    'Bookings'[PassengerFullName],
+    'Bookings'[AllocatedLeg],
+    'Bookings'[CabinNumber],
     'Bookings'[RouteArrivalPort],
     FILTER (
         VALUES ( 'Sailings'[DepartureDate] ),
@@ -202,72 +202,72 @@ SUMMARIZECOLUMNS (
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>STANDBYPRODUCT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[STANDBYPRODUCT]</HierarchyUniqueName>
-                      <LevelName>STANDBYPRODUCT</LevelName>
-                      <UniqueName>[Bookings].[STANDBYPRODUCT].[STANDBYPRODUCT]</UniqueName>
+                      <HierarchyName>StanbyProduct</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[StanbyProduct]</HierarchyUniqueName>
+                      <LevelName>StanbyProduct</LevelName>
+                      <UniqueName>[Bookings].[StanbyProduct].[StanbyProduct]</UniqueName>
                     </ID>
-                    <ItemCaption>STANDBYPRODUCT</ItemCaption>
+                    <ItemCaption>StanbyProduct</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>VESSELTRANSFER</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[VESSELTRANSFER]</HierarchyUniqueName>
-                      <LevelName>VESSELTRANSFER</LevelName>
-                      <UniqueName>[Bookings].[VESSELTRANSFER].[VESSELTRANSFER]</UniqueName>
+                      <HierarchyName>VesselTransfer</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[VesselTransfer]</HierarchyUniqueName>
+                      <LevelName>VesselTransfer</LevelName>
+                      <UniqueName>[Bookings].[VesselTransfer].[VesselTransfer]</UniqueName>
                     </ID>
-                    <ItemCaption>VESSELTRANSFER</ItemCaption>
+                    <ItemCaption>VesselTransfer</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>PAID</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[PAID]</HierarchyUniqueName>
-                      <LevelName>PAID</LevelName>
-                      <UniqueName>[Bookings].[PAID].[PAID]</UniqueName>
+                      <HierarchyName>Paid</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[Paid]</HierarchyUniqueName>
+                      <LevelName>Paid</LevelName>
+                      <UniqueName>[Bookings].[Paid].[Paid]</UniqueName>
                     </ID>
-                    <ItemCaption>PAID</ItemCaption>
+                    <ItemCaption>Paid</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>DEFERREDPAYMENT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[DEFERREDPAYMENT]</HierarchyUniqueName>
-                      <LevelName>DEFERREDPAYMENT</LevelName>
-                      <UniqueName>[Bookings].[DEFERREDPAYMENT].[DEFERREDPAYMENT]</UniqueName>
+                      <HierarchyName>DeferredPayment</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[DeferredPayment]</HierarchyUniqueName>
+                      <LevelName>DeferredPayment</LevelName>
+                      <UniqueName>[Bookings].[DeferredPayment].[DeferredPayment]</UniqueName>
                     </ID>
-                    <ItemCaption>DEFERREDPAYMENT</ItemCaption>
+                    <ItemCaption>DeferredPayment</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>SURCHARGEAMOUNT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[SURCHARGEAMOUNT]</HierarchyUniqueName>
-                      <LevelName>SURCHARGEAMOUNT</LevelName>
-                      <UniqueName>[Bookings].[SURCHARGEAMOUNT].[SURCHARGEAMOUNT]</UniqueName>
+                      <HierarchyName>SurChargeAmount</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[SurChargeAmount]</HierarchyUniqueName>
+                      <LevelName>SurChargeAmount</LevelName>
+                      <UniqueName>[Bookings].[SurChargeAmount].[SurChargeAmount]</UniqueName>
                     </ID>
-                    <ItemCaption>SURCHARGEAMOUNT</ItemCaption>
+                    <ItemCaption>SurChargeAmount</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>TOTALPRICE</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[TOTALPRICE]</HierarchyUniqueName>
-                      <LevelName>TOTALPRICE</LevelName>
-                      <UniqueName>[Bookings].[TOTALPRICE].[TOTALPRICE]</UniqueName>
+                      <HierarchyName>TotalPrice</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[TotalPrice]</HierarchyUniqueName>
+                      <LevelName>TotalPrice</LevelName>
+                      <UniqueName>[Bookings].[TotalPrice].[TotalPrice]</UniqueName>
                     </ID>
-                    <ItemCaption>TOTALPRICE</ItemCaption>
+                    <ItemCaption>TotalPrice</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>UNITGROSSAMOUNT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[UNITGROSSAMOUNT]</HierarchyUniqueName>
-                      <LevelName>UNITGROSSAMOUNT</LevelName>
-                      <UniqueName>[Bookings].[UNITGROSSAMOUNT].[UNITGROSSAMOUNT]</UniqueName>
+                      <HierarchyName>UnitGrossAmount</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[UnitGrossAmount]</HierarchyUniqueName>
+                      <LevelName>UnitGrossAmount</LevelName>
+                      <UniqueName>[Bookings].[UnitGrossAmount].[UnitGrossAmount]</UniqueName>
                     </ID>
-                    <ItemCaption>UNITGROSSAMOUNT</ItemCaption>
+                    <ItemCaption>UnitGrossAmount</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -322,62 +322,62 @@ SUMMARIZECOLUMNS (
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>GROSSAMOUNT</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[GROSSAMOUNT]</HierarchyUniqueName>
-                      <LevelName>GROSSAMOUNT</LevelName>
-                      <UniqueName>[Bookings].[GROSSAMOUNT].[GROSSAMOUNT]</UniqueName>
+                      <HierarchyName>GrossAmount</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[GrossAmount]</HierarchyUniqueName>
+                      <LevelName>GrossAmount</LevelName>
+                      <UniqueName>[Bookings].[GrossAmount].[GrossAmount]</UniqueName>
                     </ID>
-                    <ItemCaption>GROSSAMOUNT</ItemCaption>
+                    <ItemCaption>GrossAmount</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>BHSURNAME</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[BHSURNAME]</HierarchyUniqueName>
-                      <LevelName>BHSURNAME</LevelName>
-                      <UniqueName>[Bookings].[BHSURNAME].[BHSURNAME]</UniqueName>
+                      <HierarchyName>BHSurNAme</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[BHSurNAme]</HierarchyUniqueName>
+                      <LevelName>BHSurNAme</LevelName>
+                      <UniqueName>[Bookings].[BHSurNAme].[BHSurNAme]</UniqueName>
                     </ID>
-                    <ItemCaption>BHSURNAME</ItemCaption>
+                    <ItemCaption>BHSurNAme</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>BHFIRSTNAME</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[BHFIRSTNAME]</HierarchyUniqueName>
-                      <LevelName>BHFIRSTNAME</LevelName>
-                      <UniqueName>[Bookings].[BHFIRSTNAME].[BHFIRSTNAME]</UniqueName>
+                      <HierarchyName>BHFirstName</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[BHFirstName]</HierarchyUniqueName>
+                      <LevelName>BHFirstName</LevelName>
+                      <UniqueName>[Bookings].[BHFirstName].[BHFirstName]</UniqueName>
                     </ID>
-                    <ItemCaption>BHFIRSTNAME</ItemCaption>
+                    <ItemCaption>BHFirstName</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>PASSENGERFULLNAME</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[PASSENGERFULLNAME]</HierarchyUniqueName>
-                      <LevelName>PASSENGERFULLNAME</LevelName>
-                      <UniqueName>[Bookings].[PASSENGERFULLNAME].[PASSENGERFULLNAME]</UniqueName>
+                      <HierarchyName>PassengerFullName</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[PassengerFullName]</HierarchyUniqueName>
+                      <LevelName>PassengerFullName</LevelName>
+                      <UniqueName>[Bookings].[PassengerFullName].[PassengerFullName]</UniqueName>
                     </ID>
-                    <ItemCaption>PASSENGERFULLNAME</ItemCaption>
+                    <ItemCaption>PassengerFullName</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>ALLOCATEDLEG</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[ALLOCATEDLEG]</HierarchyUniqueName>
-                      <LevelName>ALLOCATEDLEG</LevelName>
-                      <UniqueName>[Bookings].[ALLOCATEDLEG].[ALLOCATEDLEG]</UniqueName>
+                      <HierarchyName>AllocatedLeg</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[AllocatedLeg]</HierarchyUniqueName>
+                      <LevelName>AllocatedLeg</LevelName>
+                      <UniqueName>[Bookings].[AllocatedLeg].[AllocatedLeg]</UniqueName>
                     </ID>
-                    <ItemCaption>ALLOCATEDLEG</ItemCaption>
+                    <ItemCaption>AllocatedLeg</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
                       <DimensionName>Bookings</DimensionName>
-                      <HierarchyName>CABINNUMBER</HierarchyName>
-                      <HierarchyUniqueName>[Bookings].[CABINNUMBER]</HierarchyUniqueName>
-                      <LevelName>CABINNUMBER</LevelName>
-                      <UniqueName>[Bookings].[CABINNUMBER].[CABINNUMBER]</UniqueName>
+                      <HierarchyName>CabinNumber</HierarchyName>
+                      <HierarchyUniqueName>[Bookings].[CabinNumber]</HierarchyUniqueName>
+                      <LevelName>CabinNumber</LevelName>
+                      <UniqueName>[Bookings].[CabinNumber].[CabinNumber]</UniqueName>
                     </ID>
-                    <ItemCaption>CABINNUMBER</ItemCaption>
+                    <ItemCaption>CabinNumber</ItemCaption>
                   </Item>
                   <Item>
                     <ID xsi:type="Level">
@@ -446,24 +446,24 @@ SUMMARIZECOLUMNS (
     'Bookings'[BookingCustomerDetail],
     'Bookings'[PrdCode],
     'Bookings'[PrdType],
-    'Bookings'[STANDBYPRODUCT],
-    'Bookings'[VESSELTRANSFER],
-    'Bookings'[PAID],
-    'Bookings'[DEFERREDPAYMENT],
-    'Bookings'[SURCHARGEAMOUNT],
-    'Bookings'[TOTALPRICE],
-    'Bookings'[UNITGROSSAMOUNT],
+    'Bookings'[StanbyProduct],
+    'Bookings'[VesselTransfer],
+    'Bookings'[Paid],
+    'Bookings'[DeferredPayment],
+    'Bookings'[SurChargeAmount],
+    'Bookings'[TotalPrice],
+    'Bookings'[UnitGrossAmount],
     'Sailings'[ArrivalPortCode],
     'Sailings'[DeparturePortCode],
     'Bookings'[BookingReference],
     'Sailings'[ShipPhysicalDescription],
     'Bookings'[SpecialInstructionsFlag],
-    'Bookings'[GROSSAMOUNT],
-    'Bookings'[BHSURNAME],
-    'Bookings'[BHFIRSTNAME],
-    'Bookings'[PASSENGERFULLNAME],
-    'Bookings'[ALLOCATEDLEG],
-    'Bookings'[CABINNUMBER],
+    'Bookings'[GrossAmount],
+    'Bookings'[BHSurName],
+    'Bookings'[BHFirstName],
+    'Bookings'[PassengerFullName],
+    'Bookings'[AllocatedLeg],
+    'Bookings'[CabinNumber],
     'Bookings'[RouteArrivalPort],
     FILTER (
         VALUES ( 'Sailings'[DepartureDate] ),
@@ -560,36 +560,36 @@ SUMMARIZECOLUMNS (
           <DataField>Bookings[PrdType]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="STANDBYPRODUCT">
-          <DataField>Bookings[STANDBYPRODUCT]</DataField>
+        <Field Name="StanbyProduct">
+          <DataField>Bookings[StanbyProduct]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VESSELTRANSFER">
-          <DataField>Bookings[VESSELTRANSFER]</DataField>
+          <DataField>Bookings[VesselTransfer]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="GROSSAMOUNT">
-          <DataField>Bookings[GROSSAMOUNT]</DataField>
+          <DataField>Bookings[GrossAmount]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PAID">
-          <DataField>Bookings[PAID]</DataField>
+          <DataField>Bookings[Paid]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DEFERREDPAYMENT">
-          <DataField>Bookings[DEFERREDPAYMENT]</DataField>
+          <DataField>Bookings[DeferredPayment]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SURCHARGEAMOUNT">
-          <DataField>Bookings[SURCHARGEAMOUNT]</DataField>
+          <DataField>Bookings[SurChargeAmount]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TOTALPRICE">
-          <DataField>Bookings[TOTALPRICE]</DataField>
+          <DataField>Bookings[TotalPrice]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="UNITGROSSAMOUNT">
-          <DataField>Bookings[UNITGROSSAMOUNT]</DataField>
+          <DataField>Bookings[UnitGrossAmount]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ArrivalPortCode">
@@ -617,19 +617,19 @@ SUMMARIZECOLUMNS (
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="BHSURNAME">
-          <DataField>Bookings[BHSURNAME]</DataField>
+          <DataField>Bookings[BHSurNAme]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="BHFIRSTNAME">
-          <DataField>Bookings[BHFIRSTNAME]</DataField>
+          <DataField>Bookings[BHFirstName]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PASSENGERFULLNAME">
-          <DataField>Bookings[PASSENGERFULLNAME]</DataField>
+          <DataField>Bookings[PassengerFullName]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ALLOCATEDLEG">
-          <DataField>Bookings[ALLOCATEDLEG]</DataField>
+          <DataField>Bookings[AllocatedLeg]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RouteArrivalPort">
@@ -637,7 +637,7 @@ SUMMARIZECOLUMNS (
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CABINNUMBER">
-          <DataField>Bookings[CABINNUMBER]</DataField>
+          <DataField>Bookings[CabinNumber]</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -1791,14 +1791,14 @@ SUMMARIZECOLUMNS (
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="STANDBYPRODUCT">
+                        <Textbox Name="StanbyProduct">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!STANDBYPRODUCT.Value</Value>
+                                  <Value>=Fields!StanbyProduct.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -1807,7 +1807,7 @@ SUMMARIZECOLUMNS (
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>STANDBYPRODUCT</rd:DefaultName>
+                          <rd:DefaultName>StanbyProduct</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>

@@ -3340,37 +3340,37 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BHSURNAME",
+            "name": "BHSurNAme",
             "dataType": "string",
             "sourceColumn": "BHSURNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BHFIRSTNAME",
+            "name": "BHFirstName",
             "dataType": "string",
             "sourceColumn": "BHFIRSTNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BHTELEPHONE",
+            "name": "BHTelephone",
             "dataType": "string",
             "sourceColumn": "BHTELEPHONE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CUSTOMERID",
+            "name": "CustomerNumber",
             "dataType": "string",
             "sourceColumn": "CUSTOMERID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "AGENCYID",
+            "name": "AgencyID",
             "dataType": "string",
             "sourceColumn": "AGENCYID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SPECIALINSTRUCTIONS",
+            "name": "SpecialInstructions",
             "dataType": "string",
             "sourceColumn": "SPECIALINSTRUCTIONS",
             "sourceProviderType": "VarChar"
@@ -3384,6 +3384,7 @@
           {
             "name": "PRODUCTTYPESORT",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "PRODUCTTYPESORT",
             "sourceProviderType": "Decimal"
           },
@@ -3394,145 +3395,145 @@
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "STANDBYPRODUCT",
+            "name": "StanbyProduct",
             "dataType": "string",
             "sourceColumn": "STANDBYPRODUCT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "VEHICLELENGTH",
+            "name": "VehicleLength",
             "dataType": "double",
             "sourceColumn": "VEHICLELENGTH",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "PASSENGERCODE",
+            "name": "PassengerCode",
             "dataType": "string",
             "sourceColumn": "PASSENGERCODE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "TYPE",
+            "name": "Type",
             "dataType": "string",
             "sourceColumn": "TYPE",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PASSENGERFIRSTNAME",
+            "name": "PassengerFirstName",
             "dataType": "string",
             "sourceColumn": "PASSENGERFIRSTNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PASSENGERSURNAME",
+            "name": "PassengerSurName",
             "dataType": "string",
             "sourceColumn": "PASSENGERSURNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "PASSENGERFULLNAME",
+            "name": "PassengerFullName",
             "dataType": "string",
             "sourceColumn": "PASSENGERFULLNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "REDEEMED",
+            "name": "Redeemed",
             "dataType": "string",
             "sourceColumn": "REDEEMED",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "DEFERREDPAYMENT",
+            "name": "DeferredPayment",
             "dataType": "string",
             "sourceColumn": "DEFERREDPAYMENT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "SALESCHANNEL",
+            "name": "SalesChannel",
             "dataType": "string",
             "sourceColumn": "SALESCHANNEL",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "VESSELTRANSFER",
+            "name": "VesselTransfer",
             "dataType": "string",
             "sourceColumn": "VESSELTRANSFER",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BOOKINGDEPARTUREPORT",
+            "name": "BookingDeparturePort",
             "dataType": "string",
             "sourceColumn": "BOOKINGDEPARTUREPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "BOOKINGARRIVALPORT",
+            "name": "BookingArrivalPort",
             "dataType": "string",
             "sourceColumn": "BOOKINGARRIVALPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "FINALTRANSFERPORT",
+            "name": "FinalTransferPort",
             "dataType": "string",
             "sourceColumn": "FINALTRANSFERPORT",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "CUSTOMERNAME",
+            "name": "CustomerName",
             "dataType": "string",
             "sourceColumn": "CUSTOMERNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTID",
+            "name": "AccountID",
             "dataType": "string",
             "sourceColumn": "ACCOUNTID",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "ACCOUNTNAME",
+            "name": "AccountName",
             "dataType": "string",
             "sourceColumn": "ACCOUNTNAME",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "GROSSAMOUNT",
+            "name": "GrossAmount",
             "dataType": "double",
             "sourceColumn": "GROSSAMOUNT",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "PAID",
+            "name": "Paid",
             "dataType": "double",
             "sourceColumn": "PAID",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "OWING",
+            "name": "Owing",
             "dataType": "double",
             "sourceColumn": "OWING",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "OWINGFLAG",
+            "name": "OwingFlag",
             "dataType": "string",
             "sourceColumn": "OWINGFLAG",
             "sourceProviderType": "VarChar"
           },
           {
-            "name": "REBATEAMOUNT",
+            "name": "RebateAmount",
             "dataType": "double",
             "sourceColumn": "REBATEAMOUNT",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "SURCHARGEAMOUNT",
+            "name": "SurChargeAmount",
             "dataType": "double",
             "sourceColumn": "SURCHARGEAMOUNT",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "TOTALPRICE",
+            "name": "TotalPrice",
             "dataType": "double",
             "sourceColumn": "TOTALPRICE",
             "sourceProviderType": "Decimal"
@@ -3544,18 +3545,18 @@
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "UNITGROSSAMOUNT",
+            "name": "UnitGrossAmount",
             "dataType": "double",
             "sourceColumn": "UNITGROSSAMOUNT",
             "sourceProviderType": "Decimal"
           },
           {
-            "name": "HOSTLEPRODUCT",
+            "name": "HostleProduct",
             "dataType": "string",
             "sourceColumn": "HOSTLEPRODUCT"
           },
           {
-            "name": "DGPRODUCT",
+            "name": "DGProduct",
             "dataType": "string",
             "sourceColumn": "DGPRODUCT"
           },
@@ -3566,7 +3567,7 @@
             "isDataTypeInferred": true,
             "expression": [
               "IF(",
-              "\t\t\tBookings[STANDBYPRODUCT] = \"Y\", 1, 0",
+              "\t\t\tBookings[StanbyProduct] = \"Y\", 1, 0",
               "\t\t)"
             ]
           },
@@ -3577,7 +3578,7 @@
             "isDataTypeInferred": true,
             "expression": [
               "IF(",
-              "\t\t\tBookings[HOSTLEPRODUCT] = \"Y\", 1, 0",
+              "\t\t\tBookings[HostleProduct] = \"Y\", 1, 0",
               "\t\t)"
             ]
           },
@@ -3588,22 +3589,22 @@
             "isDataTypeInferred": true,
             "expression": [
               "IF(",
-              "\t\t\tBookings[DGPRODUCT] = \"Y\", 1, 0",
+              "\t\t\tBookings[DGProduct] = \"Y\", 1, 0",
               "\t\t)"
             ]
           },
           {
-            "name": "VEHICLEWEIGHT",
+            "name": "VehicleWeight",
             "dataType": "double",
             "sourceColumn": "VEHICLEWEIGHT"
           },
           {
-            "name": "VEHICLEWIDTH",
+            "name": "VehicleWidth",
             "dataType": "double",
             "sourceColumn": "VEHICLEWIDTH"
           },
           {
-            "name": "VEHICLEHEIGHT",
+            "name": "VehicleHeight",
             "dataType": "double",
             "sourceColumn": "VEHICLEHEIGHT"
           },
@@ -3612,36 +3613,36 @@
             "name": "BookingCustomerDetail",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "Bookings[BHSURNAME] & \", \" & Bookings[BHFIRSTNAME] & \" - \" & Bookings[BHTELEPHONE]"
+            "expression": "Bookings[BHSurNAme] & \", \" & Bookings[BHFirstName] & \" - \" & Bookings[BHTelephone]"
           },
           {
-            "name": "ALLOCATEDLEG",
+            "name": "AllocatedLeg",
             "dataType": "string",
             "sourceColumn": "ALLOCATEDLEG"
           },
           {
-            "name": "CABINNUMBER",
+            "name": "CabinNumber",
             "dataType": "double",
             "sourceColumn": "CABINNUMBER"
           },
           {
-            "name": "STANDBYDATETIME",
+            "name": "StandbyDateTime",
             "dataType": "string",
             "sourceColumn": "STANDBYDATETIME"
           },
           {
-            "name": "STANDBYPRIORITY",
+            "name": "StandByPriority",
             "dataType": "int64",
             "sourceColumn": "STANDBYPRIORITY",
             "formatString": "0"
           },
           {
-            "name": "BOOKINGDATE",
+            "name": "BookingDate",
             "dataType": "dateTime",
             "sourceColumn": "BOOKINGDATE"
           },
           {
-            "name": "PRODUCTAVAILABILITY",
+            "name": "ProductAvailability",
             "dataType": "double",
             "sourceColumn": "PRODUCTAVAILABILITY"
           },
@@ -3650,7 +3651,7 @@
             "name": "BHFullName",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "Bookings[BHSURNAME] & \", \" & Bookings[BHFIRSTNAME]"
+            "expression": "Bookings[BHSurNAme] & \", \" & Bookings[BHFirstName]"
           }
         ],
         "partitions": [
@@ -4332,7 +4333,7 @@
         "measures": [
           {
             "name": "TotalAmount",
-            "expression": "sum(Bookings[TOTALPRICE]) + sum(Bookings[REBATEAMOUNT]) + sum(Bookings[SURCHARGEAMOUNT])"
+            "expression": "sum(Bookings[TotalPrice]) + sum(Bookings[RebateAmount]) + sum(Bookings[SurChargeAmount])"
           }
         ],
         "annotations": [
